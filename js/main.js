@@ -1,68 +1,378 @@
-const componentFallbacks = {
-  header: `
-    <header class="site-header">
-      <a class="brand" href="{{ROOT}}/index.html">UniMatch</a>
-      <button class="nav-toggle" type="button" aria-label="Mở menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav class="site-nav" aria-label="Điều hướng chính">
-        <a data-nav="home" href="{{ROOT}}/index.html">HOME</a>
-        <a data-nav="schools" href="{{ROOT}}/pages/suggestions.html">Schools</a>
-        <a data-nav="map" href="{{ROOT}}/pages/map.html">Map</a>
-        <a data-nav="about" href="{{ROOT}}/index.html#about">About us</a>
-      </nav>
-      <a class="header-dot" href="{{DOT_HREF}}" aria-label="{{DOT_LABEL}}"></a>
-    </header>
-  `,
-  footer: `
-    <footer class="site-footer">
-      <div>
-        <strong>UniMatch</strong>
-        <p>Smart university matching for Vietnamese students.</p>
-      </div>
-      <nav aria-label="Liên kết phụ">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Contact Support</a>
-        <a href="#">University Partners</a>
-      </nav>
-    </footer>
-  `
-};
+// Multi-step Form Logic
+function initMatchForm() {
+  const form = document.getElementById("matchForm");
+  if (!form) return;
 
-function renderTemplate(template, target) {
-  return template
-    .replaceAll("{{ROOT}}", target.dataset.root || ".")
-    .replaceAll("{{DOT_HREF}}", target.dataset.dot || `${target.dataset.root || "."}/pages/suggestions.html`)
-    .replaceAll("{{DOT_LABEL}}", target.dataset.dotLabel || "Xem gợi ý");
-}
+  const steps = form.querySelectorAll(".form-step");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const submitBtn = document.getElementById("submitBtn");
+  const scoreInputs = document.getElementById("scoreInputs");
+  const selectedGroupName = document.getElementById("selectedGroupName");
+  
+  let currentStep = 1;
+  const totalSteps = steps.length;
 
-async function loadComponent(target) {
-  const name = target.dataset.include;
-  const root = target.dataset.root || ".";
-  const url = `${root}/components/${name}.html`;
-  let template = componentFallbacks[name] || "";
+  // Subject Group Tabs Logic
+  const groupTabs = document.querySelectorAll(".group-tab");
+  const subjectDropdowns = document.querySelectorAll(".subject-dropdown");
 
-  try {
-    const response = await fetch(url);
-    if (response.ok) {
-      template = await response.text();
+  groupTabs.forEach(tab => {
+    tab.addEventListener("click", function() {
+      const group = this.dataset.group;
+      
+      // Update active tab
+      groupTabs.forEach(t => t.classList.remove("active"));
+      this.classList.add("active");
+      
+      // Show corresponding dropdown
+      subjectDropdowns.forEach(dropdown => {
+        dropdown.classList.remove("active");
+        if (dropdown.dataset.group === group) {
+          dropdown.classList.add("active");
+        }
+      });
+    });
+  });
+
+  function updateStepDisplay() {
+    steps.forEach((step, index) => {
+      step.classList.toggle("active", index + 1 === currentStep);
+    });
+
+    prevBtn.disabled = currentStep === 1;
+    
+    if (currentStep === totalSteps) {
+      nextBtn.style.display = "none";
+      submitBtn.style.display = "inline-flex";
+    } else {
+      nextBtn.style.display = "inline-flex";
+      submitBtn.style.display = "none";
     }
-  } catch (error) {
-    template = componentFallbacks[name] || "";
   }
 
-  target.outerHTML = renderTemplate(template, target);
+  function validateStep(step) {
+    if (step === 1) {
+      const selectedGroup = form.querySelector('input[name="subject_group"]:checked');
+      return !!selectedGroup;
+    }
+    if (step === 2) {
+      const inputs = scoreInputs.querySelectorAll('input[type="number"]');
+      let valid = true;
+      inputs.forEach(input => {
+        const value = parseFloat(input.value);
+        if (isNaN(value) || value < 0 || value > 10) {
+          valid = false;
+          input.parentElement.classList.add("error");
+        } else {
+          input.parentElement.classList.remove("error");
+        }
+      });
+      return valid;
+    }
+    if (step === 3) {
+      const selectedInterests = form.querySelectorAll('input[name="interests"]:checked');
+      return selectedInterests.length > 0;
+    }
+    return true;
+  }
+
+  function generateScoreInputs() {
+    const selectedGroup = form.querySelector('input[name="subject_group"]:checked');
+    if (!selectedGroup) return;
+
+    const subjects = JSON.parse(selectedGroup.dataset.subjects || "[]");
+    const groupCode = selectedGroup.value;
+    
+    selectedGroupName.textContent = `${groupCode} (${subjects.join(", ")})`;
+
+    scoreInputs.innerHTML = subjects.map((subject, index) => `
+      <div class="score-input">
+        <label for="score_${index}">Nhập điểm môn ${subject}</label>
+        <input 
+          type="number" 
+          id="score_${index}" 
+          name="score_${index}"
+          min="0" 
+          max="10" 
+          step="0.01" 
+          placeholder="0.00"
+          required
+        >
+      </div>
+    `).join("");
+
+    // Add input animation
+    scoreInputs.querySelectorAll("input").forEach(input => {
+      input.addEventListener("focus", function() {
+        this.parentElement.classList.add("focused");
+      });
+      input.addEventListener("blur", function() {
+        this.parentElement.classList.remove("focused");
+        validateScoreInput(this);
+      });
+    });
+  }
+
+  function validateScoreInput(input) {
+    const value = parseFloat(input.value);
+    const wrapper = input.parentElement;
+    
+    if (isNaN(value) || value < 0 || value > 10) {
+      wrapper.classList.add("error");
+      return false;
+    }
+    wrapper.classList.remove("error");
+    return true;
+  }
+
+  // Event Listeners
+  nextBtn.addEventListener("click", () => {
+    if (validateStep(currentStep)) {
+      if (currentStep === 1) {
+        generateScoreInputs();
+      }
+      currentStep++;
+      updateStepDisplay();
+      animateStepTransition("next");
+    } else {
+      showValidationError();
+    }
+  });
+
+  prevBtn.addEventListener("click", () => {
+    currentStep--;
+    updateStepDisplay();
+    animateStepTransition("prev");
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    
+    if (validateStep(3)) {
+      submitForm();
+    } else {
+      showValidationError();
+    }
+  });
+
+  // Subject option selection animation
+  const subjectOptions = form.querySelectorAll(".subject-option input");
+  subjectOptions.forEach(option => {
+    option.addEventListener("change", function() {
+      if (this.checked) {
+        // Remove checked from other options in same dropdown
+        const parentDropdown = this.closest(".subject-dropdown");
+        parentDropdown.querySelectorAll(".subject-option input").forEach(opt => {
+          if (opt !== this) {
+            opt.checked = false;
+            opt.closest(".subject-option").classList.remove("selected");
+          }
+        });
+        
+        this.closest(".subject-option").classList.add("selected");
+        // Animate the option
+        this.closest(".subject-option").style.transform = "scale(1.05)";
+        setTimeout(() => {
+          this.closest(".subject-option").style.transform = "";
+        }, 200);
+      }
+    });
+  });
+
+  // Interest selection animation
+  const interestOptions = form.querySelectorAll(".interest-option input");
+  interestOptions.forEach(option => {
+    option.addEventListener("change", function() {
+      if (this.checked) {
+        this.closest(".interest-option").classList.add("selected");
+      } else {
+        this.closest(".interest-option").classList.remove("selected");
+      }
+    });
+  });
+
+  updateStepDisplay();
 }
 
-function setActiveNav(page) {
-  document.querySelectorAll(".site-nav a").forEach((link) => {
-    link.classList.toggle("is-active", link.dataset.nav === page);
+function animateStepTransition(direction) {
+  const activeStep = document.querySelector(".form-step.active");
+  if (!activeStep) return;
+
+  activeStep.style.animation = "none";
+  activeStep.offsetHeight; // Trigger reflow
+  activeStep.style.animation = direction === "next" 
+    ? "slideInRight 0.4s ease" 
+    : "slideInLeft 0.4s ease";
+}
+
+function showValidationError() {
+  const form = document.getElementById("matchForm");
+  
+  // Add shake animation
+  form.style.animation = "shake 0.5s ease";
+  setTimeout(() => {
+    form.style.animation = "";
+  }, 500);
+
+  // Highlight error fields
+  const errorFields = form.querySelectorAll(".score-input.error");
+  
+  // Visual feedback for interests
+  if (currentStep === 3) {
+    const interestsGrid = document.getElementById("interestsGrid");
+    interestsGrid.style.border = "2px dashed var(--color-accent)";
+    setTimeout(() => {
+      interestsGrid.style.border = "";
+    }, 2000);
+  }
+}
+
+// Form submission
+function submitForm() {
+  const form = document.getElementById("matchForm");
+  const formData = new FormData(form);
+  
+  const data = {
+    subjectGroup: formData.get("subject_group"),
+    scores: [],
+    interests: []
+  };
+
+  // Collect scores
+  const scoreInputs = document.querySelectorAll("#scoreInputs input");
+  scoreInputs.forEach(input => {
+    data.scores.push(parseFloat(input.value));
+  });
+
+  // Collect interests
+  const checkedInterests = form.querySelectorAll('input[name="interests"]:checked');
+  checkedInterests.forEach(checkbox => {
+    data.interests.push(checkbox.value);
+  });
+
+  // Show success animation
+  showSuccessAnimation();
+
+  // Log data (in real app, this would be sent to server)
+  console.log("Form submitted:", data);
+}
+
+function showSuccessAnimation() {
+  const submitBtn = document.getElementById("submitBtn");
+  
+  submitBtn.innerHTML = `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="check-icon">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+    Đang tìm kiếm...
+  `;
+  submitBtn.disabled = true;
+
+  setTimeout(() => {
+    submitBtn.innerHTML = `
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+      Tìm thấy! Chuyển trang...
+    `;
+    
+    // Redirect after showing success
+    setTimeout(() => {
+      window.location.href = "./pages/suggestions.html";
+    }, 1000);
+  }, 2000);
+}
+
+// ========== SCROLL ANIMATIONS ==========
+function initScrollAnimations() {
+  // Get all elements with data-animate attribute
+  const animatedElements = document.querySelectorAll("[data-animate]");
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        // Get delay from data-delay attribute or use default
+        const delay = parseInt(entry.target.dataset.delay) || 0;
+        setTimeout(() => {
+          entry.target.classList.add("animated");
+        }, delay);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  });
+
+  animatedElements.forEach(el => {
+    observer.observe(el);
   });
 }
 
+// Counter Animation for Statistics
+function initCounterAnimation() {
+  const counters = document.querySelectorAll(".stat-number");
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const counter = entry.target;
+        const target = parseInt(counter.dataset.target);
+        const duration = 2000;
+        const startTime = performance.now();
+        
+        function updateCounter(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Easing function
+          const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+          const current = Math.floor(easeOutQuart * target);
+          
+          counter.textContent = current.toLocaleString();
+          
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            counter.textContent = target.toLocaleString();
+          }
+        }
+        
+        requestAnimationFrame(updateCounter);
+        observer.unobserve(counter);
+      }
+    });
+  }, {
+    threshold: 0.5
+  });
+  
+  counters.forEach(counter => {
+    observer.observe(counter);
+  });
+}
+
+// Smooth scroll for anchor links
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute("href"));
+      if (target) {
+        const headerOffset = 80;
+        const elementPosition = target.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    });
+  });
+}
+
+// Mobile Navigation Toggle
 function initNavigation() {
   const navToggle = document.querySelector(".nav-toggle");
   const siteNav = document.querySelector(".site-nav");
@@ -75,13 +385,120 @@ function initNavigation() {
   }
 }
 
-async function initPageComponents() {
-  const includes = Array.from(document.querySelectorAll("[data-include]"));
-  const page = document.querySelector("[data-page]")?.dataset.page || "home";
+// Add dynamic styles
+const style = document.createElement("style");
+style.textContent = `
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .score-input.error input {
+    border-color: #ef4444 !important;
+    background: #fef2f2 !important;
+  }
+  
+  .score-input.focused {
+    transform: scale(1.02);
+  }
+  
+  .check-icon {
+    animation: checkmark 0.5s ease forwards;
+  }
+  
+  @keyframes checkmark {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
 
-  await Promise.all(includes.map(loadComponent));
-  setActiveNav(page);
+  .subject-option.selected .option-content {
+    animation: selectPop 0.3s ease;
+  }
+
+  @keyframes selectPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1.05); }
+  }
+  
+  /* Scroll animation base styles */
+  [data-animate] {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  [data-animate="fadeInUp"] {
+    transform: translateY(40px);
+  }
+  
+  [data-animate="fadeInDown"] {
+    transform: translateY(-30px);
+  }
+  
+  [data-animate="fadeInLeft"] {
+    transform: translateX(-40px);
+  }
+  
+  [data-animate="fadeInRight"] {
+    transform: translateX(40px);
+  }
+  
+  [data-animate="fadeIn"] {
+    transform: scale(0.95);
+  }
+  
+  [data-animate].animated {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+  }
+  
+  /* Number counting animation */
+  .counting {
+    transition: color 0.3s ease;
+  }
+`;
+document.head.appendChild(style);
+
+// Initialize everything on DOM ready
+document.addEventListener("DOMContentLoaded", () => {
+  initMatchForm();
+  initScrollAnimations();
+  initSmoothScroll();
   initNavigation();
-}
+  initCounterAnimation();
+});
 
-initPageComponents();
+// Re-initialize on page load
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  setTimeout(() => {
+    initMatchForm();
+    initScrollAnimations();
+    initSmoothScroll();
+    initNavigation();
+    initCounterAnimation();
+  }, 100);
+}
