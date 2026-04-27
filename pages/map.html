@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniMatch - Bản đồ đại học Việt Nam</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div data-include="header" data-page="map" data-root=".." data-dot="./suggestions.html" data-dot-label="Xem danh sách"></div>
+
+  <main class="app-page vietnam-map-page">
+    <section class="page-hero compact-hero map-page-hero">
+      <p class="section-kicker">BẢN ĐỒ TRƯỜNG ĐẠI HỌC</p>
+      <h1>Bản đồ các trường đại học trên Việt Nam</h1>
+      <p>Theo dõi nhanh các cụm trường lớn tại Hà Nội, Đà Nẵng, Huế, TP. Hồ Chí Minh và một số trung tâm đào tạo nổi bật.</p>
+    </section>
+
+    <section class="vietnam-map-layout" aria-label="Bản đồ các trường đại học trên Việt Nam">
+      <div class="vietnam-map-card">
+        <div class="map-toolbar vietnam-toolbar">
+          <div>
+            <span class="panel-label">Toàn quốc</span>
+            <strong>12 trường nổi bật</strong>
+          </div>
+          <a class="secondary-button" href="./suggestions.html">Xem gợi ý cá nhân</a>
+        </div>
+
+        <div class="vietnam-map-stage">
+          <svg class="vietnam-shape" viewBox="0 0 360 720" role="img" aria-label="Minh họa bản đồ Việt Nam">
+            <path class="region north-region" d="M168 28 C118 42 94 82 106 126 C70 154 78 205 126 220 C154 252 216 244 232 198 C280 177 274 112 232 94 C226 53 202 26 168 28 Z" />
+            <path class="region central-region" d="M202 214 C176 236 172 272 196 302 C160 332 166 378 202 406 C184 444 190 486 224 512 C210 558 230 602 274 622 C292 592 282 548 250 522 C268 478 250 436 220 410 C244 372 236 330 210 300 C232 268 232 236 202 214 Z" />
+            <path class="region south-region" d="M258 612 C210 620 180 652 184 690 C224 714 282 702 316 670 C330 640 304 610 258 612 Z" />
+          </svg>
+
+          <a class="university-marker marker-hanoi marker-primary" href="./detail.html" aria-label="Đại học Bách Khoa Hà Nội">
+            <span></span>
+            <strong>Hà Nội</strong>
+            <small>HUST, NEU, FTU</small>
+          </a>
+
+          <a class="university-marker marker-thainguyen" href="./detail.html" aria-label="Đại học Thái Nguyên">
+            <span></span>
+            <strong>Thái Nguyên</strong>
+            <small>ĐH Thái Nguyên</small>
+          </a>
+
+          <a class="university-marker marker-hue" href="./detail.html" aria-label="Đại học Huế">
+            <span></span>
+            <strong>Huế</strong>
+            <small>ĐH Huế</small>
+          </a>
+
+          <a class="university-marker marker-danang" href="./detail.html" aria-label="Đại học Đà Nẵng">
+            <span></span>
+            <strong>Đà Nẵng</strong>
+            <small>VKU, DUT</small>
+          </a>
+
+          <a class="university-marker marker-quynhon" href="./detail.html" aria-label="Đại học Quy Nhơn">
+            <span></span>
+            <strong>Quy Nhơn</strong>
+            <small>ĐH Quy Nhơn</small>
+          </a>
+
+          <a class="university-marker marker-hcm marker-primary" href="./detail.html" aria-label="Đại học Quốc gia Thành phố Hồ Chí Minh">
+            <span></span>
+            <strong>TP. HCM</strong>
+            <small>VNU-HCM, UEH</small>
+          </a>
+
+          <a class="university-marker marker-cantho" href="./detail.html" aria-label="Đại học Cần Thơ">
+            <span></span>
+            <strong>Cần Thơ</strong>
+            <small>ĐH Cần Thơ</small>
+          </a>
+        </div>
+      </div>
+
+      <aside class="map-school-panel">
+        <div class="map-panel-header">
+          <span class="panel-label">Cụm trường</span>
+          <h2>Danh sách nhanh</h2>
+        </div>
+
+        <a class="map-school-item is-featured" href="./detail.html">
+          <span>HN</span>
+          <div>
+            <strong>Đại học Bách Khoa Hà Nội</strong>
+            <small>Hà Nội - Kỹ thuật, công nghệ</small>
+          </div>
+        </a>
+
+        <a class="map-school-item" href="./detail.html">
+          <span>DN</span>
+          <div>
+            <strong>Đại học CNTT &amp; TT Việt - Hàn</strong>
+            <small>Đà Nẵng - Công nghệ thông tin</small>
+          </div>
+        </a>
+
+        <a class="map-school-item" href="./detail.html">
+          <span>HCM</span>
+          <div>
+            <strong>Đại học Quốc gia TP. HCM</strong>
+            <small>TP. HCM - Đa ngành</small>
+          </div>
+        </a>
+
+        <a class="map-school-item" href="./detail.html">
+          <span>CT</span>
+          <div>
+            <strong>Đại học Cần Thơ</strong>
+            <small>Cần Thơ - Nông nghiệp, kỹ thuật</small>
+          </div>
+        </a>
+
+        <div class="map-summary-grid">
+          <div>
+            <strong>3</strong>
+            <span>Miền Bắc</span>
+          </div>
+          <div>
+            <strong>5</strong>
+            <span>Miền Trung</span>
+          </div>
+          <div>
+            <strong>4</strong>
+            <span>Miền Nam</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <div data-include="footer" data-root=".."></div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

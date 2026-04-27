@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="Website background">
+  <rect width="1600" height="900" fill="#1f2937"/>
+  <path d="M0 640C220 520 360 560 560 450C760 340 890 270 1080 330C1270 390 1370 300 1600 170V900H0V640Z" fill="#2563eb"/>
+  <path d="M0 720C260 610 430 680 650 560C870 440 1010 470 1200 530C1390 590 1480 520 1600 450V900H0V720Z" fill="#14b8a6" opacity="0.9"/>
+  <circle cx="1260" cy="210" r="92" fill="#facc15" opacity="0.9"/>
+</svg>

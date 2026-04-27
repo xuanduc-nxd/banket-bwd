@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniMatch - Trang chủ</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div data-include="header" data-page="home" data-root="." data-dot="./pages/suggestions.html" data-dot-label="Xem gợi ý"></div>
+
+  <main>
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1>
+          Tìm kiếm môi trường<br>
+          tương lai của bạn cùng<br>
+          <span>UniMatch</span>
+        </h1>
+        <p>
+          Navigate the complex world of university admissions with personalized
+          recommendations designed for ambitious students.
+        </p>
+      </div>
+
+      <form class="match-form" action="./pages/suggestions.html">
+        <label>
+          Khối xét tuyển
+          <select name="subject_group">
+            <option>A00: Toán, Lý, Hóa</option>
+            <option>A01: Toán, Lý, Anh</option>
+            <option>D01: Toán, Văn, Anh</option>
+          </select>
+        </label>
+
+        <div class="field-group">
+          <label>
+            Môn 1
+            <input type="number" name="subject_1" min="0" max="10" step="0.01" placeholder="Nhập điểm">
+          </label>
+          <label>
+            Môn 2
+            <input type="number" name="subject_2" min="0" max="10" step="0.01" placeholder="Nhập điểm">
+          </label>
+          <label>
+            Môn 3
+            <input type="number" name="subject_3" min="0" max="10" step="0.01" placeholder="Nhập điểm">
+          </label>
+        </div>
+
+        <div class="major-cloud" aria-label="Ngành học quan tâm">
+          <span>CNTT</span>
+          <span>Marketing</span>
+          <span>Kinh tế</span>
+          <span>Ngôn ngữ</span>
+          <span>Y dược</span>
+        </div>
+
+        <button class="primary-button" type="submit">Tìm Trường Phù Hợp</button>
+      </form>
+    </section>
+
+    <section class="institutions-section" id="schools">
+      <div class="section-title-row">
+        <p class="section-kicker">RECOMMENDATIONS</p>
+        <a href="./pages/suggestions.html">Xem tất cả các trường</a>
+      </div>
+      <h2>Explore Top Institutions</h2>
+
+      <div class="institution-grid">
+        <article class="institution-card">
+          <div class="card-top">
+            <div class="school-logo logo-blue"></div>
+            <span></span>
+          </div>
+          <h3>Đại học Bách Khoa</h3>
+          <p>Đào tạo kỹ thuật và công nghệ hàng đầu, phù hợp với nhóm ngành kỹ sư và phần mềm.</p>
+          <a href="./pages/detail.html">View more</a>
+        </article>
+
+        <article class="institution-card featured-card">
+          <div class="card-top">
+            <div class="school-logo logo-dark"></div>
+            <span></span>
+          </div>
+          <h3>Đại học Ngoại Thương</h3>
+          <p>Môi trường năng động cho các ngành kinh tế, kinh doanh quốc tế và thương mại.</p>
+          <a href="./pages/detail.html">View more</a>
+        </article>
+
+        <article class="institution-card">
+          <div class="card-top">
+            <div class="school-logo logo-sky"></div>
+            <span></span>
+          </div>
+          <h3>Đại học Kinh tế Quốc dân</h3>
+          <p>Lựa chọn nổi bật với các ngành quản trị, tài chính, phân tích dữ liệu và marketing.</p>
+          <a href="./pages/detail.html">View more</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="about-section" id="about">
+      <div class="about-copy">
+        <p class="section-kicker">VỀ UNIMATCH</p>
+        <h2>Ra quyết định chọn trường tự tin hơn</h2>
+        <p>
+          UniMatch giúp học sinh định hướng trường đại học bằng cách kết hợp điểm số,
+          khối xét tuyển, sở thích ngành nghề và dữ liệu tuyển sinh. Giao diện được
+          thiết kế tối giản để bạn tập trung vào những thông tin quan trọng nhất.
+        </p>
+        <p>
+          Thay vì lướt qua quá nhiều nguồn rời rạc, bạn có thể xem đề xuất trường,
+          ngành phù hợp, điểm chuẩn, học phí và vị trí trong cùng một hệ thống.
+        </p>
+      </div>
+
+      <article class="admin-card">
+        <div class="admin-icon">i</div>
+        <h3>Lời nhắn từ Admin</h3>
+        <p>
+          UniMatch được xây dựng với mục tiêu hỗ trợ học sinh nhìn rõ hơn các lựa
+          chọn sau THPT. Mỗi gợi ý chỉ là điểm bắt đầu, quyết định cuối cùng vẫn nên
+          dựa trên năng lực, sở thích và kế hoạch dài hạn của bạn.
+        </p>
+        <div class="admin-sign">
+          <span></span>
+          <div>
+            <strong>UniMatch Advisory</strong>
+            <small>Student-first guidance</small>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div data-include="footer" data-root="."></div>
+
+  <script src="./js/main.js"></script>
+</body>
+</html>

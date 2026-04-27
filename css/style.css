@@ -1,0 +1,1415 @@
+:root {
+  --color-bg: #f7f5ff;
+  --color-bg-soft: #f0edff;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f5f3ff;
+  --color-text: #17172f;
+  --color-muted: #7d7b91;
+  --color-primary: #3157ff;
+  --color-primary-dark: #213ed8;
+  --color-accent: #ff7a2f;
+  --color-accent-soft: #fff1e8;
+  --color-border: #e7e4f5;
+  --color-shadow: rgba(39, 38, 85, 0.11);
+  --container: 1180px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--color-text);
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  background:
+    radial-gradient(circle at 18% 24%, rgba(49, 87, 255, 0.1), transparent 28rem),
+    radial-gradient(circle at 82% 32%, rgba(255, 122, 47, 0.12), transparent 24rem),
+    linear-gradient(180deg, #fbfaff 0%, var(--color-bg) 52%, #ffffff 100%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  width: min(100% - 44px, var(--container));
+  margin: 0 auto;
+  padding: 18px 0;
+}
+
+.brand {
+  color: var(--color-primary);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 7px;
+  border: 1px solid rgba(231, 228, 245, 0.72);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 10px 32px rgba(39, 38, 85, 0.07);
+  backdrop-filter: blur(16px);
+}
+
+.site-nav a {
+  padding: 7px 14px;
+  border-radius: 999px;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.site-nav a:hover,
+.site-nav a.is-active {
+  color: var(--color-primary);
+  background: var(--color-surface-soft);
+}
+
+.header-dot {
+  justify-self: end;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 0 7px rgba(49, 87, 255, 0.09);
+}
+
+.nav-toggle {
+  display: none;
+  justify-self: end;
+  width: 42px;
+  height: 42px;
+  padding: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface);
+}
+
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  margin: 5px 0;
+  background: var(--color-text);
+}
+
+.hero-section {
+  display: grid;
+  justify-items: center;
+  width: min(100% - 44px, var(--container));
+  margin: 0 auto;
+  padding: 44px 0 74px;
+  text-align: center;
+}
+
+.hero-content h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 7vw, 5.8rem);
+  font-weight: 950;
+  line-height: 0.94;
+  letter-spacing: 0;
+}
+
+.hero-content h1 span {
+  display: inline-block;
+  color: transparent;
+  font-style: italic;
+  background: linear-gradient(90deg, var(--color-primary), #7f5cff 42%, var(--color-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.hero-content p {
+  max-width: 610px;
+  margin: 22px auto 0;
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+
+.match-form {
+  display: grid;
+  gap: 16px;
+  width: min(100%, 570px);
+  margin-top: 38px;
+  padding: 26px;
+  border: 1px solid var(--color-border);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 28px 70px var(--color-shadow);
+  backdrop-filter: blur(18px);
+}
+
+.match-form label {
+  display: grid;
+  gap: 7px;
+  color: var(--color-muted);
+  text-align: left;
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.match-form input,
+.match-form select {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: var(--color-text);
+  background: #f0eef8;
+  outline: none;
+}
+
+.match-form input:focus,
+.match-form select:focus {
+  border-color: rgba(49, 87, 255, 0.45);
+  background: #ffffff;
+}
+
+.field-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.major-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.major-cloud span {
+  padding: 7px 12px;
+  border-radius: 999px;
+  color: #5d5874;
+  background: var(--color-surface-soft);
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border: 0;
+  border-radius: 999px;
+  color: #ffffff;
+  background: var(--color-primary);
+  box-shadow: 0 16px 30px rgba(49, 87, 255, 0.24);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.primary-button::after {
+  content: ">";
+  margin-left: 8px;
+}
+
+.primary-button:hover {
+  background: var(--color-primary-dark);
+}
+
+.institutions-section,
+.about-section,
+.site-footer {
+  width: min(100% - 44px, var(--container));
+  margin: 0 auto;
+}
+
+.institutions-section {
+  padding: 54px 0 86px;
+}
+
+.section-title-row {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.section-kicker {
+  margin: 0 0 10px;
+  color: var(--color-primary);
+  font-size: 0.74rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.section-title-row a {
+  color: var(--color-accent);
+  font-size: 0.9rem;
+  font-weight: 850;
+}
+
+.institutions-section h2,
+.about-copy h2 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1.15;
+}
+
+.institution-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.institution-card {
+  min-height: 250px;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 22px 50px rgba(39, 38, 85, 0.09);
+}
+
+.featured-card {
+  transform: translateY(-10px);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+
+.school-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+}
+
+.logo-blue {
+  background: linear-gradient(135deg, #0ea5e9, #3157ff);
+}
+
+.logo-dark {
+  background: radial-gradient(circle, #facc15 0 18%, #20223d 20% 100%);
+}
+
+.logo-sky {
+  background: linear-gradient(135deg, #c7d2fe, #38bdf8);
+}
+
+.card-top span {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #ebe8f6;
+}
+
+.institution-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+}
+
+.institution-card p {
+  min-height: 78px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+}
+
+.institution-card a {
+  display: inline-flex;
+  margin-top: 18px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  color: var(--color-primary);
+  background: var(--color-surface-soft);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.about-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 430px;
+  align-items: center;
+  gap: 68px;
+  padding: 82px 0;
+}
+
+.about-copy p:not(.section-kicker) {
+  max-width: 650px;
+  margin: 18px 0 0;
+  color: var(--color-muted);
+}
+
+.admin-card {
+  padding: 34px;
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 30px 80px rgba(39, 38, 85, 0.12);
+}
+
+.admin-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  color: #ffffff;
+  background: var(--color-primary);
+  font-weight: 950;
+}
+
+.admin-card h3 {
+  margin: 18px 0 10px;
+  font-size: 1.3rem;
+}
+
+.admin-card p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.admin-sign {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.admin-sign span {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+}
+
+.admin-sign strong,
+.admin-sign small {
+  display: block;
+}
+
+.admin-sign small {
+  color: var(--color-muted);
+}
+
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 34px 0;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted);
+}
+
+.site-footer strong {
+  color: var(--color-text);
+}
+
+.site-footer p {
+  margin: 4px 0 0;
+}
+
+.site-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 18px;
+  font-size: 0.86rem;
+}
+
+.site-footer a:hover {
+  color: var(--color-primary);
+}
+
+@media (max-width: 820px) {
+  .site-header {
+    grid-template-columns: 1fr auto;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .header-dot {
+    display: none;
+  }
+
+  .site-nav {
+    position: absolute;
+    top: 72px;
+    left: 22px;
+    right: 22px;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 18px;
+  }
+
+  .site-nav.is-open {
+    display: flex;
+  }
+
+  .site-nav a {
+    text-align: center;
+  }
+
+  .field-group,
+  .institution-grid,
+  .about-section {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-card {
+    transform: none;
+  }
+
+  .about-section {
+    gap: 28px;
+  }
+
+  .site-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .site-footer nav {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .site-header,
+  .hero-section,
+  .institutions-section,
+  .about-section,
+  .site-footer {
+    width: min(100% - 28px, var(--container));
+  }
+
+  .hero-section {
+    padding-top: 30px;
+  }
+
+  .match-form,
+  .institution-card,
+  .admin-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .section-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+.app-page,
+.detail-page {
+  width: min(100% - 44px, var(--container));
+  margin: 0 auto;
+  padding: 34px 0 82px;
+}
+
+.page-hero {
+  max-width: 850px;
+  margin-bottom: 30px;
+}
+
+.compact-hero h1,
+.map-toolbar h1 {
+  margin: 0;
+  font-size: clamp(1.85rem, 4.5vw, 3.2rem);
+  line-height: 1.08;
+}
+
+.page-hero p {
+  max-width: 680px;
+  margin: 16px 0 0;
+  color: var(--color-muted);
+}
+
+.results-layout {
+  display: grid;
+  grid-template-columns: 270px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.filter-panel,
+.school-result,
+.map-shell,
+.detail-card,
+.side-summary,
+.fee-panel,
+.benchmark-panel {
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 24px 64px rgba(39, 38, 85, 0.09);
+}
+
+.filter-panel {
+  position: sticky;
+  top: 96px;
+  display: grid;
+  gap: 20px;
+  padding: 22px;
+  border-radius: 18px;
+}
+
+.filter-panel strong,
+.filter-panel small,
+.panel-label {
+  display: block;
+}
+
+.panel-label,
+.filter-panel small,
+.result-meta,
+.result-stats,
+.quick-facts small,
+.summary-card span,
+.fee-grid small,
+.fee-grid span,
+.benchmark-grid span,
+.panel-heading span {
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.filter-panel strong {
+  margin-top: 4px;
+  font-size: 1.45rem;
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-chips span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: #5c5873;
+  background: var(--color-surface-soft);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.secondary-button,
+.primary-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.secondary-button {
+  color: var(--color-primary);
+  background: var(--color-surface-soft);
+}
+
+.school-list {
+  display: grid;
+  gap: 18px;
+}
+
+.school-result {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  min-height: 164px;
+  padding: 18px;
+  border-radius: 18px;
+}
+
+.highlight-result {
+  background:
+    linear-gradient(90deg, rgba(49, 87, 255, 0.07), rgba(255, 255, 255, 0.92) 38%),
+    rgba(255, 255, 255, 0.92);
+}
+
+.result-rank {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0ea5e9, var(--color-primary));
+  font-weight: 950;
+}
+
+.result-main h2 {
+  margin: 7px 0 6px;
+  font-size: 1.2rem;
+}
+
+.result-main p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+}
+
+.result-meta,
+.result-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.school-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 9px;
+  border-radius: 999px;
+  color: var(--color-primary);
+  background: #eef1ff;
+  font-size: 0.74rem;
+  font-weight: 950;
+}
+
+.badge-warm {
+  color: #b45309;
+  background: var(--color-accent-soft);
+}
+
+.badge-cool {
+  color: #047857;
+  background: #e9fbf3;
+}
+
+.result-stats {
+  margin-top: 12px;
+}
+
+.result-stats span {
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #f6f4ff;
+}
+
+.primary-pill {
+  color: #ffffff;
+  background: var(--color-primary);
+}
+
+.muted-pill {
+  color: var(--color-primary);
+  background: var(--color-surface-soft);
+}
+
+.map-shell {
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+.map-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px;
+}
+
+.map-canvas {
+  position: relative;
+  min-height: 560px;
+  overflow: hidden;
+  background:
+    linear-gradient(24deg, transparent 0 47%, rgba(255, 122, 47, 0.55) 48% 50%, transparent 51%),
+    linear-gradient(115deg, transparent 0 48%, rgba(255, 122, 47, 0.45) 49% 51%, transparent 52%),
+    repeating-linear-gradient(0deg, transparent 0 42px, rgba(255, 122, 47, 0.35) 43px 45px),
+    repeating-linear-gradient(90deg, transparent 0 58px, rgba(255, 122, 47, 0.25) 59px 61px),
+    #244d55;
+}
+
+.map-grid {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 122, 47, 0.28), transparent 23%),
+    radial-gradient(circle at 50% 50%, transparent 0 18%, rgba(255, 122, 47, 0.35) 18.3% 18.9%, transparent 19.2% 100%),
+    radial-gradient(circle at 50% 50%, transparent 0 32%, rgba(255, 122, 47, 0.28) 32.3% 32.9%, transparent 33.2% 100%);
+}
+
+.route-line {
+  position: absolute;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 122, 47, 0.75);
+  transform-origin: left center;
+}
+
+.route-one {
+  left: 30%;
+  top: 52%;
+  width: 32%;
+  transform: rotate(-12deg);
+}
+
+.route-two {
+  left: 46%;
+  top: 43%;
+  width: 20%;
+  transform: rotate(28deg);
+}
+
+.map-pin {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border-radius: 999px;
+  color: #3c3a51;
+  background: rgba(255, 255, 255, 0.93);
+  box-shadow: 0 16px 32px rgba(19, 32, 46, 0.23);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.map-pin span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 0 5px rgba(49, 87, 255, 0.14);
+}
+
+.pin-home {
+  left: 33%;
+  top: 55%;
+}
+
+.pin-primary {
+  left: 55%;
+  top: 45%;
+}
+
+.pin-two {
+  left: 48%;
+  top: 58%;
+}
+
+.pin-three {
+  left: 62%;
+  top: 64%;
+}
+
+.map-zoom {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  display: grid;
+  gap: 8px;
+}
+
+.map-zoom button {
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 11px;
+  color: var(--color-primary);
+  background: #ffffff;
+  box-shadow: 0 14px 28px rgba(19, 32, 46, 0.22);
+  font-size: 1.2rem;
+  font-weight: 950;
+}
+
+.detail-page {
+  max-width: 980px;
+}
+
+.school-detail-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 210px;
+  gap: 22px;
+  align-items: end;
+}
+
+.campus-photo {
+  grid-column: 1 / -1;
+  min-height: 330px;
+  border-radius: 26px;
+  background:
+    linear-gradient(180deg, rgba(15, 34, 52, 0.08), rgba(15, 34, 52, 0.42)),
+    linear-gradient(90deg, rgba(42, 91, 63, 0.7), transparent 24% 76%, rgba(42, 91, 63, 0.7)),
+    repeating-linear-gradient(90deg, transparent 0 42px, rgba(255, 255, 255, 0.65) 43px 56px, transparent 57px 84px),
+    linear-gradient(180deg, #e6d7a2 0 38%, #f4f0dd 38% 55%, #c99b5c 55% 100%);
+  box-shadow: 0 28px 70px rgba(39, 38, 85, 0.13);
+}
+
+.detail-card {
+  grid-column: 1;
+  margin-top: -136px;
+  margin-left: 26px;
+  padding: 28px;
+  border-radius: 24px;
+}
+
+.detail-title-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.detail-title-row h1 {
+  margin: 12px 0 0;
+  font-size: clamp(2rem, 5vw, 3.9rem);
+  line-height: 0.92;
+}
+
+.detail-title-row h1 span {
+  color: var(--color-primary);
+}
+
+.school-mark {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  color: #ffffff;
+  background: var(--color-primary);
+  font-size: 0.76rem;
+  font-weight: 950;
+}
+
+.detail-card p {
+  margin: 18px 0;
+  color: var(--color-muted);
+}
+
+.quick-facts,
+.fee-grid,
+.benchmark-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.quick-facts {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.quick-facts div,
+.fee-grid div,
+.benchmark-grid div,
+.summary-card {
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--color-surface-soft);
+}
+
+.quick-facts strong,
+.fee-grid strong,
+.benchmark-grid strong,
+.summary-card strong {
+  display: block;
+  color: var(--color-primary);
+  font-size: 1.05rem;
+}
+
+.side-summary {
+  grid-column: 2;
+  display: grid;
+  gap: 12px;
+  margin-top: -136px;
+  padding: 14px;
+  border-radius: 22px;
+}
+
+.accent-summary strong {
+  color: var(--color-accent);
+}
+
+.mini-map {
+  position: relative;
+  min-height: 130px;
+  overflow: hidden;
+  border-radius: 16px;
+  background:
+    repeating-linear-gradient(35deg, transparent 0 18px, rgba(49, 87, 255, 0.15) 19px 21px),
+    #dfe8ff;
+}
+
+.mini-map span {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: 42px;
+  height: 42px;
+  border: 9px solid #596176;
+  border-radius: 50% 50% 50% 0;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.detail-content {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 22px;
+  margin-top: 26px;
+}
+
+.fee-panel,
+.benchmark-panel {
+  padding: 22px;
+  border-radius: 22px;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.panel-heading h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.panel-heading a {
+  color: var(--color-primary);
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.fee-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.benchmark-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 820px) {
+  .app-page,
+  .detail-page {
+    width: min(100% - 28px, var(--container));
+  }
+
+  .results-layout,
+  .school-detail-hero,
+  .detail-content {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-panel {
+    position: static;
+  }
+
+  .school-result {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .school-result .primary-pill {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .map-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .map-canvas {
+    min-height: 470px;
+  }
+
+  .map-pin {
+    max-width: 180px;
+  }
+
+  .pin-home {
+    left: 14%;
+  }
+
+  .pin-primary {
+    left: 40%;
+  }
+
+  .pin-two {
+    left: 28%;
+  }
+
+  .pin-three {
+    left: 45%;
+  }
+
+  .detail-card,
+  .side-summary {
+    grid-column: auto;
+    margin: -96px 14px 0;
+  }
+
+  .side-summary {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .school-result,
+  .quick-facts,
+  .fee-grid,
+  .benchmark-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .school-result .primary-pill {
+    grid-column: 1;
+  }
+
+  .result-rank {
+    width: 38px;
+    height: 38px;
+  }
+
+  .campus-photo {
+    min-height: 260px;
+    border-radius: 18px;
+  }
+
+  .detail-card {
+    margin: -70px 8px 0;
+    padding: 20px;
+    border-radius: 18px;
+  }
+}
+
+.vietnam-map-page {
+  max-width: 1240px;
+}
+
+.map-page-hero {
+  margin-bottom: 22px;
+}
+
+.vietnam-map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 24px;
+  align-items: start;
+}
+
+.vietnam-map-card,
+.map-school-panel {
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 24px 64px rgba(39, 38, 85, 0.09);
+}
+
+.vietnam-map-card {
+  overflow: hidden;
+}
+
+.vietnam-toolbar {
+  padding: 22px 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.vietnam-toolbar strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.3rem;
+}
+
+.vietnam-map-stage {
+  position: relative;
+  min-height: 720px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(49, 87, 255, 0.06), transparent 34%),
+    radial-gradient(circle at 64% 18%, rgba(255, 122, 47, 0.12), transparent 18rem),
+    radial-gradient(circle at 24% 84%, rgba(49, 87, 255, 0.12), transparent 20rem),
+    #f8fbff;
+}
+
+.vietnam-map-stage::before {
+  content: "";
+  position: absolute;
+  inset: 28px;
+  border-radius: 22px;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 48px, rgba(49, 87, 255, 0.06) 49px 50px),
+    repeating-linear-gradient(90deg, transparent 0 48px, rgba(49, 87, 255, 0.06) 49px 50px);
+}
+
+.vietnam-shape {
+  position: absolute;
+  left: 50%;
+  top: 34px;
+  width: min(54%, 430px);
+  height: calc(100% - 68px);
+  transform: translateX(-50%);
+  filter: drop-shadow(0 22px 32px rgba(39, 38, 85, 0.14));
+}
+
+.region {
+  stroke: rgba(255, 255, 255, 0.88);
+  stroke-width: 9;
+  stroke-linejoin: round;
+}
+
+.north-region {
+  fill: #dce6ff;
+}
+
+.central-region {
+  fill: #dff5ef;
+}
+
+.south-region {
+  fill: #fff0e5;
+}
+
+.university-marker {
+  position: absolute;
+  display: grid;
+  grid-template-columns: 13px minmax(0, 1fr);
+  column-gap: 9px;
+  min-width: 156px;
+  padding: 10px 12px;
+  border: 1px solid rgba(231, 228, 245, 0.92);
+  border-radius: 14px;
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 34px rgba(39, 38, 85, 0.14);
+  backdrop-filter: blur(10px);
+}
+
+.university-marker span {
+  grid-row: 1 / 3;
+  align-self: center;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 0 6px rgba(255, 122, 47, 0.14);
+}
+
+.university-marker strong,
+.university-marker small {
+  display: block;
+  min-width: 0;
+}
+
+.university-marker strong {
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.university-marker small {
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.marker-primary span {
+  background: var(--color-primary);
+  box-shadow: 0 0 0 6px rgba(49, 87, 255, 0.14);
+}
+
+.marker-hanoi {
+  left: 43%;
+  top: 15%;
+}
+
+.marker-thainguyen {
+  left: 56%;
+  top: 8%;
+}
+
+.marker-hue {
+  left: 43%;
+  top: 42%;
+}
+
+.marker-danang {
+  left: 55%;
+  top: 49%;
+}
+
+.marker-quynhon {
+  left: 40%;
+  top: 58%;
+}
+
+.marker-hcm {
+  left: 49%;
+  top: 82%;
+}
+
+.marker-cantho {
+  left: 30%;
+  top: 89%;
+}
+
+.map-school-panel {
+  position: sticky;
+  top: 96px;
+  display: grid;
+  gap: 14px;
+  padding: 20px;
+}
+
+.map-panel-header h2 {
+  margin: 4px 0 0;
+  font-size: 1.35rem;
+}
+
+.map-school-item {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 13px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.map-school-item.is-featured {
+  border-color: rgba(49, 87, 255, 0.24);
+  background: linear-gradient(90deg, rgba(49, 87, 255, 0.08), #ffffff 52%);
+}
+
+.map-school-item > span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--color-primary), #0ea5e9);
+  font-size: 0.76rem;
+  font-weight: 950;
+}
+
+.map-school-item strong,
+.map-school-item small {
+  display: block;
+}
+
+.map-school-item strong {
+  line-height: 1.25;
+}
+
+.map-school-item small {
+  margin-top: 3px;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+}
+
+.map-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  margin-top: 4px;
+}
+
+.map-summary-grid div {
+  padding: 12px 8px;
+  border-radius: 14px;
+  text-align: center;
+  background: var(--color-surface-soft);
+}
+
+.map-summary-grid strong,
+.map-summary-grid span {
+  display: block;
+}
+
+.map-summary-grid strong {
+  color: var(--color-primary);
+  font-size: 1.2rem;
+  line-height: 1.1;
+}
+
+.map-summary-grid span {
+  margin-top: 4px;
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+@media (max-width: 980px) {
+  .vietnam-map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .map-school-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 680px) {
+  .vietnam-map-stage {
+    min-height: 760px;
+  }
+
+  .vietnam-shape {
+    left: 44%;
+    width: 72%;
+  }
+
+  .university-marker {
+    min-width: 132px;
+    padding: 9px 10px;
+  }
+
+  .marker-hanoi,
+  .marker-hue,
+  .marker-quynhon {
+    left: 6%;
+  }
+
+  .marker-thainguyen,
+  .marker-danang,
+  .marker-hcm {
+    left: auto;
+    right: 5%;
+  }
+
+  .marker-cantho {
+    left: 7%;
+  }
+
+  .map-summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
