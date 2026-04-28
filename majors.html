@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ngành học - UniMatch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="brand">UniMatch</a>
+    <nav class="site-nav" id="mainNav">
+      <a href="index.html">Trang chủ</a>
+      <a href="universities.html">Trường ĐH</a>
+      <a href="majors.html" class="is-active">Ngành học</a>
+      <a href="index.html#about">Giới thiệu</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero-section" id="home">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </span>
+          Hơn 40 ngành đại học
+        </div>
+        <h1>Khám phá ngành học<br><span>định hướng tương lai</span></h1>
+        <p>Tìm hiểu về các ngành học, định hướng nghề nghiệp và lựa chọn con đường phù hợp nhất với bạn</p>
+      </div>
+    </section>
+
+    <section class="match-section" id="match">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Tìm kiếm</span>
+          <h2>Tìm ngành học phù hợp</h2>
+        </div>
+        <div class="major-filter-container" style="flex-direction: column;">
+          <div class="major-search-box" style="width: 50%; margin-left: auto; margin-bottom: 20px;">
+            <div class="search-container">
+              <span class="search-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </span>
+              <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm ngành học, nghề nghiệp...">
+              <button class="search-clear" id="searchClear" onclick="clearSearch()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="subject-group-grid" id="filterButtons" style="width: 100%;">
+            <div class="subject-group-btn active" data-category="all" onclick="filterByCategory('all')">
+              <span class="group-letter">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+              </span>
+              <span class="group-fullname">Tất cả</span>
+            </div>
+            <div class="subject-group-btn" data-category="cntt" onclick="filterByCategory('cntt')">
+              <span class="group-letter">IT</span>
+              <span class="group-fullname">CNTT</span>
+            </div>
+            <div class="subject-group-btn" data-category="kinhte" onclick="filterByCategory('kinhte')">
+              <span class="group-letter">$</span>
+              <span class="group-fullname">Kinh tế</span>
+            </div>
+            <div class="subject-group-btn" data-category="yte" onclick="filterByCategory('yte')">
+              <span class="group-letter">+</span>
+              <span class="group-fullname">Y Dược</span>
+            </div>
+            <div class="subject-group-btn" data-category="kysu" onclick="filterByCategory('kysu')">
+              <span class="group-letter">G</span>
+              <span class="group-fullname">Kỹ thuật</span>
+            </div>
+            <div class="subject-group-btn" data-category="sudp" onclick="filterByCategory('sudp')">
+              <span class="group-letter">E</span>
+              <span class="group-fullname">Sư phạm</span>
+            </div>
+            <div class="subject-group-btn" data-category="luat" onclick="filterByCategory('luat')">
+              <span class="group-letter">L</span>
+              <span class="group-fullname">Luật</span>
+            </div>
+            <div class="subject-group-btn" data-category="design" onclick="filterByCategory('design')">
+              <span class="group-letter">D</span>
+              <span class="group-fullname">Design</span>
+            </div>
+            <div class="subject-group-btn" data-category="nnl" onclick="filterByCategory('nnl')">
+              <span class="group-letter">N</span>
+              <span class="group-fullname">Nông-Lâm</span>
+            </div>
+            <div class="subject-group-btn" data-category="nn" onclick="filterByCategory('nn')">
+              <span class="group-letter">W</span>
+              <span class="group-fullname">Ngôn ngữ</span>
+            </div>
+            <div class="subject-group-btn" data-category="kien_truc" onclick="filterByCategory('kien_truc')">
+              <span class="group-letter">K</span>
+              <span class="group-fullname">Kiến trúc</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="action-buttons" style="margin: 2rem 0;">
+        <button class="action-btn primary" onclick="openQuiz()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          Quiz chọn ngành
+        </button>
+        <button class="action-btn secondary" onclick="toggleCompare()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          So sánh ngành
+        </button>
+      </div>
+    </div>
+
+    <section class="universities-section" id="rankingsSection">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Hot</span>
+          <h2>Top ngành nổi bật</h2>
+        </div>
+        
+        <div class="ranking-tabs">
+          <button class="ranking-tab active" data-ranking="hotTrending" onclick="setRanking('hotTrending')">Xu hướng</button>
+          <button class="ranking-tab" data-ranking="highestSalary" onclick="setRanking('highestSalary')">Lương cao</button>
+          <button class="ranking-tab" data-ranking="easiestJob" onclick="setRanking('easiestJob')">Dễ xin việc</button>
+          <button class="ranking-tab" data-ranking="lowestCutoff" onclick="setRanking('lowestCutoff')">Điểm chuẩn thấp</button>
+        </div>
+        
+        <div class="ranking-list" id="rankingList"></div>
+      </div>
+    </section>
+
+    <section class="universities-section" id="majorsSection">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge" id="majorsSectionBadge">Danh sách</span>
+          <h2 id="majorsTitle">Tất cả ngành học</h2>
+        </div>
+        <div class="university-grid" id="majorsGrid"></div>
+      </div>
+    </section>
+
+    <section class="universities-section" id="compareSection" style="display: none;">
+      <div class="container">
+        <div class="compare-section">
+          <div class="compare-header">
+            <div class="section-header" style="margin-bottom: 0;">
+              <span class="section-badge">So sánh</span>
+              <h2>So sánh ngành học</h2>
+            </div>
+            <button class="btn-secondary" onclick="clearCompare()">Xóa so sánh</button>
+          </div>
+          <div class="compare-grid" id="compareGrid"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="brand">UniMatch</span>
+          <p>Nền tảng tư vấn chọn trường đại học thông minh</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Trang chủ</a>
+          <a href="universities.html">Trường ĐH</a>
+          <a href="majors.html">Ngành học</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 UniMatch. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="majorModal">
+    <div class="modal">
+      <div class="modal-header">
+        <button class="modal-close" onclick="closeModal('majorModal')">&times;</button>
+        <span class="modal-category-badge" id="modalCategory"></span>
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <p class="modal-description" id="modalDescription"></p>
+      </div>
+      <div class="modal-body">
+        <div class="info-grid" id="modalStats"></div>
+        
+        <div class="modal-section">
+          <h4>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+            Môn học chính
+          </h4>
+          <div class="subject-tags" id="modalSubjects"></div>
+        </div>
+        
+        <div class="modal-section">
+          <h4>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+            Cơ hội nghề nghiệp
+          </h4>
+          <div class="career-tags" id="modalCareers"></div>
+        </div>
+        
+        <div class="modal-section">
+          <h4>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+            Ngành liên quan
+          </h4>
+          <div class="related-tags" id="modalRelated"></div>
+        </div>
+        
+        <div class="modal-section">
+          <h4>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+            Trường đào tạo
+          </h4>
+          <div id="modalUniversities"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="quizModal">
+    <div class="modal">
+      <div class="modal-header" style="background: linear-gradient(135deg, var(--color-primary), var(--color-accent));">
+        <button class="modal-close" onclick="closeModal('quizModal')">&times;</button>
+        <h2 class="modal-title">Quiz chọn ngành</h2>
+        <p class="modal-description">Trả lời 5 câu hỏi để nhận gợi ý ngành phù hợp</p>
+      </div>
+      <div class="modal-body">
+        <div class="step-indicator" id="quizProgress" style="margin-bottom: 2rem;"></div>
+        <div id="quizContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/majors.js"></script>
+  <script src="js/universities.js"></script>
+  <script>
+    var currentCategory = 'all';
+    var searchQuery = '';
+    var compareList = [];
+    var currentQuizStep = 0;
+    var quizAnswers = [];
+    var currentRanking = 'hotTrending';
+
+    function initApp() {
+      if (typeof majorsData === 'undefined') {
+        document.getElementById('majorsGrid').innerHTML = '<div class="empty-state"><p>Lỗi: Không load được dữ liệu!</p></div>';
+        return;
+      }
+      renderMajors();
+      renderRankings(currentRanking);
+      initSearch();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+
+    function filterByCategory(categoryId) {
+      currentCategory = categoryId;
+      document.querySelectorAll('.subject-group-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.category === categoryId);
+      });
+      if (categoryId === 'all') {
+        document.getElementById('majorsSectionBadge').textContent = 'Danh sách';
+        document.getElementById('majorsTitle').textContent = 'Tất cả ngành học';
+      } else {
+        var cat = getCategoryById(categoryId);
+        document.getElementById('majorsSectionBadge').textContent = cat ? cat.icon : 'Danh mục';
+        document.getElementById('majorsTitle').textContent = cat ? cat.name : 'Ngành học';
+      }
+      renderMajors();
+    }
+
+    function renderMajors() {
+      var grid = document.getElementById('majorsGrid');
+      var filtered = majorsData.majors.slice();
+      
+      if (currentCategory !== 'all') {
+        filtered = filtered.filter(function(m) { return m.category === currentCategory; });
+      }
+      
+      if (searchQuery) {
+        var query = searchQuery.toLowerCase();
+        filtered = filtered.filter(function(m) {
+          return m.name.toLowerCase().indexOf(query) !== -1 ||
+                 m.description.toLowerCase().indexOf(query) !== -1 ||
+                 m.careers.some(function(c) { return c.toLowerCase().indexOf(query) !== -1; });
+        });
+      }
+      
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;"><p>Không tìm thấy ngành học nào</p></div>';
+        return;
+      }
+      
+      var html = '';
+      filtered.forEach(function(major) {
+        var cat = getCategoryById(major.category);
+        var salaryLevel = getSalaryLevel(major.avgSalary);
+        var employmentLevel = parseInt(major.employmentRate) >= 90 ? 'high' : parseInt(major.employmentRate) >= 80 ? 'medium' : 'low';
+        var catColor = cat ? cat.color : 'var(--color-primary)';
+        
+        html += '<div class="major-card" onclick="openMajorDetail(\'' + major.id + '\')">' +
+          '<div class="major-card-header" style="background: linear-gradient(135deg, ' + catColor + ', ' + catColor + ');">' +
+          '<span class="major-card-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg> ' + (cat ? cat.name : major.category) + '</span>' +
+          '<h3 class="major-card-title">' + major.name + '</h3>' +
+          '<p class="major-card-subtitle">' + major.description.substring(0, 80) + '...</p></div>' +
+          '<div class="major-card-body">' +
+          '<div class="major-stats">' +
+          '<div class="major-stat-item"><span class="major-stat-value ' + salaryLevel + '">' + major.avgSalary.split('/')[0] + '</span><span class="major-stat-label">Lương</span></div>' +
+          '<div class="major-stat-item"><span class="major-stat-value ' + employmentLevel + '">' + major.employmentRate + '</span><span class="major-stat-label">Có việc</span></div>' +
+          '<div class="major-stat-item"><span class="major-stat-value">' + major.difficulty + '/10</span><span class="major-stat-label">Độ khó</span>' +
+          '<div class="difficulty-bar"><div class="difficulty-fill" style="width:' + (major.difficulty * 10) + '%"></div></div></div></div>' +
+          '<div class="major-careers">' +
+          major.careers.slice(0, 4).map(function(c) { return '<span class="major-career-tag">' + c + '</span>'; }).join('') +
+          '</div></div></div>';
+      });
+      grid.innerHTML = html;
+    }
+
+    function getSalaryLevel(salaryStr) {
+      var match = salaryStr.match(/\d+/);
+      if (!match) return '';
+      var salary = parseInt(match[0]);
+      if (salary >= 18) return 'high';
+      if (salary >= 12) return 'medium';
+      return 'low';
+    }
+
+    function openMajorDetail(majorId) {
+      var major = getMajorById(majorId);
+      if (!major) return;
+      
+      var cat = getCategoryById(major.category);
+      var catColor = cat ? cat.color : 'var(--color-primary)';
+      
+      document.getElementById('modalCategory').innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg> ' + (cat ? cat.name : major.category);
+      document.getElementById('modalTitle').textContent = major.name;
+      document.getElementById('modalDescription').textContent = major.description;
+      
+      var salaryLevel = getSalaryLevel(major.avgSalary);
+      var salaryColor = salaryLevel === 'high' ? 'var(--color-success)' : salaryLevel === 'medium' ? '#f59e0b' : '#ef4444';
+      document.getElementById('modalStats').innerHTML = 
+        '<div class="info-item"><span class="info-value" style="color:' + salaryColor + '">' + major.avgSalary + '</span><span class="info-label">Lương khởi điểm</span></div>' +
+        '<div class="info-item"><span class="info-value">' + major.employmentRate + '</span><span class="info-label">Có việc làm</span></div>' +
+        '<div class="info-item"><span class="info-value">' + major.difficulty + '/10</span><span class="info-label">Độ khó</span></div>';
+      
+      document.getElementById('modalSubjects').innerHTML = major.subjects.map(function(s) {
+        return '<span class="subject-tag">' + s + '</span>';
+      }).join('');
+      
+      document.getElementById('modalCareers').innerHTML = major.careers.map(function(c) {
+        return '<span class="career-tag">' + c + '</span>';
+      }).join('');
+      
+      var related = getRelatedMajors(majorId);
+      document.getElementById('modalRelated').innerHTML = related.map(function(r) {
+        return '<button onclick="openMajorDetail(\'' + r.id + '\');" class="related-tag">' + r.name + '</button>';
+      }).join('');
+      
+      var relevantUnis = getUniversitiesWithMajor(major.category);
+      document.getElementById('modalUniversities').innerHTML = relevantUnis.slice(0, 5).map(function(u) {
+        return '<a href="' + u.website + '" target="_blank" class="university-link">' +
+          '<div class="university-link-icon">' + u.shortName.substring(0, 3) + '</div>' +
+          '<div class="university-link-info">' +
+          '<div class="university-link-name">' + u.name + '</div>' +
+          '<div class="university-link-meta">' + u.shortName + ' - ' + u.location + '</div></div></a>';
+      }).join('') || '<p style="color: var(--color-muted);">Đang cập nhật...</p>';
+      
+      document.getElementById('majorModal').style.setProperty('--header-bg', catColor);
+      document.querySelector('#majorModal .modal-header').style.background = 'linear-gradient(135deg, ' + catColor + ', ' + catColor + ')';
+      
+      document.getElementById('majorModal').classList.add('active');
+      
+      if (compareList.length < 3 && compareList.indexOf(majorId) === -1) {
+        compareList.push(majorId);
+      }
+    }
+
+    function getUniversitiesWithMajor(category) {
+      var allUnis = [];
+      if (typeof universitiesData !== 'undefined') {
+        allUnis = universitiesData.public.concat(universitiesData.private || []);
+      }
+      return allUnis.filter(function(u) { return u.categories && u.categories.indexOf(category) !== -1; });
+    }
+
+    function initSearch() {
+      var input = document.getElementById('searchInput');
+      var clearBtn = document.getElementById('searchClear');
+      if (input) {
+        input.addEventListener('input', function(e) {
+          searchQuery = e.target.value;
+          if (clearBtn) {
+            clearBtn.classList.toggle('visible', searchQuery.length > 0);
+          }
+          renderMajors();
+        });
+      }
+    }
+    
+    function clearSearch() {
+      var input = document.getElementById('searchInput');
+      var clearBtn = document.getElementById('searchClear');
+      if (input) {
+        input.value = '';
+        searchQuery = '';
+        if (clearBtn) {
+          clearBtn.classList.remove('visible');
+        }
+        renderMajors();
+      }
+    }
+
+    function setRanking(type) {
+      currentRanking = type;
+      document.querySelectorAll('.ranking-tab').forEach(function(tab) {
+        tab.classList.toggle('active', tab.dataset.ranking === type);
+      });
+      renderRankings(type);
+    }
+
+    function renderRankings(type) {
+      var list = document.getElementById('rankingList');
+      var topMajors = getTopMajors(type, 4);
+      var medals = ['gold', 'silver', 'bronze'];
+      
+      if (topMajors.length === 0) {
+        list.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;"><p>Không có dữ liệu</p></div>';
+        return;
+      }
+      
+      var html = '';
+      topMajors.forEach(function(major, i) {
+        var cat = getCategoryById(major.category);
+        var medal = medals[i] || '';
+        html += '<div class="ranking-item" onclick="openMajorDetail(\'' + major.id + '\')">' +
+          '<div class="ranking-number ' + medal + '">' + (i + 1) + '</div>' +
+          '<div class="ranking-info">' +
+          '<h4>' + major.name + '</h4>' +
+          '<span>' + major.avgSalary.split('/')[0] + ' | ' + major.employmentRate + ' có việc</span></div></div>';
+      });
+      list.innerHTML = html;
+    }
+
+    function openQuiz() {
+      currentQuizStep = 0;
+      quizAnswers = [];
+      document.getElementById('quizModal').classList.add('active');
+      renderQuiz();
+    }
+
+    function renderQuiz() {
+      var progress = document.getElementById('quizProgress');
+      var content = document.getElementById('quizContent');
+      var totalQuestions = majorsData.quizQuestions.length;
+      
+      var progressHtml = '';
+      for (var i = 0; i < totalQuestions; i++) {
+        var cls = 'step-item';
+        if (i === currentQuizStep) cls += ' active';
+        else if (quizAnswers[i] !== undefined) cls += ' completed';
+        progressHtml += '<div class="' + cls + '" style="flex: 1;"><div class="step-number">' + (i + 1) + '</div></div>';
+      }
+      progress.innerHTML = progressHtml;
+      
+      if (currentQuizStep >= totalQuestions) {
+        renderQuizResults();
+        return;
+      }
+      
+      var question = majorsData.quizQuestions[currentQuizStep];
+      var optionsHtml = question.options.map(function(opt, i) {
+        var cls = 'quiz-option';
+        if (quizAnswers[currentQuizStep] === i) cls += ' selected';
+        return '<div class="' + cls + '" onclick="selectAnswer(' + i + ')">' + opt.text + '</div>';
+      }).join('');
+      
+      content.innerHTML = '<div class="quiz-question">' + question.question + '</div>' +
+        '<div class="quiz-options">' + optionsHtml + '</div>' +
+        '<div class="quiz-nav">' +
+        '<button class="btn-secondary" onclick="prevQuestion()" ' + (currentQuizStep === 0 ? 'disabled' : '') + '>Quay lại</button>' +
+        '<button class="btn-primary" onclick="nextQuestion()" ' + (quizAnswers[currentQuizStep] === undefined ? 'disabled' : '') + '>' +
+        (currentQuizStep === totalQuestions - 1 ? 'Xem kết quả' : 'Tiếp theo') + '</button></div>';
+    }
+
+    function selectAnswer(index) {
+      quizAnswers[currentQuizStep] = index;
+      renderQuiz();
+    }
+
+    function nextQuestion() {
+      if (quizAnswers[currentQuizStep] !== undefined) {
+        currentQuizStep++;
+        renderQuiz();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuizStep > 0) {
+        currentQuizStep--;
+        renderQuiz();
+      }
+    }
+
+    function renderQuizResults() {
+      var recommendations = getRecommendedMajors(quizAnswers);
+      var content = document.getElementById('quizContent');
+      var cardsHtml = recommendations.map(function(m) {
+        return '<div class="result-card" onclick="openMajorDetail(\'' + m.id + '\'); closeModal(\'quizModal\');">' +
+          '<h4>' + m.name + '</h4><span>' + m.avgSalary.split('/')[0] + '</span></div>';
+      }).join('');
+      
+      content.innerHTML = '<div class="quiz-results"><h3>Kết quả gợi ý</h3>' +
+        '<p class="subtitle">Dựa trên câu trả lời của bạn, đây là những ngành phù hợp nhất:</p>' +
+        '<div class="result-majors">' + cardsHtml + '</div>' +
+        '<button class="btn-primary" onclick="closeModal(\'quizModal\');">Đóng</button></div>';
+    }
+
+    function toggleCompare() {
+      var section = document.getElementById('compareSection');
+      if (section.style.display === 'none') {
+        section.style.display = 'block';
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+      renderCompare();
+    }
+
+    function clearCompare() {
+      compareList = [];
+      renderCompare();
+    }
+
+    function renderCompare() {
+      var grid = document.getElementById('compareGrid');
+      if (compareList.length === 0) {
+        grid.innerHTML = '<p style="text-align: center; color: var(--color-muted); padding: 2rem;">Nhấn vào ngành học để thêm vào so sánh (tối đa 3)</p>';
+        return;
+      }
+      var majors = compareList.map(function(id) { return getMajorById(id); }).filter(Boolean);
+      grid.style.setProperty('--compare-count', majors.length);
+      
+      grid.innerHTML = 
+        '<div class="compare-row header-row">' +
+        '<div class="compare-label">Ngành</div>' + majors.map(function(m) { return '<div class="compare-value" style="font-weight:700;color:var(--color-primary);">' + m.name + '</div>'; }).join('') + '</div>' +
+        '<div class="compare-row"><div class="compare-label">Lương khởi điểm</div>' + majors.map(function(m) { return '<div class="compare-value">' + m.avgSalary + '</div>'; }).join('') + '</div>' +
+        '<div class="compare-row"><div class="compare-label">Tỷ lệ có việc</div>' + majors.map(function(m) { return '<div class="compare-value">' + m.employmentRate + '</div>'; }).join('') + '</div>' +
+        '<div class="compare-row"><div class="compare-label">Độ khó đào tạo</div>' + majors.map(function(m) { return '<div class="compare-value">' + m.difficulty + '/10</div>'; }).join('') + '</div>' +
+        '<div class="compare-row"><div class="compare-label">Cơ hội nghề nghiệp</div>' + majors.map(function(m) { return '<div class="compare-value">' + m.careers.slice(0, 2).join(', ') + '...</div>'; }).join('') + '</div>';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+          overlay.classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

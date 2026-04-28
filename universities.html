@@ -16,7 +16,7 @@
     <nav class="site-nav" id="mainNav">
       <a href="index.html">Trang chủ</a>
       <a href="universities.html" class="is-active">Trường ĐH</a>
-      <a href="index.html#majors">Ngành học</a>
+      <a href="majors.html">Ngành học</a>
       <a href="index.html#about">Giới thiệu</a>
     </nav>
     <div class="header-actions">
@@ -47,16 +47,19 @@
         <!-- Search Bar -->
         <div class="search-section" data-animate="fadeInUp" data-delay="100">
           <div class="search-container">
-            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"/>
               <path d="m21 21-4.3-4.3"/>
             </svg>
-            <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm trường đại học...">
+            <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm theo tên trường, khu vực...">
             <button class="search-clear" id="searchClear" style="display: none;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M18 6 6 18M6 6l12 12"/>
               </svg>
             </button>
+          </div>
+          <div class="search-stats" id="searchStats">
+            <span id="totalResults">0</span> trường được tìm thấy
           </div>
         </div>
       </div>
