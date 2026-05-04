@@ -285,6 +285,235 @@ function showSuccessAnimation() {
   }, 2000);
 }
 
+// ========== STAGGER SCROLL ANIMATIONS ==========
+function initStaggerAnimations() {
+  const staggerContainers = document.querySelectorAll('[data-stagger]');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const container = entry.target;
+        const items = container.querySelectorAll('[data-stagger-item]');
+        const baseDelay = parseInt(container.dataset.stagger) || 100;
+        
+        items.forEach((item, index) => {
+          setTimeout(() => {
+            item.classList.add('stagger-animated');
+          }, index * baseDelay);
+        });
+        
+        observer.unobserve(container);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  });
+  
+  staggerContainers.forEach(container => {
+    observer.observe(container);
+  });
+}
+
+// ========== HOVER 3D EFFECT ==========
+function init3DHover() {
+  const cards3D = document.querySelectorAll('.card-3d');
+  
+  cards3D.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (y - centerY) / 20;
+      const rotateY = (centerX - x) / 20;
+      
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+    });
+  });
+}
+
+// ========== PARALLAX EFFECT ==========
+function initParallax() {
+  const parallaxElements = document.querySelectorAll('[data-parallax]');
+  
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    
+    parallaxElements.forEach(el => {
+      const speed = parseFloat(el.dataset.parallax) || 0.5;
+      const offset = scrollY * speed;
+      el.style.transform = `translateY(${offset}px)`;
+    });
+  });
+}
+
+// ========== NUMBER COUNTING ANIMATION ==========
+function animateNumber(element, target, duration = 2000) {
+  const start = 0;
+  const startTime = performance.now();
+  
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // Easing function
+    const easeOutExpo = 1 - Math.pow(2, -10 * progress);
+    const current = Math.floor(easeOutExpo * target);
+    
+    element.textContent = current.toLocaleString();
+    
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      element.textContent = target.toLocaleString();
+    }
+  }
+  
+  requestAnimationFrame(update);
+}
+
+function initNumberAnimations() {
+  const counters = document.querySelectorAll('[data-count]');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.count);
+        const duration = parseInt(el.dataset.duration) || 2000;
+        
+        animateNumber(el, target, duration);
+        observer.unobserve(el);
+      }
+    });
+  }, {
+    threshold: 0.5
+  });
+  
+  counters.forEach(counter => {
+    observer.observe(counter);
+  });
+}
+
+// ========== RIPPLE EFFECT ==========
+function initRippleEffect() {
+  const buttons = document.querySelectorAll('.btn-ripple');
+  
+  buttons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple-effect';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+}
+
+// ========== FLOATING ANIMATION ==========
+function initFloatingAnimation() {
+  const floatingElements = document.querySelectorAll('.floating');
+  
+  floatingElements.forEach((el, index) => {
+    el.style.animationDelay = `${index * 0.5}s`;
+  });
+}
+
+// ========== PROGRESS BAR ANIMATION ==========
+function initProgressBars() {
+  const progressBars = document.querySelectorAll('[data-progress]');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bar = entry.target;
+        const progress = bar.dataset.progress;
+        
+        setTimeout(() => {
+          bar.style.width = progress + '%';
+        }, 100);
+        
+        observer.unobserve(bar);
+      }
+    });
+  }, {
+    threshold: 0.5
+  });
+  
+  progressBars.forEach(bar => {
+    observer.observe(bar);
+  });
+}
+
+// ========== TYPEWRITER EFFECT ==========
+function typeWriter(element, text, speed = 50) {
+  let i = 0;
+  element.textContent = '';
+  
+  function type() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+  
+  type();
+}
+
+function initTypewriter() {
+  const typewriters = document.querySelectorAll('[data-typewriter]');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const text = el.dataset.typewriter;
+        const speed = parseInt(el.dataset.speed) || 50;
+        
+        typeWriter(el, text, speed);
+        observer.unobserve(el);
+      }
+    });
+  }, {
+    threshold: 0.5
+  });
+  
+  typewriters.forEach(el => {
+    observer.observe(el);
+  });
+}
+
+// ========== MORPHING SHAPE ANIMATION ==========
+function initMorphingShapes() {
+  const shapes = document.querySelectorAll('.morphing-shape');
+  
+  shapes.forEach(shape => {
+    const colors = JSON.parse(shape.dataset.colors || '["#0077b6", "#00b4d8"]');
+    let colorIndex = 0;
+    
+    setInterval(() => {
+      colorIndex = (colorIndex + 1) % colors.length;
+      shape.style.background = colors[colorIndex];
+    }, 3000);
+  });
+}
+
 // ========== SCROLL ANIMATIONS ==========
 function initScrollAnimations() {
   // Get all elements with data-animate attribute
@@ -384,6 +613,172 @@ function initNavigation() {
     });
   }
 }
+
+// ========== STAGGER ANIMATION STYLES ==========
+const staggerStyle = document.createElement("style");
+staggerStyle.textContent = `
+  /* Stagger Animation */
+  [data-stagger-item] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  [data-stagger-item].stagger-animated {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* 3D Card Effect */
+  .card-3d {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+  }
+  
+  /* Parallax */
+  [data-parallax] {
+    will-change: transform;
+  }
+  
+  /* Progress Bar Animation */
+  [data-progress] {
+    width: 0;
+    transition: width 1s ease-out;
+  }
+  
+  /* Ripple Effect */
+  .ripple-effect {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%) scale(0);
+    animation: ripple 0.6s ease-out;
+    pointer-events: none;
+  }
+  
+  @keyframes ripple {
+    to {
+      transform: translate(-50%, -50%) scale(4);
+      opacity: 0;
+    }
+  }
+  
+  /* Floating Animation */
+  .floating {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  /* Morphing Shape */
+  .morphing-shape {
+    transition: background 1s ease;
+  }
+  
+  /* Glitch Effect for hover */
+  .glitch:hover {
+    animation: glitch 0.3s ease infinite;
+  }
+  
+  @keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+  }
+  
+  /* Glow Pulse */
+  .glow-pulse {
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(0, 119, 182, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(0, 119, 182, 0.6); }
+  }
+  
+  /* Shimmer Loading */
+  .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  
+  /* Spin Animation */
+  .spin-slow {
+    animation: spinSlow 8s linear infinite;
+  }
+  
+  @keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Bounce In */
+  .bounce-in {
+    animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  @keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  /* Fade Scale */
+  .fade-scale {
+    transition: all 0.4s ease;
+  }
+  
+  .fade-scale:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  
+  /* Slide Up on Scroll */
+  .slide-up {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.6s ease;
+  }
+  
+  .slide-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Cursor Trail */
+  .cursor-trail {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  body:hover .cursor-trail {
+    opacity: 0.5;
+  }
+`;
+
+// Add stagger styles to head
+document.head.appendChild(staggerStyle);
 
 // Add dynamic styles
 const style = document.createElement("style");
@@ -487,9 +882,15 @@ document.head.appendChild(style);
 document.addEventListener("DOMContentLoaded", () => {
   initMatchForm();
   initScrollAnimations();
+  initStaggerAnimations();
   initSmoothScroll();
   initNavigation();
   initCounterAnimation();
+  initNumberAnimations();
+  initProgressBars();
+  initTypewriter();
+  initFloatingAnimation();
+  initRippleEffect();
 });
 
 // Re-initialize on page load
@@ -497,8 +898,14 @@ if (document.readyState === "complete" || document.readyState === "interactive")
   setTimeout(() => {
     initMatchForm();
     initScrollAnimations();
+    initStaggerAnimations();
     initSmoothScroll();
     initNavigation();
     initCounterAnimation();
+    initNumberAnimations();
+    initProgressBars();
+    initTypewriter();
+    initFloatingAnimation();
+    initRippleEffect();
   }, 100);
 }

@@ -17,6 +17,13 @@
       <a href="majors.html" class="is-active">Ngành học</a>
       <a href="index.html#about">Giới thiệu</a>
     </nav>
+    <div class="header-actions">
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </header>
 
   <main>
@@ -133,6 +140,7 @@
             <line x1="6" y1="20" x2="6" y2="14"></line>
           </svg>
           So sánh ngành
+          <span class="compare-badge" id="compareBadge" style="display: none;">0/3</span>
         </button>
       </div>
     </div>
@@ -172,11 +180,43 @@
             <div class="section-header" style="margin-bottom: 0;">
               <span class="section-badge">So sánh</span>
               <h2>So sánh ngành học</h2>
+              <p class="compare-hint" id="compareHint">Chọn ngành để so sánh (tối đa 3)</p>
             </div>
-            <button class="btn-secondary" onclick="clearCompare()">Xóa so sánh</button>
+            <div class="compare-actions">
+              <button class="btn-secondary" id="addMoreBtn" onclick="scrollToMajors()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Thêm ngành khác
+              </button>
+              <button class="btn-secondary" onclick="clearCompare()">Xóa so sánh</button>
+            </div>
           </div>
           <div class="compare-grid" id="compareGrid"></div>
         </div>
+      </div>
+    </section>
+
+    <section class="trends-section" id="trendsSection">
+      <div class="container">
+        <div class="trends-header">
+          <div class="section-header" style="margin-bottom: 1rem;">
+            <h2>Dự báo xu hướng ngành</h2>
+          </div>
+          <div class="year-filter-tabs">
+            <button class="year-tab-btn active" data-year="2026" onclick="filterByYear('2026')">2026</button>
+            <button class="year-tab-btn" data-year="2025" onclick="filterByYear('2025')">2025</button>
+            <button class="year-tab-btn" data-year="2024" onclick="filterByYear('2024')">2024</button>
+          </div>
+          <div class="trends-filters">
+            <button class="trend-filter-btn active" data-filter="all" onclick="filterTrends('all')">Tất cả</button>
+            <button class="trend-filter-btn" data-filter="hot" onclick="filterTrends('hot')">Hot</button>
+            <button class="trend-filter-btn" data-filter="rising" onclick="filterTrends('rising')">Tăng trưởng</button>
+            <button class="trend-filter-btn" data-filter="stable" onclick="filterTrends('stable')">Ổn định</button>
+          </div>
+        </div>
+        <div class="trends-grid" id="trendsGrid"></div>
       </div>
     </section>
   </main>
@@ -210,6 +250,17 @@
       </div>
       <div class="modal-body">
         <div class="info-grid" id="modalStats"></div>
+        
+        <div class="modal-compare-action" id="modalCompareAction">
+          <button class="btn-primary modal-compare-btn" id="modalCompareBtn" onclick="toggleCompareFromModal()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            <span id="modalCompareText">Thêm vào so sánh</span>
+          </button>
+        </div>
         
         <div class="modal-section">
           <h4>
@@ -289,7 +340,177 @@
       }
       renderMajors();
       renderRankings(currentRanking);
+      renderTrends('all');
+      updateCompareBadge();
       initSearch();
+    }
+
+    // Trend Data
+    var trendsData = [
+      {
+        id: 'cntt-ai',
+        title: 'Trí tuệ nhân tạo & Machine Learning',
+        category: 'cntt',
+        trend: 'hot',
+        trendValue: '+35%',
+        change: 'up',
+        salaryNow: '25-40 triệu',
+        demandNow: 'Rất cao',
+        growth5y: '+150%',
+        description: 'AI đang thay đổi mọi ngành nghề. Nhu cầu nhân lực tăng vượt bậc với mức lương hấp dẫn top đầu ngành IT.',
+        forecast: 'Dự báo thiếu hụt 230.000 nhân sự AI trên toàn cầu vào 2027. Đây là ngành có mức tăng trưởng nóng nhất hiện nay.',
+        chart: [40, 55, 70, 85, 100]
+      },
+      {
+        id: 'cntt-cyber',
+        title: 'An toàn thông tin - Cybersecurity',
+        category: 'cntt',
+        trend: 'rising',
+        trendValue: '+28%',
+        change: 'up',
+        salaryNow: '20-35 triệu',
+        demandNow: 'Cao',
+        growth5y: '+120%',
+        description: 'Cùng với số hóa, an ninh mạng trở thành ưu tiên hàng đầu của doanh nghiệp và chính phủ.',
+        forecast: 'Các vụ tấn công mạng tăng 300% trong 2 năm qua. Nhu cầu nhân sự bảo mật tăng mạnh.',
+        chart: [45, 55, 65, 78, 90]
+      },
+      {
+        id: 'yte-data',
+        title: 'Y tế dữ liệu & Health Tech',
+        category: 'yte',
+        trend: 'rising',
+        trendValue: '+22%',
+        change: 'up',
+        salaryNow: '18-30 triệu',
+        demandNow: 'Khá cao',
+        growth5y: '+95%',
+        description: 'Sức khỏe số đang bùng nổ. Từ telemedicine đến AI chẩn đoán bệnh - ngành y tế đang thay đổi nhanh chóng.',
+        forecast: 'Thị trường Health Tech Việt Nam dự kiến đạt 9 tỷ USD vào 2025, mở ra nhiều cơ hội việc làm.',
+        chart: [35, 45, 58, 72, 88]
+      },
+      {
+        id: 'kinhte-digital',
+        title: 'Kinh tế số & Digital Marketing',
+        category: 'kinhte',
+        trend: 'hot',
+        trendValue: '+30%',
+        change: 'up',
+        salaryNow: '15-28 triệu',
+        demandNow: 'Rất cao',
+        growth5y: '+110%',
+        description: 'Thương mại điện tử và marketing số là động lực chính của nền kinh tế. Doanh nghiệp săn đón nhân sự digital.',
+        forecast: '70% doanh nghiệp Việt Nam đang tăng cường đầu tư vào chuyển đổi số. Nhu cầu nhân sự digital tăng mạnh.',
+        chart: [50, 62, 75, 88, 100]
+      },
+      {
+        id: 'kien_truc_xanh',
+        title: 'Kiến trúc xanh & Bền vững',
+        category: 'kien_truc',
+        trend: 'rising',
+        trendValue: '+25%',
+        change: 'up',
+        salaryNow: '15-25 triệu',
+        demandNow: 'Cao',
+        growth5y: '+85%',
+        description: 'Xu hướng kiến trúc xanh, net-zero đang thay thế kiến trúc truyền thống. Chính sách Net Zero 2050 thúc đẩy phát triển.',
+        forecast: 'Chính phủ yêu cầu 100% công trình công phải đạt tiêu chuẩn xanh vào 2030. Nhu cầu nhân sự tăng mạnh.',
+        chart: [30, 42, 55, 70, 85]
+      },
+      {
+        id: 'cntt-data',
+        title: 'Khoa học dữ liệu - Data Science',
+        category: 'cntt',
+        trend: 'hot',
+        trendValue: '+32%',
+        change: 'up',
+        salaryNow: '22-38 triệu',
+        demandNow: 'Rất cao',
+        growth5y: '+140%',
+        description: 'Big Data là vàng của thế kỷ 21. Doanh nghiệp nào cũng cần người biết khai thác dữ liệu để đưa ra quyết định.',
+        forecast: 'Việt Nam thiếu hụt 70% nhân sự Data Science. Đây là một trong những ngành có mức lương tăng nhanh nhất.',
+        chart: [38, 52, 68, 82, 100]
+      },
+      {
+        id: 'sudp-so',
+        title: 'Sư phạm STEM',
+        category: 'sudp',
+        trend: 'stable',
+        trendValue: '+5%',
+        change: 'up',
+        salaryNow: '10-18 triệu',
+        demandNow: 'Ổn định',
+        growth5y: '+20%',
+        description: 'Giáo dục STEM đang được đẩy mạnh trong chương trình GDPT 2018. Giáo viên STEM có nhu cầu cao.',
+        forecast: 'Bộ GD&ĐT cam kết tăng 30% lương giáo viên giai đoạn 2024-2026. Ngành sư phạm ổn định lâu dài.',
+        chart: [55, 57, 60, 63, 68]
+      },
+      {
+        id: 'yte-dược',
+        title: 'Dược liệu & Dược phẩm sinh học',
+        category: 'yte',
+        trend: 'rising',
+        trendValue: '+18%',
+        change: 'up',
+        salaryNow: '15-28 triệu',
+        demandNow: 'Khá cao',
+        growth5y: '+75%',
+        description: 'Đại dịch COVID-19 cho thấy tầm quan trọng của ngành dược. Dược phẩm sinh học là xu hướng tương lai.',
+        forecast: 'Thị trường dược phẩm Việt Nam tăng trưởng 8-10%/năm. Nhu cầu nhân sự chất lượng cao tiếp tục tăng.',
+        chart: [42, 50, 58, 68, 78]
+      }
+    ];
+
+    function renderTrends(filter) {
+      var grid = document.getElementById('trendsGrid');
+      var filtered = filter === 'all' ? trendsData : trendsData.filter(function(t) {
+        if (filter === 'hot') return t.trend === 'hot' || t.trend === 'rising';
+        return t.trend === filter;
+      });
+      
+      grid.innerHTML = filtered.map(function(t) {
+        var trendClass = t.trend === 'hot' ? 'hot' : t.trend === 'rising' ? 'rising' : t.trend === 'stable' ? 'stable' : 'declining';
+        var arrowIcon = t.change === 'up' 
+          ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>' 
+          : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+        
+        var chartBars = t.chart.map(function(h, i) {
+          return '<div class="trend-bar' + (i === t.chart.length - 1 ? ' current' : '') + '" style="height:' + h + '%"></div>';
+        }).join('');
+        
+        return '<div class="trend-card" data-trend="' + t.trend + '">' +
+          '<div class="trend-card-header">' +
+            '<span class="trend-category ' + trendClass + '">' + (t.trend === 'hot' ? 'HOT' : t.trend === 'rising' ? 'TĂNG TRƯỞNG' : t.trend === 'stable' ? 'ỔN ĐỊNH' : 'GIẢM') + '</span>' +
+            '<span class="trend-arrow ' + t.change + '">' + arrowIcon + ' ' + t.trendValue + ' /năm</span>' +
+          '</div>' +
+          '<h3 class="trend-card-title">' + t.title + '</h3>' +
+          '<div class="trend-card-stats">' +
+            '<div class="trend-stat"><span class="trend-stat-label">Lương khởi điểm</span><span class="trend-stat-value">' + t.salaryNow + '</span></div>' +
+            '<div class="trend-stat"><span class="trend-stat-label">Nhu cầu</span><span class="trend-stat-value">' + t.demandNow + '</span></div>' +
+            '<div class="trend-stat"><span class="trend-stat-label">Tăng trưởng 5 năm</span><span class="trend-stat-value" style="color: var(--color-success);">' + t.growth5y + '</span></div>' +
+          '</div>' +
+          '<p class="trend-card-description">' + t.description + '</p>' +
+          '<div class="trend-chart-mini">' + chartBars + '</div>' +
+          '<div class="trend-forecast">' +
+            '<div class="trend-forecast-title">Dự báo 2026-2030</div>' +
+            '<p class="trend-forecast-text">' + t.forecast + '</p>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function filterTrends(filter) {
+      document.querySelectorAll('.trend-filter-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.filter === filter);
+      });
+      renderTrends(filter);
+    }
+
+    function filterByYear(year) {
+      document.querySelectorAll('.year-tab-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.year === year);
+      });
+      // Could filter trends by year here
     }
 
     if (document.readyState === 'loading') {
@@ -342,10 +563,14 @@
         var salaryLevel = getSalaryLevel(major.avgSalary);
         var employmentLevel = parseInt(major.employmentRate) >= 90 ? 'high' : parseInt(major.employmentRate) >= 80 ? 'medium' : 'low';
         var catColor = cat ? cat.color : 'var(--color-primary)';
+        var isInCompare = compareList.indexOf(major.id) !== -1;
+        var compareBtnClass = isInCompare ? 'major-compare-btn added' : 'major-compare-btn';
+        var compareBtnText = isInCompare ? 'Đã thêm' : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> So sánh';
         
         html += '<div class="major-card" onclick="openMajorDetail(\'' + major.id + '\')">' +
           '<div class="major-card-header" style="background: linear-gradient(135deg, ' + catColor + ', ' + catColor + ');">' +
           '<span class="major-card-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg> ' + (cat ? cat.name : major.category) + '</span>' +
+          '<button class="' + compareBtnClass + '" onclick="event.stopPropagation(); toggleCompareFromCard(\'' + major.id + '\', this);">' + compareBtnText + '</button>' +
           '<h3 class="major-card-title">' + major.name + '</h3>' +
           '<p class="major-card-subtitle">' + major.description.substring(0, 80) + '...</p></div>' +
           '<div class="major-card-body">' +
@@ -359,6 +584,33 @@
           '</div></div></div>';
       });
       grid.innerHTML = html;
+    }
+
+    function toggleCompareFromCard(majorId, btn) {
+      var index = compareList.indexOf(majorId);
+      if (index > -1) {
+        compareList.splice(index, 1);
+        btn.classList.remove('added');
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> So sánh';
+      } else {
+        if (compareList.length >= 3) {
+          alert('Bạn chỉ có thể so sánh tối đa 3 ngành!');
+          return;
+        }
+        compareList.push(majorId);
+        btn.classList.add('added');
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Đã thêm';
+      }
+      // Update compare badge
+      updateCompareBadge();
+    }
+
+    function updateCompareBadge() {
+      var badge = document.getElementById('compareBadge');
+      if (badge) {
+        badge.textContent = compareList.length > 0 ? compareList.length + '/3' : '';
+        badge.style.display = compareList.length > 0 ? 'flex' : 'none';
+      }
     }
 
     function getSalaryLevel(salaryStr) {
@@ -413,11 +665,58 @@
       document.getElementById('majorModal').style.setProperty('--header-bg', catColor);
       document.querySelector('#majorModal .modal-header').style.background = 'linear-gradient(135deg, ' + catColor + ', ' + catColor + ')';
       
-      document.getElementById('majorModal').classList.add('active');
+      // Update compare button in modal
+      updateModalCompareBtn(majorId);
       
-      if (compareList.length < 3 && compareList.indexOf(majorId) === -1) {
+      document.getElementById('majorModal').classList.add('active');
+    }
+
+    function updateModalCompareBtn(majorId) {
+      var btn = document.getElementById('modalCompareBtn');
+      var text = document.getElementById('modalCompareText');
+      var isInCompare = compareList.indexOf(majorId) !== -1;
+      
+      if (isInCompare) {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-secondary');
+        text.textContent = 'Đã thêm vào so sánh';
+      } else if (compareList.length >= 3) {
+        btn.classList.add('btn-secondary');
+        btn.classList.add('disabled');
+        text.textContent = 'Đã đủ 3 ngành';
+      } else {
+        btn.classList.remove('btn-secondary', 'disabled');
+        btn.classList.add('btn-primary');
+        text.textContent = 'Thêm vào so sánh';
+      }
+    }
+
+    function toggleCompareFromModal() {
+      var modal = document.getElementById('majorModal');
+      var title = document.getElementById('modalTitle').textContent;
+      var majorId = null;
+      
+      // Find major by name
+      majorsData.majors.forEach(function(m) {
+        if (m.name === title) majorId = m.id;
+      });
+      
+      if (!majorId) return;
+      
+      var index = compareList.indexOf(majorId);
+      if (index > -1) {
+        compareList.splice(index, 1);
+      } else {
+        if (compareList.length >= 3) {
+          alert('Bạn chỉ có thể so sánh tối đa 3 ngành!');
+          return;
+        }
         compareList.push(majorId);
       }
+      
+      updateModalCompareBtn(majorId);
+      updateCompareBadge();
+      renderMajors(); // Update cards
     }
 
     function getUniversitiesWithMajor(category) {
@@ -548,16 +847,74 @@
 
     function renderQuizResults() {
       var recommendations = getRecommendedMajors(quizAnswers);
+      var traits = getPersonalityTraits(quizAnswers);
       var content = document.getElementById('quizContent');
-      var cardsHtml = recommendations.map(function(m) {
-        return '<div class="result-card" onclick="openMajorDetail(\'' + m.id + '\'); closeModal(\'quizModal\');">' +
-          '<h4>' + m.name + '</h4><span>' + m.avgSalary.split('/')[0] + '</span></div>';
+      
+      // Build traits HTML
+      var traitsHtml = traits.map(function(trait) {
+        var info = traitLabels[trait];
+        return '<div class="quiz-trait-item"><span class="quiz-trait-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span class="quiz-trait-text">' + info.desc + '</span></div>';
       }).join('');
       
-      content.innerHTML = '<div class="quiz-results"><h3>Kết quả gợi ý</h3>' +
-        '<p class="subtitle">Dựa trên câu trả lời của bạn, đây là những ngành phù hợp nhất:</p>' +
-        '<div class="result-majors">' + cardsHtml + '</div>' +
-        '<button class="btn-primary" onclick="closeModal(\'quizModal\');">Đóng</button></div>';
+      // Build recommendations HTML
+      var recsHtml = recommendations.map(function(m, i) {
+        var cat = getCategoryById(m.category);
+        var isInCompare = compareList.indexOf(m.id) !== -1;
+        var compareBtnClass = isInCompare ? 'btn-secondary disabled' : 'btn-secondary';
+        var compareBtnText = isInCompare ? 'Đã thêm' : 'So sánh';
+        var rankClass = i === 0 ? 'rank-badge gold' : i === 1 ? 'rank-badge silver' : 'rank-badge bronze';
+        var rankIcon = i === 0 ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path></svg>' : '';
+        
+        return '<div class="quiz-result-card">' +
+          '<div class="quiz-result-header">' +
+            '<span class="' + rankClass + '">' + rankIcon + ' #' + (i + 1) + '</span>' +
+            '<span class="match-percentage">' + m.matchPercentage + '% phù hợp</span>' +
+          '</div>' +
+          '<h4 class="quiz-result-title">' + m.name + '</h4>' +
+          '<p class="quiz-result-reason">' + m.matchReason + '</p>' +
+          '<div class="quiz-result-stats">' +
+            '<div class="quiz-result-stat"><span class="label">Lương</span><span class="value">' + m.avgSalary.split('/')[0] + '</span></div>' +
+            '<div class="quiz-result-stat"><span class="label">Có việc</span><span class="value">' + m.employmentRate + '</span></div>' +
+            '<div class="quiz-result-stat"><span class="label">Độ khó</span><span class="value">' + m.difficulty + '/10</span></div>' +
+          '</div>' +
+          '<div class="quiz-result-actions">' +
+            '<button class="btn-primary" onclick="openMajorDetail(\'' + m.id + '\'); closeModal(\'quizModal\');">Xem chi tiết</button>' +
+            '<button class="' + compareBtnClass + '" onclick="event.stopPropagation(); addToCompare(\'' + m.id + '\', this);">' + compareBtnText + '</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+      
+      content.innerHTML = '<div class="quiz-results">' +
+        '<div class="quiz-result-summary">' +
+          '<h3>Kết quả quiz của bạn</h3>' +
+          '<p class="quiz-subtitle">Dựa trên câu trả lời, đây là những điểm mạnh và ngành phù hợp nhất với bạn:</p>' +
+          '<div class="quiz-traits">' + traitsHtml + '</div>' +
+        '</div>' +
+        '<h4 class="quiz-section-title">Top ngành gợi ý</h4>' +
+        '<div class="quiz-recommendations">' + recsHtml + '</div>' +
+        '<div class="quiz-result-actions-main">' +
+          '<button class="btn-secondary" onclick="restartQuiz();">Làm lại quiz</button>' +
+          '<button class="btn-primary" onclick="closeModal(\'quizModal\');">Đóng</button>' +
+        '</div>' +
+      '</div>';
+    }
+
+    function addToCompare(majorId, btn) {
+      if (compareList.length >= 3) {
+        alert('Bạn chỉ có thể so sánh tối đa 3 ngành!');
+        return;
+      }
+      if (compareList.indexOf(majorId) === -1) {
+        compareList.push(majorId);
+        btn.textContent = 'Đã thêm';
+        btn.classList.add('disabled');
+      }
+    }
+
+    function restartQuiz() {
+      currentQuizStep = 0;
+      quizAnswers = [];
+      renderQuiz();
     }
 
     function toggleCompare() {
@@ -567,14 +924,41 @@
         section.scrollIntoView({ behavior: 'smooth' });
       }
       renderCompare();
+      updateCompareHint();
+    }
+
+    function scrollToMajors() {
+      var section = document.getElementById('majorsSection');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function updateCompareHint() {
+      var hint = document.getElementById('compareHint');
+      var addBtn = document.getElementById('addMoreBtn');
+      if (hint) {
+        if (compareList.length === 0) {
+          hint.textContent = 'Chọn ngành để so sánh (tối đa 3)';
+          hint.style.display = 'block';
+        } else {
+          hint.textContent = compareList.length + '/3 ngành đã chọn';
+          hint.style.display = 'block';
+        }
+      }
+      if (addBtn) {
+        addBtn.style.display = compareList.length < 3 ? 'inline-flex' : 'none';
+      }
     }
 
     function clearCompare() {
       compareList = [];
       renderCompare();
+      updateCompareHint();
     }
 
     function renderCompare() {
+      updateCompareHint();
       var grid = document.getElementById('compareGrid');
       if (compareList.length === 0) {
         grid.innerHTML = '<p style="text-align: center; color: var(--color-muted); padding: 2rem;">Nhấn vào ngành học để thêm vào so sánh (tối đa 3)</p>';
@@ -583,13 +967,89 @@
       var majors = compareList.map(function(id) { return getMajorById(id); }).filter(Boolean);
       grid.style.setProperty('--compare-count', majors.length);
       
+      // Calculate max values for chart scaling
+      var maxSalary = 0;
+      var maxEmployment = 0;
+      var maxDifficulty = 0;
+      majors.forEach(function(m) {
+        var salary = parseInt(m.avgSalary.replace(/[^\d]/g, '')) || 0;
+        var employment = parseInt(m.employmentRate) || 0;
+        var difficulty = parseInt(m.difficulty) || 0;
+        if (salary > maxSalary) maxSalary = salary;
+        if (employment > maxEmployment) maxEmployment = employment;
+        if (difficulty > maxDifficulty) maxDifficulty = difficulty;
+      });
+      
+      // Build chart bars
+      var salaryBars = majors.map(function(m) {
+        var salary = parseInt(m.avgSalary.replace(/[^\d]/g, '')) || 0;
+        var percent = maxSalary > 0 ? (salary / maxSalary * 100) : 0;
+        return '<div class="compare-chart-bar">' +
+          '<div class="compare-chart-label">' + m.name + '</div>' +
+          '<div class="compare-chart-bar-wrapper">' +
+            '<div class="compare-chart-bar-fill salary" style="width:' + percent + '%">' +
+              '<span class="compare-chart-bar-value">' + m.avgSalary.split('/')[0] + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+      
+      var employmentBars = majors.map(function(m) {
+        var employment = parseInt(m.employmentRate) || 0;
+        var percent = maxEmployment > 0 ? (employment / maxEmployment * 100) : 0;
+        return '<div class="compare-chart-bar">' +
+          '<div class="compare-chart-label">' + m.name + '</div>' +
+          '<div class="compare-chart-bar-wrapper">' +
+            '<div class="compare-chart-bar-fill employment" style="width:' + percent + '%">' +
+              '<span class="compare-chart-bar-value">' + m.employmentRate + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+      
+      var difficultyBars = majors.map(function(m) {
+        var difficulty = parseInt(m.difficulty) || 0;
+        var percent = maxDifficulty > 0 ? (difficulty / maxDifficulty * 100) : 0;
+        return '<div class="compare-chart-bar">' +
+          '<div class="compare-chart-label">' + m.name + '</div>' +
+          '<div class="compare-chart-bar-wrapper">' +
+            '<div class="compare-chart-bar-fill difficulty" style="width:' + percent + '%">' +
+              '<span class="compare-chart-bar-value dark">' + m.difficulty + '/10</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+      
       grid.innerHTML = 
         '<div class="compare-row header-row">' +
         '<div class="compare-label">Ngành</div>' + majors.map(function(m) { return '<div class="compare-value" style="font-weight:700;color:var(--color-primary);">' + m.name + '</div>'; }).join('') + '</div>' +
         '<div class="compare-row"><div class="compare-label">Lương khởi điểm</div>' + majors.map(function(m) { return '<div class="compare-value">' + m.avgSalary + '</div>'; }).join('') + '</div>' +
         '<div class="compare-row"><div class="compare-label">Tỷ lệ có việc</div>' + majors.map(function(m) { return '<div class="compare-value">' + m.employmentRate + '</div>'; }).join('') + '</div>' +
         '<div class="compare-row"><div class="compare-label">Độ khó đào tạo</div>' + majors.map(function(m) { return '<div class="compare-value">' + m.difficulty + '/10</div>'; }).join('') + '</div>' +
-        '<div class="compare-row"><div class="compare-label">Cơ hội nghề nghiệp</div>' + majors.map(function(m) { return '<div class="compare-value">' + m.careers.slice(0, 2).join(', ') + '...</div>'; }).join('') + '</div>';
+        '<div class="compare-row"><div class="compare-label">Cơ hội nghề nghiệp</div>' + majors.map(function(m) { return '<div class="compare-value">' + m.careers.slice(0, 2).join(', ') + '...</div>'; }).join('') + '</div>' +
+        '<div class="compare-charts">' +
+          '<div class="compare-chart-item">' +
+            '<div class="compare-chart-title">' +
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>' +
+              'Lương khởi điểm (triệu/tháng)' +
+            '</div>' +
+            salaryBars +
+          '</div>' +
+          '<div class="compare-chart-item">' +
+            '<div class="compare-chart-title">' +
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>' +
+              'Tỷ lệ có việc làm sau tốt nghiệp' +
+            '</div>' +
+            employmentBars +
+          '</div>' +
+          '<div class="compare-chart-item">' +
+            '<div class="compare-chart-title">' +
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>' +
+              'Độ khó đào tạo' +
+            '</div>' +
+            difficultyBars +
+          '</div>' +
+        '</div>';
     }
 
     function closeModal(modalId) {
@@ -602,6 +1062,29 @@
           overlay.classList.remove('active');
         }
       });
+    });
+  </script>
+  <script src="./js/main.js"></script>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Lên đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+  <script>
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    window.addEventListener('scroll', function() {
+      var btn = document.getElementById('backToTop');
+      if (btn) {
+        if (window.scrollY > 400) {
+          btn.classList.add('show');
+        } else {
+          btn.classList.remove('show');
+        }
+      }
     });
   </script>
 </body>

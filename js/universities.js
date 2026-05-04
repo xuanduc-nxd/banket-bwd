@@ -1344,9 +1344,412 @@ function initMobileTabs() {
   });
 }
 
+// Compare functionality
+let compareList = [];
+let compareModalClosed = false;
+
+function addToCompare(university, type) {
+  if (compareList.length >= 3) {
+    showToast('Chỉ có thể so sánh tối đa 3 trường!', 'warning');
+    return;
+  }
+  
+  if (compareList.find(u => u.name === university.name)) {
+    showToast('Trường này đã được thêm vào danh sách so sánh!', 'info');
+    return;
+  }
+  
+  compareList.push({ ...university, type });
+  updateCompareUI();
+  showToast(`Đã thêm ${university.name} vào danh sách so sánh`, 'success');
+}
+
+function removeFromCompare(index) {
+  const removed = compareList.splice(index, 1)[0];
+  updateCompareUI();
+  showToast(`Đã xóa ${removed.name} khỏi danh sách so sánh`, 'info');
+}
+
+function clearAllCompare() {
+  compareList = [];
+  updateCompareUI();
+  closeCompareModal();
+  showToast('Đã xóa tất cả khỏi danh sách so sánh', 'info');
+}
+
+function updateCompareUI() {
+  const compareSection = document.getElementById('compareSection');
+  const compareGrid = document.getElementById('compareGrid');
+  
+  if (!compareSection || !compareGrid) return;
+  
+  if (compareList.length === 0) {
+    compareSection.style.display = 'none';
+    return;
+  }
+  
+  compareSection.style.display = 'block';
+  
+  compareGrid.innerHTML = compareList.map((uni, index) => `
+    <div class="compare-item">
+      <button class="compare-item-remove" onclick="removeFromCompare(${index})">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <div class="compare-item-logo ${uni.type}">
+        <span>${uni.shortName}</span>
+      </div>
+      <div class="compare-item-info">
+        <h4>${uni.name}</h4>
+        <span>${uni.location}</span>
+      </div>
+    </div>
+  `).join('');
+  
+  // Update add compare buttons state
+  document.querySelectorAll('.add-compare-btn').forEach(btn => {
+    const name = btn.dataset.name;
+    const isAdded = compareList.find(u => u.name === name);
+    const isFull = compareList.length >= 3;
+    
+    if (isAdded) {
+      btn.classList.add('added');
+      btn.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        Đã thêm
+      `;
+    } else if (isFull) {
+      btn.classList.add('disabled');
+      btn.disabled = true;
+    } else {
+      btn.classList.remove('added', 'disabled');
+      btn.disabled = false;
+      btn.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        So sánh
+      `;
+    }
+  });
+}
+
+function openCompareModal() {
+  if (compareList.length < 2) {
+    showToast('Cần chọn ít nhất 2 trường để so sánh!', 'warning');
+    return;
+  }
+  
+  const modal = document.getElementById('compareModal');
+  const modalBody = document.getElementById('compareModalBody');
+  
+  if (!modal || !modalBody) return;
+  
+  // Generate compare content
+  modalBody.innerHTML = generateCompareContent();
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  compareModalClosed = false;
+}
+
+function generateCompareContent() {
+  return `
+    <div class="compare-actions-modal">
+      <button class="btn-secondary" onclick="clearAllAndReset()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+        Xóa tất cả & So sánh mới
+      </button>
+    </div>
+    
+    <div class="compare-table-wrapper">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Tiêu chí</th>
+            ${compareList.map(u => `
+              <th>
+                <div class="compare-table-header">
+                  <div class="compare-table-logo ${u.type}">
+                    <span>${u.shortName}</span>
+                  </div>
+                  <div class="compare-table-title">
+                    <strong>${u.name}</strong>
+                    <small>${u.location}</small>
+                  </div>
+                  <button class="compare-remove-btn" onclick="removeFromCompareAndRefresh(${compareList.indexOf(u)})">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M18 6 6 18M6 6l12 12"/>
+                    </svg>
+                    Xóa
+                  </button>
+                </div>
+              </th>
+            `).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="compare-label">Loại trường</td>
+            ${compareList.map(u => `<td>${u.type === 'public' ? 'Công Lập' : 'Tư Thục'}</td>`).join('')}
+          </tr>
+          <tr>
+            <td class="compare-label">Phân loại</td>
+            ${compareList.map(u => `<td>${u.type}</td>`).join('')}
+          </tr>
+          <tr>
+            <td class="compare-label">Số sinh viên</td>
+            ${compareList.map(u => `<td>${u.students}</td>`).join('')}
+          </tr>
+          <tr>
+            <td class="compare-label">Số ngành đào tạo</td>
+            ${compareList.map(u => `<td>${u.majors}</td>`).join('')}
+          </tr>
+          <tr>
+            <td class="compare-label">Xếp hạng</td>
+            ${compareList.map(u => `<td><span class="rank-badge-text">${u.rank}</span></td>`).join('')}
+          </tr>
+          <tr>
+            <td class="compare-label">Website</td>
+            ${compareList.map(u => `
+              <td><a href="${u.website}" target="_blank" class="compare-link">Truy cập website</a></td>
+            `).join('')}
+          </tr>
+          <tr>
+            <td class="compare-label">Bản đồ</td>
+            ${compareList.map(u => `
+              <td><button class="btn-compare-map" onclick="openMapForUniversity('${u.name}')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                Xem bản đồ
+              </button></td>
+            `).join('')}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="compare-chart-section">
+      <h4>Biểu đồ so sánh</h4>
+      <div class="compare-simple-chart">
+        <div class="simple-chart-item">
+          <span class="simple-chart-label">Số ngành đào tạo</span>
+          ${compareList.map(u => {
+            const num = parseInt(u.majors) || 0;
+            const maxNum = Math.max(...compareList.map(x => parseInt(x.majors) || 0));
+            const percent = maxNum > 0 ? (num / maxNum) * 100 : 0;
+            return `
+              <div class="simple-chart-bar-wrapper">
+                <span class="simple-chart-bar-label">${u.shortName}</span>
+                <div class="simple-chart-bar-container">
+                  <div class="simple-chart-bar ${u.type}" style="width: ${percent}%"></div>
+                  <span class="simple-chart-bar-value">${u.majors}</span>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+    
+    <div class="compare-repeat-section">
+      <p>Bạn có thể xóa trường trong bảng so sánh và thêm trường mới để so sánh tiếp!</p>
+      <button class="btn-primary" onclick="closeCompareModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+        Đóng
+      </button>
+    </div>
+  `;
+}
+
+function removeFromCompareAndRefresh(index) {
+  removeFromCompare(index);
+  if (compareList.length >= 2) {
+    const modalBody = document.getElementById('compareModalBody');
+    if (modalBody) {
+      modalBody.innerHTML = generateCompareContent();
+    }
+  } else {
+    closeCompareModal();
+    showToast('Cần ít nhất 2 trường để so sánh', 'warning');
+  }
+}
+
+function clearAllAndReset() {
+  closeCompareModal();
+  compareList = [];
+  updateCompareUI();
+  showToast('Đã xóa tất cả. Bạn có thể chọn trường mới để so sánh!', 'success');
+}
+
+function closeCompareModal() {
+  const modal = document.getElementById('compareModal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    compareModalClosed = true;
+  }
+}
+
+function openMapForUniversity(name) {
+  // Chuyển hướng đến trang map với query param
+  window.open(`pages/map.html?university=${encodeURIComponent(name)}`, '_blank');
+}
+
+function showToast(message, type = 'info') {
+  // Remove existing toast
+  const existingToast = document.querySelector('.toast-notification');
+  if (existingToast) existingToast.remove();
+  
+  const toast = document.createElement('div');
+  toast.className = `toast-notification toast-${type}`;
+  toast.innerHTML = `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      ${type === 'success' ? '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>' : 
+        type === 'warning' ? '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>' :
+        '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>'}
+    </svg>
+    <span>${message}</span>
+  `;
+  
+  document.body.appendChild(toast);
+  
+  // Animate in
+  requestAnimationFrame(() => {
+    toast.classList.add('show');
+  });
+  
+  // Remove after 3 seconds
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// Initialize compare functionality
+function initCompare() {
+  // Add compare buttons to university items
+  const observer = new MutationObserver(() => {
+    addCompareButtons();
+  });
+  
+  const publicList = document.getElementById('publicList');
+  const privateList = document.getElementById('privateList');
+  
+  if (publicList) observer.observe(publicList, { childList: true });
+  if (privateList) observer.observe(privateList, { childList: true });
+  
+  // Initial add
+  addCompareButtons();
+  
+  // Clear compare button
+  const clearCompareBtn = document.getElementById('clearCompareBtn');
+  if (clearCompareBtn) {
+    clearCompareBtn.addEventListener('click', () => {
+      clearAllCompare();
+    });
+  }
+  
+  // Do compare button
+  const doCompareBtn = document.getElementById('doCompareBtn');
+  if (doCompareBtn) {
+    doCompareBtn.addEventListener('click', openCompareModal);
+  }
+  
+  // Close modal button
+  const closeModalBtn = document.getElementById('closeCompareModal');
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', closeCompareModal);
+  }
+  
+  // Close modal on overlay click
+  const modal = document.getElementById('compareModal');
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeCompareModal();
+    });
+  }
+  
+  // ESC to close modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCompareModal();
+  });
+}
+
+function addCompareButtons() {
+  document.querySelectorAll('.university-item').forEach(item => {
+    if (item.querySelector('.add-compare-btn')) return;
+    
+    const name = item.dataset.name;
+    const logo = item.querySelector('.university-item-logo span');
+    if (!logo) return;
+    
+    const shortName = logo.textContent.trim();
+    
+    // Find university in data
+    const university = [...universitiesData.public, ...universitiesData.private].find(u => u.name.toLowerCase() === name);
+    if (!university) return;
+    
+    const type = universitiesData.public.find(u => u.name === university.name) ? 'public' : 'private';
+    
+    const infoDiv = item.querySelector('.university-item-info');
+    if (!infoDiv) return;
+    
+    // Add Map button
+    const mapBtn = document.createElement('button');
+    mapBtn.className = 'btn-map-university';
+    mapBtn.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+      Bản đồ
+    `;
+    mapBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openMapForUniversity(university.name);
+    });
+    infoDiv.appendChild(mapBtn);
+    
+    // Add Compare button
+    const compareBtn = document.createElement('button');
+    compareBtn.className = 'add-compare-btn';
+    compareBtn.dataset.name = name;
+    compareBtn.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+      So sánh
+    `;
+    compareBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!compareBtn.classList.contains('added') && !compareBtn.classList.contains('disabled')) {
+        addToCompare(university, type);
+      }
+    });
+    
+    infoDiv.appendChild(compareBtn);
+  });
+  
+  updateCompareUI();
+}
+
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   renderUniversities();
   initSearch();
   initMobileTabs();
+  initCompare();
 });

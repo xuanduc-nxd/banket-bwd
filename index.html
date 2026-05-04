@@ -17,6 +17,7 @@
       <a href="#home" class="is-active">Trang chủ</a>
       <a href="universities.html">Trường ĐH</a>
       <a href="majors.html">Ngành học</a>
+      <a href="pages/map.html">Bản đồ</a>
       <a href="#about">Giới thiệu</a>
     </nav>
     <div class="header-actions">
@@ -551,5 +552,27 @@
   <script src="./js/subject-data.js"></script>
   <script src="./js/universities.js"></script>
   <script src="./js/smart-match.js"></script>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Lên đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+  <script>
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    window.addEventListener('scroll', function() {
+      var btn = document.getElementById('backToTop');
+      if (btn) {
+        if (window.scrollY > 400) {
+          btn.classList.add('show');
+        } else {
+          btn.classList.remove('show');
+        }
+      }
+    });
+  </script>
 </body>
 </html>

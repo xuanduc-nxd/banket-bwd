@@ -855,9 +855,10 @@ function getRelatedMajors(majorId) {
   return major.relatedMajors.map(id => getMajorById(id)).filter(Boolean);
 }
 
-// Calculate quiz results
+// Calculate quiz results with match percentage
 function calculateQuizResults(answers) {
   const scores = {};
+  const maxPossible = {};
   
   answers.forEach((answerIndex, questionIndex) => {
     const question = majorsData.quizQuestions[questionIndex];
@@ -865,32 +866,109 @@ function calculateQuizResults(answers) {
       const optionScores = question.options[answerIndex].scores;
       Object.keys(optionScores).forEach(cat => {
         scores[cat] = (scores[cat] || 0) + optionScores[cat];
+        maxPossible[cat] = (maxPossible[cat] || 0) + Math.max(...Object.values(optionScores));
       });
     }
   });
   
-  // Convert scores to sorted array
-  const sortedCategories = Object.entries(scores)
-    .sort((a, b) => b[1] - a[1])
-    .map(([cat]) => cat);
+  // Calculate match percentage
+  const results = Object.entries(scores).map(([cat, score]) => {
+    const max = maxPossible[cat] || 1;
+    const maxFromQuiz = 15; // Max possible from 5 questions
+    const percentage = Math.round((score / maxFromQuiz) * 100);
+    return { category: cat, score, percentage };
+  });
   
-  return sortedCategories;
+  // Sort by score and return
+  return results.sort((a, b) => b.score - a.score);
 }
+
+// Get personality traits based on answers
+function getPersonalityTraits(answers) {
+  const traits = {
+    analytical: 0,
+    creative: 0,
+    social: 0,
+    practical: 0,
+    caring: 0
+  };
+  
+  // Q1: Work with
+  if (answers[0] === 0) traits.analytical += 2;
+  if (answers[0] === 1) traits.social += 2;
+  if (answers[0] === 2) traits.analytical += 2;
+  if (answers[0] === 3) traits.caring += 2;
+  if (answers[0] === 4) traits.creative += 2;
+  
+  // Q2: Favorite subject
+  if (answers[1] === 0) traits.analytical += 2;
+  if (answers[1] === 1) traits.practical += 2;
+  if (answers[1] === 2) traits.creative += 2;
+  if (answers[1] === 3) traits.caring += 2;
+  if (answers[1] === 4) traits.creative += 2;
+  
+  // Q3: Work environment
+  if (answers[2] === 0) traits.analytical += 1;
+  if (answers[2] === 1) traits.practical += 2;
+  if (answers[2] === 2) traits.caring += 2;
+  if (answers[2] === 3) traits.social += 2;
+  if (answers[2] === 4) traits.creative += 2;
+  
+  // Q5: Personality
+  if (answers[4] === 0) traits.analytical += 3;
+  if (answers[4] === 1) traits.social += 3;
+  if (answers[4] === 2) traits.caring += 3;
+  if (answers[4] === 3) traits.creative += 3;
+  if (answers[4] === 4) traits.practical += 3;
+  
+  // Return top traits
+  return Object.entries(traits)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([trait]) => trait);
+}
+
+// Trait labels
+const traitLabels = {
+  analytical: { name: 'Phân tích', desc: 'Bạn thích suy nghĩ logic và giải quyết vấn đề' },
+  creative: { name: 'Sáng tạo', desc: 'Bạn có óc sáng tạo và thích làm những điều mới mẻ' },
+  social: { name: 'Giao tiếp', desc: 'Bạn thích làm việc với mọi người và giao tiếp' },
+  practical: { name: 'Thực tế', desc: 'Bạn thích làm việc với tay và giải quyết vấn đề cụ thể' },
+  caring: { name: 'Chăm sóc', desc: 'Bạn quan tâm đến người khác và muốn giúp đỡ' }
+};
+
+// Category explanations
+const categoryExplanations = {
+  cntt: 'Công nghệ thông tin phù hợp với người thích phân tích và làm việc với máy tính.',
+  kinhte: 'Kinh tế phù hợp với người thích phân tích con số và công việc kinh doanh.',
+  yte: 'Y dược phù hợp với người có tính cách chăm sóc và muốn giúp đỡ người khác.',
+  kysu: 'Kỹ thuật phù hợp với người thích làm việc thực tế và giải quyết vấn đề kỹ thuật.',
+  sudp: 'Sư phạm phù hợp với người thích giao tiếp và truyền đạt kiến thức.',
+  design: 'Thiết kế phù hợp với người có óc sáng tạo và yêu cái đẹp.',
+  nn: 'Ngôn ngữ phù hợp với người thích giao tiếp và khám phá văn hóa.',
+  luat: 'Luật phù hợp với người thích phân tích và có tư duy logic.',
+  kien_truc: 'Kiến trúc phù hợp với người thích kết hợp giữa sáng tạo và thực tế.',
+  nnl: 'Nông lâm nghiệp phù hợp với người thích thiên nhiên và công việc ngoài trời.'
+};
 
 // Get recommended majors from quiz
 function getRecommendedMajors(answers) {
-  const topCategories = calculateQuizResults(answers);
+  const categoryResults = calculateQuizResults(answers);
   const recommendations = [];
   
-  topCategories.slice(0, 3).forEach(cat => {
-    const catMajors = getMajorsByCategory(cat);
+  // Get top 3 categories with percentage
+  categoryResults.slice(0, 3).forEach(result => {
+    const catMajors = getMajorsByCategory(result.category);
     if (catMajors.length > 0) {
-      // Pick top 2 from each category
-      recommendations.push(...catMajors.slice(0, 2));
+      // Pick the first (most popular) major from each category
+      const topMajor = catMajors[0];
+      topMajor.matchPercentage = result.percentage;
+      topMajor.matchReason = categoryExplanations[result.category] || '';
+      recommendations.push(topMajor);
     }
   });
   
-  return recommendations.slice(0, 6);
+  return recommendations;
 }
 
 // Get top majors by ranking type
