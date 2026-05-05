@@ -497,6 +497,51 @@
       color: #b45309;
     }
 
+    /* Recommended Mode Badge */
+    .recommended-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      color: white;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-left: 8px;
+    }
+
+    .recommended-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .clear-recommendation {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      color: var(--color-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      margin-left: 8px;
+    }
+
+    .clear-recommendation:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .clear-recommendation svg {
+      width: 12px;
+      height: 12px;
+    }
+
     /* Map Info Panel */
     .map-info-panel {
       flex: 1;
@@ -842,6 +887,7 @@
       <a href="../index.html">Trang chủ</a>
       <a href="../universities.html">Trường ĐH</a>
       <a href="../majors.html">Ngành học</a>
+      <a href="map.html" class="is-active">Bản đồ</a>
       <a href="#about">Giới thiệu</a>
     </nav>
     <div class="header-actions">
@@ -877,11 +923,26 @@
           <!-- University List -->
           <div class="sidebar-list">
             <div class="sidebar-header">
-              <h3>Danh sách trường</h3>
+              <h3 id="sidebarTitle">Danh sách trường</h3>
               <div class="sidebar-tabs">
                 <button class="sidebar-tab active" data-filter="all">Tất cả</button>
                 <button class="sidebar-tab" data-filter="public">Công Lập</button>
                 <button class="sidebar-tab" data-filter="private">Tư Thục</button>
+              </div>
+              <div id="recommendationControls" style="display: none; margin-top: 12px;">
+                <span class="recommended-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  <span id="recommendationText">Gợi ý cho bạn</span>
+                </span>
+                <button class="clear-recommendation" id="clearRecommendation">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6 6 18M6 6l12 12"/>
+                  </svg>
+                  Xem tất cả
+                </button>
               </div>
             </div>
             <div class="sidebar-items" id="sidebarItems">
@@ -969,6 +1030,7 @@
           <div class="footer-column">
             <h4>Trường học</h4>
             <a href="../universities.html">Top trường</a>
+            <a href="map.html">Bản đồ</a>
             <a href="../universities.html">Theo khu vực</a>
             <a href="../universities.html">Theo ngành</a>
           </div>
@@ -1255,6 +1317,47 @@
       }
     ];
 
+    // Check for consultation data in localStorage
+    let recommendedUniversities = []; // Full data with order preserved
+    let consultationData = null;
+    
+    function checkConsultationData() {
+      const stored = localStorage.getItem('unimatch_consultation');
+      if (stored) {
+        try {
+          consultationData = JSON.parse(stored);
+          // Extract full university data with order
+          recommendedUniversities = consultationData.recommendedUniversities || [];
+          return recommendedUniversities.length > 0;
+        } catch (e) {
+          console.error('Error parsing consultation data:', e);
+          return false;
+        }
+      }
+      return false;
+    }
+
+    function clearRecommendation() {
+      recommendedUniversities = [];
+      consultationData = null;
+      localStorage.removeItem('unimatch_consultation');
+      localStorage.removeItem('unimatch_form_state');
+      
+      // Hide recommendation controls
+      document.getElementById('recommendationControls').style.display = 'none';
+      document.getElementById('sidebarTitle').textContent = 'Danh sách trường';
+      
+      // Reset tabs
+      document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector('.sidebar-tab[data-filter="all"]').classList.add('active');
+      
+      // Re-generate sidebar with all universities
+      generateSidebarItems('all');
+      
+      // Update map markers
+      updateMapMarkers('all');
+    }
+
     // Initialize map
     const map = L.map('map').setView([16.0544, 108.2022], 6);
 
@@ -1322,6 +1425,40 @@
 
       markers[university.id] = marker;
     });
+
+    // Update map markers based on filter
+    function updateMapMarkers(filter, searchQuery = '') {
+      const hasRecommendation = recommendedUniversities.length > 0;
+      const recommendedShortNames = recommendedUniversities.map(u => u.shortName);
+      
+      universities.forEach(u => {
+        let shouldShow = true;
+        
+        // Check recommendation filter
+        if (hasRecommendation) {
+          shouldShow = recommendedShortNames.includes(u.shortName);
+        }
+        
+        // Check type filter
+        if (shouldShow && filter !== 'all') {
+          shouldShow = u.type === filter;
+        }
+        
+        // Check search query
+        if (shouldShow && searchQuery) {
+          const query = searchQuery.toLowerCase();
+          shouldShow = u.name.toLowerCase().includes(query) || 
+                       u.location.toLowerCase().includes(query) ||
+                       u.shortName.toLowerCase().includes(query);
+        }
+        
+        if (shouldShow) {
+          markers[u.id].addTo(map);
+        } else {
+          markers[u.id].remove();
+        }
+      });
+    }
 
     // Show university info in panel
     function showUniversityInfo(university) {
@@ -1410,11 +1547,42 @@
     // Generate sidebar items
     function generateSidebarItems(filter = 'all') {
       const container = document.getElementById('sidebarItems');
-      const filtered = filter === 'all' 
-        ? universities 
-        : universities.filter(u => u.type === filter);
+      const hasRecommendation = recommendedUniversities.length > 0;
       
-      container.innerHTML = filtered.map(u => `
+      let orderedUniversities = [];
+      
+      // If has recommendation, order universities according to the recommended order
+      if (hasRecommendation) {
+        // Map recommended universities in the exact order from consultation
+        orderedUniversities = recommendedUniversities
+          .map(rec => {
+            // Find matching university in local data
+            const uni = universities.find(u => u.shortName === rec.shortName);
+            if (uni) {
+              return {
+                ...uni,
+                matchScore: rec.matchScore,
+                chance: rec.chance
+              };
+            }
+            return null;
+          })
+          .filter(u => u !== null);
+        
+        // Apply type filter if needed
+        if (filter !== 'all') {
+          orderedUniversities = orderedUniversities.filter(u => u.type === filter);
+        }
+      } else {
+        // No recommendation - use all universities with default sorting
+        let filtered = universities;
+        if (filter !== 'all') {
+          filtered = filtered.filter(u => u.type === filter);
+        }
+        orderedUniversities = filtered;
+      }
+      
+      container.innerHTML = orderedUniversities.map((u, index) => `
         <div class="sidebar-item" data-id="${u.id}" onclick="selectUniversity(${u.id})">
           <div class="sidebar-item-logo ${u.type}">
             <span>${u.shortName}</span>
@@ -1426,6 +1594,19 @@
           <span class="sidebar-item-type ${u.type}">${u.type === 'public' ? 'Công Lập' : 'Tư Thục'}</span>
         </div>
       `).join('');
+      
+      // Show empty state if no results
+      if (orderedUniversities.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px 20px; color: var(--color-muted);">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity: 0.4; margin-bottom: 12px;">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.3-4.3"/>
+            </svg>
+            <p style="margin: 0; font-size: 0.9rem;">Không tìm thấy trường nào</p>
+          </div>
+        `;
+      }
     }
 
     function selectUniversity(id) {
@@ -1456,7 +1637,9 @@
       tab.addEventListener('click', () => {
         document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        generateSidebarItems(tab.dataset.filter);
+        const filter = tab.dataset.filter;
+        generateSidebarItems(filter);
+        updateMapMarkers(filter, document.getElementById('mapSearch').value);
       });
     });
 
@@ -1466,8 +1649,21 @@
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         
+        const filter = btn.dataset.filter;
+        const hasRecommendation = recommendedUniversities.length > 0;
+        const recommendedShortNames = recommendedUniversities.map(u => u.shortName);
+        
         universities.forEach(u => {
-          const shouldShow = btn.dataset.filter === 'all' || u.type === btn.dataset.filter;
+          let shouldShow = true;
+          
+          if (hasRecommendation) {
+            shouldShow = recommendedShortNames.includes(u.shortName);
+          }
+          
+          if (shouldShow && filter !== 'all') {
+            shouldShow = u.type === filter;
+          }
+          
           if (shouldShow) {
             markers[u.id].addTo(map);
           } else {
@@ -1481,20 +1677,118 @@
     const searchInput = document.getElementById('mapSearch');
     searchInput.addEventListener('input', (e) => {
       const query = e.target.value.toLowerCase();
-      universities.forEach(u => {
-        const matches = u.name.toLowerCase().includes(query) || 
-                       u.location.toLowerCase().includes(query) ||
-                       u.shortName.toLowerCase().includes(query);
-        if (matches) {
-          markers[u.id].addTo(map);
-        } else {
-          markers[u.id].remove();
-        }
-      });
+      const currentTab = document.querySelector('.sidebar-tab.active').dataset.filter;
+      
+      updateMapMarkers(currentTab, query);
+      
+      // Also filter sidebar items with proper ordering
+      const container = document.getElementById('sidebarItems');
+      const hasRecommendation = recommendedUniversities.length > 0;
+      
+      let filtered = [];
+      
+      if (hasRecommendation) {
+        // Use the recommended order
+        filtered = recommendedUniversities
+          .map(rec => universities.find(u => u.shortName === rec.shortName))
+          .filter(u => u !== undefined);
+      } else {
+        filtered = universities;
+      }
+      
+      if (currentTab !== 'all') {
+        filtered = filtered.filter(u => u.type === currentTab);
+      }
+      
+      if (query) {
+        filtered = filtered.filter(u => 
+          u.name.toLowerCase().includes(query) ||
+          u.location.toLowerCase().includes(query) ||
+          u.shortName.toLowerCase().includes(query)
+        );
+      }
+      
+      container.innerHTML = filtered.map(u => `
+        <div class="sidebar-item" data-id="${u.id}" onclick="selectUniversity(${u.id})">
+          <div class="sidebar-item-logo ${u.type}">
+            <span>${u.shortName}</span>
+          </div>
+          <div class="sidebar-item-info">
+            <h4>${u.name}</h4>
+            <span>${u.location} • ${u.tuition.split('/')[0]}</span>
+          </div>
+          <span class="sidebar-item-type ${u.type}">${u.type === 'public' ? 'Công Lập' : 'Tư Thục'}</span>
+        </div>
+      `).join('');
+      
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px 20px; color: var(--color-muted);">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity: 0.4; margin-bottom: 12px;">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.3-4.3"/>
+            </svg>
+            <p style="margin: 0; font-size: 0.9rem;">Không tìm thấy trường nào</p>
+          </div>
+        `;
+      }
     });
 
-    // Initialize sidebar
-    generateSidebarItems();
+    // Clear recommendation button
+    document.getElementById('clearRecommendation').addEventListener('click', clearRecommendation);
+
+    // Initialize sidebar and check for consultation data
+    function initializeMap() {
+      const hasConsultation = checkConsultationData();
+      
+      if (hasConsultation) {
+        // Show recommendation controls
+        document.getElementById('recommendationControls').style.display = 'block';
+        document.getElementById('sidebarTitle').textContent = 'Trường gợi ý';
+        
+        // Update recommendation text with score info
+        if (consultationData && consultationData.totalScore) {
+          document.getElementById('recommendationText').textContent = 
+            `Gợi ý (${consultationData.totalScore.toFixed(1)} điểm)`;
+        }
+        
+        // Update map markers to only show recommended
+        updateMapMarkers('all');
+        
+        // Generate sidebar with recommended universities
+        generateSidebarItems('all');
+        
+        // Fit map to recommended universities
+        fitMapToRecommended();
+      } else {
+        // No consultation data - show all universities
+        generateSidebarItems('all');
+      }
+    }
+
+    // Fit map to recommended universities bounds
+    function fitMapToRecommended() {
+      if (recommendedUniversities.length === 0) return;
+      
+      const recommendedUnis = recommendedUniversities
+        .map(rec => universities.find(u => u.shortName === rec.shortName))
+        .filter(u => u !== undefined);
+      
+      if (recommendedUnis.length === 0) return;
+      
+      const bounds = L.latLngBounds(recommendedUnis.map(u => [u.lat, u.lng]));
+      map.fitBounds(bounds, { padding: [50, 50] });
+    }
+
+    // Initialize on page load
+    initializeMap();
+
+    // Listen for restart consultation event from smart-match.js
+    window.addEventListener('unimatch_restart_consultation', function() {
+      clearRecommendation();
+      // Reset map view to show all of Vietnam
+      map.setView([16.0544, 108.2022], 6);
+    });
 
     // Check for university query parameter
     const urlParams = new URLSearchParams(window.location.search);
