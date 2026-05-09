@@ -1,0 +1,151 @@
+/*  CHUCWS NANG CUA FILE LA DE DINH NGHIA CAC KIEU GIAO DIEN CHO CAC TRANG KHAC NHAU TREN WEBSITE, 
+NHU TRANG INSIGHTS, TRENDING, MAP, VA QUIZ. CAC KIEU GIAO DIEN NAY SE GIUP TOI BO SUNG CAC THANH PHAN 
+VA BO CUC RIENG CHO MOI TRANG, GIUP NANG CAO TRAI NGHIEM NGUOI DUNG VA LAM CHO NOI DUNG TREN MOI TRANG TRO NEN HAP DAN HON.  
+*/
+.insight-panel {
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow);
+}
+
+.panel-title {
+  margin: 0 0 16px;
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.strategy-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.strategy-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.strategy-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 999px;
+}
+
+.strategy-dot.safe {
+  background: var(--success);
+}
+
+.strategy-dot.fit {
+  background: var(--primary-2);
+}
+
+.strategy-dot.reach {
+  background: var(--warning);
+}
+
+.strategy-card strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.strategy-card span {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.strategy-card b {
+  color: var(--primary);
+}
+
+.major-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 18px;
+}
+
+.filter-panel {
+  position: sticky;
+  top: 86px;
+  padding: 18px;
+  height: fit-content;
+}
+
+.quiz-box {
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.quiz-options {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.quiz-option {
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--text);
+  text-align: left;
+}
+
+.quiz-option.is-selected {
+  border-color: var(--primary-2);
+  background: #e9f7fb;
+}
+
+.trend-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.trend-card {
+  padding: 16px;
+}
+
+.map-layout {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.map-panel {
+  padding: 16px;
+}
+
+#map {
+  min-height: 620px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.map-list {
+  display: grid;
+  gap: 10px;
+  max-height: 620px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.map-item {
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.map-item.is-active {
+  border-color: var(--primary-2);
+  background: #e9f7fb;
+}

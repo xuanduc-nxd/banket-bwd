@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bản thiết kế đề tài UniMatch</title>
+  <style>
+    body {
+      font-family: "Times New Roman", serif;
+      font-size: 13pt;
+      line-height: 1.45;
+      color: #111827;
+      max-width: 900px;
+      margin: 40px auto;
+    }
+
+    h1, h2, h3 {
+      font-family: Arial, sans-serif;
+      color: #0f4c81;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 22pt;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: 16pt;
+      margin-top: 28px;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      font-size: 14pt;
+      margin-top: 18px;
+    }
+
+    p {
+      text-align: justify;
+      margin: 8px 0;
+    }
+
+    ul, ol {
+      margin-top: 6px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 18px;
+      font-size: 12pt;
+    }
+
+    th, td {
+      border: 1px solid #94a3b8;
+      padding: 8px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #e0f2fe;
+      text-align: left;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #475569;
+      font-style: italic;
+      margin-bottom: 28px;
+    }
+
+    .note {
+      background: #f0f9ff;
+      border-left: 4px solid #0284c7;
+      padding: 10px 12px;
+      margin: 12px 0;
+    }
+
+    .strong {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bản thiết kế đề tài UniMatch</h1>
+  <p class="subtitle">Hệ thống hỗ trợ học sinh xây dựng chiến lược chọn nguyện vọng đại học</p>
+
+  <h2>1. Tên đề tài đề xuất</h2>
+  <p>
+    <span class="strong">UniMatch - Hệ thống hỗ trợ học sinh xây dựng chiến lược chọn nguyện vọng đại học dựa trên điểm thi, tổ hợp xét tuyển, xu hướng điểm chuẩn và mức độ phù hợp cá nhân.</span>
+  </p>
+  <p>
+    Tên đề tài này thể hiện rõ định hướng khác biệt của hệ thống: không chỉ liệt kê danh sách trường đại học, mà hỗ trợ người học đưa ra quyết định chọn trường và sắp xếp nguyện vọng một cách có cơ sở.
+  </p>
+
+  <h2>2. Lý do chọn đề tài</h2>
+  <p>
+    Việc lựa chọn trường đại học và ngành học là một quyết định quan trọng đối với học sinh cuối cấp. Trên thực tế, học sinh thường gặp khó khăn khi phải xử lý nhiều yếu tố cùng lúc như điểm thi, tổ hợp xét tuyển, điểm chuẩn các năm, khu vực học tập, học phí, sở thích cá nhân và cơ hội nghề nghiệp.
+  </p>
+  <p>
+    Các nền tảng hiện có thường tập trung vào việc cung cấp danh sách trường hoặc thông tin tuyển sinh rời rạc. Tuy nhiên, học sinh cần nhiều hơn một danh bạ thông tin. Các em cần một công cụ giúp trả lời những câu hỏi thực tế như: điểm của mình nên chọn trường nào, ngành nào phù hợp, trường nào an toàn, trường nào vừa sức, trường nào có thể thử thách và nên sắp xếp nguyện vọng ra sao.
+  </p>
+  <p>
+    Vì vậy, UniMatch được định hướng trở thành một hệ thống tư vấn chọn trường theo chiến lược, giúp học sinh giảm rủi ro khi đăng ký nguyện vọng và có cái nhìn rõ ràng hơn về lựa chọn của mình.
+  </p>
+
+  <h2>3. Vấn đề thị trường cần giải quyết</h2>
+  <table>
+    <tr>
+      <th>Vấn đề của người dùng</th>
+      <th>Cách UniMatch giải quyết</th>
+    </tr>
+    <tr>
+      <td>Học sinh có điểm thi nhưng không biết nên chọn trường nào phù hợp.</td>
+      <td>Gợi ý trường/ngành theo tổng điểm, tổ hợp xét tuyển và lĩnh vực quan tâm.</td>
+    </tr>
+    <tr>
+      <td>Khó đánh giá mức độ rủi ro khi đăng ký nguyện vọng.</td>
+      <td>Phân loại kết quả thành nhóm An toàn, Phù hợp và Thử thách.</td>
+    </tr>
+    <tr>
+      <td>Thông tin điểm chuẩn rời rạc, khó so sánh qua các năm.</td>
+      <td>Hiển thị điểm chuẩn nhiều năm và xu hướng tăng, giảm hoặc ổn định.</td>
+    </tr>
+    <tr>
+      <td>Không biết danh sách nguyện vọng đã cân bằng hay chưa.</td>
+      <td>Cung cấp chức năng lập danh sách nguyện vọng và cảnh báo rủi ro.</td>
+    </tr>
+    <tr>
+      <td>Khó so sánh trường/ngành theo nhiều tiêu chí.</td>
+      <td>Cho phép so sánh trường/ngành theo học phí, khu vực, điểm chuẩn, cơ hội nghề nghiệp và mức độ phù hợp.</td>
+    </tr>
+  </table>
+
+  <h2>4. Mục tiêu đề tài</h2>
+  <h3>4.1. Mục tiêu tổng quát</h3>
+  <p>
+    Xây dựng một website hỗ trợ học sinh lựa chọn trường đại học và ngành học phù hợp dựa trên dữ liệu tuyển sinh, điểm thi, tổ hợp xét tuyển, sở thích cá nhân và các tiêu chí thực tế như khu vực, học phí, loại trường và xu hướng điểm chuẩn.
+  </p>
+
+  <h3>4.2. Mục tiêu cụ thể</h3>
+  <ul>
+    <li>Xây dựng giao diện thân thiện, dễ sử dụng cho học sinh cuối cấp.</li>
+    <li>Cho phép người dùng nhập điểm thi, tổ hợp xét tuyển và lĩnh vực quan tâm.</li>
+    <li>Gợi ý danh sách trường/ngành phù hợp theo mức độ ưu tiên.</li>
+    <li>Phân loại kết quả theo mức rủi ro: An toàn, Phù hợp, Thử thách.</li>
+    <li>Cho phép tìm kiếm, lọc và so sánh trường đại học, ngành học.</li>
+    <li>Hỗ trợ lập danh sách nguyện vọng và đánh giá độ cân bằng của danh sách.</li>
+    <li>Hiển thị bản đồ vị trí trường đại học để hỗ trợ lựa chọn theo khu vực.</li>
+  </ul>
+
+  <h2>5. Điểm khác biệt của đề tài</h2>
+  <p>
+    Điểm khác biệt chính của UniMatch là tập trung vào <span class="strong">chiến lược chọn nguyện vọng</span>, thay vì chỉ cung cấp thông tin trường học. Hệ thống không dừng ở việc trả về danh sách trường phù hợp, mà còn giải thích lý do gợi ý và đánh giá rủi ro của từng lựa chọn.
+  </p>
+  <ul>
+    <li>Cá nhân hóa kết quả theo điểm, tổ hợp môn, sở thích, khu vực và học phí.</li>
+    <li>Phân nhóm trường theo khả năng trúng tuyển để người dùng dễ ra quyết định.</li>
+    <li>Hỗ trợ lập danh sách nguyện vọng cân bằng, tránh quá nhiều lựa chọn rủi ro.</li>
+    <li>Kết hợp dữ liệu trường, ngành, điểm chuẩn, xu hướng nghề nghiệp và bản đồ.</li>
+    <li>Có giải thích lý do đề xuất, giúp hệ thống minh bạch hơn với người dùng.</li>
+  </ul>
+
+  <h2>6. Đối tượng sử dụng</h2>
+  <table>
+    <tr>
+      <th>Đối tượng</th>
+      <th>Nhu cầu chính</th>
+    </tr>
+    <tr>
+      <td>Học sinh lớp 12</td>
+      <td>Tìm trường/ngành phù hợp với điểm thi, năng lực và sở thích.</td>
+    </tr>
+    <tr>
+      <td>Phụ huynh</td>
+      <td>Tham khảo thông tin học phí, khu vực, mức độ an toàn khi chọn trường.</td>
+    </tr>
+    <tr>
+      <td>Giáo viên tư vấn tuyển sinh</td>
+      <td>Có công cụ hỗ trợ tư vấn nhanh, trực quan và dễ giải thích cho học sinh.</td>
+    </tr>
+  </table>
+
+  <h2>7. Phạm vi đề tài</h2>
+  <h3>7.1. Phạm vi nên tập trung</h3>
+  <ul>
+    <li>Website tư vấn chọn trường/ngành đại học.</li>
+    <li>Dữ liệu trường đại học, ngành học, tổ hợp xét tuyển và điểm chuẩn mẫu.</li>
+    <li>Gợi ý kết quả theo thuật toán tính điểm phù hợp.</li>
+    <li>So sánh trường/ngành theo các tiêu chí cơ bản.</li>
+    <li>Bản đồ vị trí trường đại học.</li>
+    <li>Lập danh sách nguyện vọng và đánh giá rủi ro.</li>
+  </ul>
+
+  <h3>7.2. Phạm vi không nên mở rộng trong giai đoạn đồ án</h3>
+  <ul>
+    <li>Không xây dựng mạng xã hội, diễn đàn hoặc hệ thống bình luận phức tạp.</li>
+    <li>Không triển khai thanh toán, tài khoản nâng cao hoặc hệ thống quản trị lớn nếu chưa cần thiết.</li>
+    <li>Không ôm quá nhiều dữ liệu tuyển sinh chưa kiểm chứng.</li>
+    <li>Không cố gắng dự đoán điểm chuẩn chính xác tuyệt đối; chỉ nên thể hiện dưới dạng tham khảo và đánh giá xu hướng.</li>
+  </ul>
+
+  <div class="note">
+    <p>
+      Định hướng tốt nhất cho đồ án là làm ít chức năng hơn nhưng mỗi chức năng giải quyết đúng nhu cầu thật của học sinh. Trọng tâm nên là chất lượng gợi ý và khả năng hỗ trợ ra quyết định.
+    </p>
+  </div>
+
+  <h2>8. Chức năng chính của hệ thống</h2>
+  <table>
+    <tr>
+      <th>Nhóm chức năng</th>
+      <th>Mô tả</th>
+      <th>Mức ưu tiên</th>
+    </tr>
+    <tr>
+      <td>Tư vấn chọn trường</td>
+      <td>Người dùng nhập tổ hợp môn, điểm thi, lĩnh vực quan tâm để nhận danh sách trường phù hợp.</td>
+      <td>Cao</td>
+    </tr>
+    <tr>
+      <td>Phân loại mức độ phù hợp</td>
+      <td>Chia kết quả thành An toàn, Phù hợp, Thử thách dựa trên điểm người dùng và điểm chuẩn tham khảo.</td>
+      <td>Cao</td>
+    </tr>
+    <tr>
+      <td>Tìm kiếm và lọc trường</td>
+      <td>Tìm trường theo tên, khu vực, loại trường, nhóm ngành, học phí.</td>
+      <td>Cao</td>
+    </tr>
+    <tr>
+      <td>Tra cứu ngành học</td>
+      <td>Hiển thị thông tin ngành, môn học, nghề nghiệp, mức lương tham khảo, mức độ khó.</td>
+      <td>Cao</td>
+    </tr>
+    <tr>
+      <td>So sánh trường/ngành</td>
+      <td>Cho phép chọn tối đa 3 trường hoặc ngành để so sánh theo nhiều tiêu chí.</td>
+      <td>Trung bình</td>
+    </tr>
+    <tr>
+      <td>Danh sách nguyện vọng</td>
+      <td>Người dùng thêm trường/ngành vào danh sách, hệ thống đánh giá độ cân bằng và rủi ro.</td>
+      <td>Cao</td>
+    </tr>
+    <tr>
+      <td>Bản đồ trường đại học</td>
+      <td>Hiển thị vị trí trường trên bản đồ, hỗ trợ lựa chọn theo địa lý.</td>
+      <td>Trung bình</td>
+    </tr>
+    <tr>
+      <td>Quiz định hướng ngành</td>
+      <td>Gợi ý nhóm ngành phù hợp dựa trên câu hỏi sở thích, tính cách và môi trường làm việc mong muốn.</td>
+      <td>Trung bình</td>
+    </tr>
+  </table>
+
+  <h2>9. Luồng sử dụng đề xuất</h2>
+  <ol>
+    <li>Người dùng truy cập trang chủ UniMatch.</li>
+    <li>Chọn tổ hợp xét tuyển và nhập điểm từng môn.</li>
+    <li>Chọn lĩnh vực quan tâm, khu vực mong muốn và mức học phí có thể chi trả.</li>
+    <li>Hệ thống tính điểm phù hợp và gợi ý danh sách trường/ngành.</li>
+    <li>Kết quả được chia thành An toàn, Phù hợp và Thử thách.</li>
+    <li>Người dùng xem lý do gợi ý, điểm chuẩn các năm và thông tin trường/ngành.</li>
+    <li>Người dùng thêm lựa chọn vào danh sách nguyện vọng.</li>
+    <li>Hệ thống đánh giá danh sách nguyện vọng và đưa ra cảnh báo nếu danh sách quá rủi ro hoặc thiếu cân bằng.</li>
+    <li>Người dùng có thể xem vị trí trường trên bản đồ hoặc so sánh các lựa chọn.</li>
+  </ol>
+
+  <h2>10. Dữ liệu cần có</h2>
+  <table>
+    <tr>
+      <th>Loại dữ liệu</th>
+      <th>Trường thông tin cần có</th>
+    </tr>
+    <tr>
+      <td>Trường đại học</td>
+      <td>Tên trường, mã trường, loại trường, khu vực, địa chỉ, website, học phí, số ngành, tọa độ bản đồ.</td>
+    </tr>
+    <tr>
+      <td>Ngành học</td>
+      <td>Tên ngành, mã ngành, nhóm ngành, mô tả, môn học chính, cơ hội nghề nghiệp, mức lương tham khảo.</td>
+    </tr>
+    <tr>
+      <td>Điểm chuẩn</td>
+      <td>Trường, ngành, tổ hợp xét tuyển, điểm chuẩn theo từng năm, phương thức xét tuyển.</td>
+    </tr>
+    <tr>
+      <td>Tổ hợp môn</td>
+      <td>Mã tổ hợp, danh sách môn, nhóm khối.</td>
+    </tr>
+    <tr>
+      <td>Người dùng</td>
+      <td>Điểm từng môn, tổ hợp, sở thích, khu vực, học phí tối đa, loại trường ưu tiên.</td>
+    </tr>
+  </table>
+
+  <h2>11. Thuật toán gợi ý đề xuất</h2>
+  <p>
+    Thuật toán có thể bắt đầu từ mô hình tính điểm phù hợp theo trọng số. Đây là cách đơn giản, dễ giải thích trong đồ án và phù hợp với dữ liệu hiện tại.
+  </p>
+  <table>
+    <tr>
+      <th>Tiêu chí</th>
+      <th>Trọng số gợi ý</th>
+      <th>Ý nghĩa</th>
+    </tr>
+    <tr>
+      <td>Độ phù hợp điểm thi</td>
+      <td>40%</td>
+      <td>So sánh điểm người dùng với điểm chuẩn gần nhất hoặc trung bình các năm.</td>
+    </tr>
+    <tr>
+      <td>Độ phù hợp ngành/lĩnh vực</td>
+      <td>25%</td>
+      <td>So khớp sở thích người dùng với nhóm ngành của trường.</td>
+    </tr>
+    <tr>
+      <td>Khu vực học tập</td>
+      <td>15%</td>
+      <td>Ưu tiên trường ở khu vực người dùng mong muốn.</td>
+    </tr>
+    <tr>
+      <td>Học phí</td>
+      <td>10%</td>
+      <td>Đánh giá mức học phí có nằm trong khả năng chi trả hay không.</td>
+    </tr>
+    <tr>
+      <td>Xu hướng điểm chuẩn</td>
+      <td>10%</td>
+      <td>Cảnh báo nếu điểm chuẩn ngành đang tăng mạnh qua các năm.</td>
+    </tr>
+  </table>
+
+  <h3>11.1. Phân loại kết quả</h3>
+  <ul>
+    <li><span class="strong">An toàn:</span> điểm người dùng cao hơn điểm chuẩn tham khảo từ 2 điểm trở lên.</li>
+    <li><span class="strong">Phù hợp:</span> điểm người dùng nằm quanh điểm chuẩn, chênh lệch khoảng -1 đến +2 điểm.</li>
+    <li><span class="strong">Thử thách:</span> điểm người dùng thấp hơn điểm chuẩn từ 1 điểm trở lên nhưng vẫn có thể cân nhắc nếu yêu thích ngành/trường.</li>
+  </ul>
+
+  <h3>11.2. Giải thích kết quả</h3>
+  <p>
+    Mỗi kết quả gợi ý nên đi kèm lý do ngắn gọn, ví dụ: "Trường này phù hợp vì điểm của bạn cao hơn điểm chuẩn gần nhất 1.5 điểm, ngành thuộc nhóm Công nghệ thông tin, học phí nằm trong mức bạn chọn và trường ở khu vực miền Trung."
+  </p>
+
+  <h2>12. Kiến trúc hệ thống đề xuất</h2>
+  <h3>12.1. Giai đoạn hiện tại</h3>
+  <p>
+    Hệ thống đang phù hợp với mô hình website tĩnh gồm HTML, CSS và JavaScript. Dữ liệu được lưu trực tiếp trong các file JavaScript và trạng thái tư vấn được lưu ở localStorage của trình duyệt.
+  </p>
+
+  <h3>12.2. Giai đoạn mở rộng</h3>
+  <p>
+    Nếu phát triển xa hơn, có thể chuyển dữ liệu sang backend hoặc file JSON riêng để dễ cập nhật. Kiến trúc đề xuất:
+  </p>
+  <ul>
+    <li><span class="strong">Frontend:</span> HTML/CSS/JavaScript hoặc framework như React/Vue nếu cần mở rộng giao diện.</li>
+    <li><span class="strong">Backend:</span> Node.js/Express hoặc PHP/Laravel để quản lý dữ liệu tuyển sinh.</li>
+    <li><span class="strong">Database:</span> MySQL, PostgreSQL hoặc SQLite cho bản đồ án nhỏ.</li>
+    <li><span class="strong">Map:</span> Leaflet + OpenStreetMap.</li>
+    <li><span class="strong">Storage:</span> localStorage cho bản demo, database cho bản hoàn chỉnh.</li>
+  </ul>
+
+  <h2>13. Các màn hình chính</h2>
+  <ul>
+    <li><span class="strong">Trang chủ:</span> giới thiệu ngắn và form tư vấn chọn trường.</li>
+    <li><span class="strong">Trang kết quả gợi ý:</span> danh sách trường/ngành được phân loại theo mức độ rủi ro.</li>
+    <li><span class="strong">Trang danh sách trường:</span> tìm kiếm, lọc, xem thông tin và so sánh trường.</li>
+    <li><span class="strong">Trang ngành học:</span> tra cứu ngành, quiz định hướng và so sánh ngành.</li>
+    <li><span class="strong">Trang bản đồ:</span> hiển thị vị trí trường và lọc theo nhóm trường.</li>
+    <li><span class="strong">Trang danh sách nguyện vọng:</span> quản lý lựa chọn và đánh giá chiến lược đăng ký.</li>
+  </ul>
+
+  <h2>14. Lộ trình phát triển đề tài</h2>
+  <table>
+    <tr>
+      <th>Giai đoạn</th>
+      <th>Nội dung thực hiện</th>
+      <th>Kết quả mong muốn</th>
+    </tr>
+    <tr>
+      <td>Giai đoạn 1</td>
+      <td>Hoàn thiện giao diện, sửa đường dẫn, chuẩn hóa dữ liệu trường/ngành/tổ hợp.</td>
+      <td>Website chạy ổn định, không lỗi điều hướng.</td>
+    </tr>
+    <tr>
+      <td>Giai đoạn 2</td>
+      <td>Bổ sung điểm chuẩn mẫu theo năm và cải tiến thuật toán gợi ý.</td>
+      <td>Kết quả gợi ý có cơ sở hơn và dễ giải thích.</td>
+    </tr>
+    <tr>
+      <td>Giai đoạn 3</td>
+      <td>Xây dựng chức năng danh sách nguyện vọng và đánh giá rủi ro.</td>
+      <td>Tạo điểm khác biệt chính cho đề tài.</td>
+    </tr>
+    <tr>
+      <td>Giai đoạn 4</td>
+      <td>Hoàn thiện so sánh trường/ngành, bản đồ và báo cáo kết quả.</td>
+      <td>Hệ thống đủ chức năng để demo và bảo vệ.</td>
+    </tr>
+    <tr>
+      <td>Giai đoạn 5</td>
+      <td>Nếu có thời gian, thêm backend quản trị dữ liệu.</td>
+      <td>Hệ thống dễ cập nhật dữ liệu tuyển sinh hơn.</td>
+    </tr>
+  </table>
+
+  <h2>15. Tiêu chí đánh giá thành công</h2>
+  <ul>
+    <li>Người dùng có thể nhận được danh sách trường/ngành phù hợp sau vài bước nhập thông tin.</li>
+    <li>Kết quả gợi ý được giải thích rõ ràng, không chỉ hiển thị điểm phần trăm.</li>
+    <li>Hệ thống phân loại được mức độ rủi ro của từng lựa chọn.</li>
+    <li>Người dùng có thể lập danh sách nguyện vọng cân bằng.</li>
+    <li>Giao diện dễ sử dụng, phù hợp với học sinh và phụ huynh.</li>
+    <li>Dữ liệu có cấu trúc rõ ràng, dễ mở rộng hoặc chuyển sang database.</li>
+  </ul>
+
+  <h2>16. Kết luận</h2>
+  <p>
+    UniMatch nên được phát triển theo hướng trở thành công cụ hỗ trợ ra quyết định tuyển sinh, thay vì chỉ là website tra cứu trường đại học. Trọng tâm của đề tài là giúp học sinh hiểu rõ mức độ phù hợp của từng lựa chọn, đánh giá rủi ro và xây dựng danh sách nguyện vọng hợp lý.
+  </p>
+  <p>
+    Với định hướng này, đề tài có tính thực tế cao, không dư thừa chức năng và có điểm khác biệt rõ so với các website tuyển sinh thông thường trên thị trường.
+  </p>
+</body>
+</html>

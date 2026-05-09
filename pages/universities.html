@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh sách trường đại học - UniMatch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span class="brand-mark">U</span> UniMatch</a>
+    <nav class="site-nav">
+      <a href="../index.html">Trang chủ</a>
+      <a class="is-active" href="universities.html">Trường ĐH</a>
+      <a href="majors.html">Ngành học</a>
+      <a href="map.html">Bản đồ</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Mở menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <span class="section-badge">Tra cứu trường</span>
+        <h1>Danh sách trường đại học</h1>
+        <p>Tìm kiếm, lọc và so sánh trường theo khu vực, loại trường, nhóm ngành và học phí tham khảo.</p>
+
+        <div class="toolbar">
+          <input class="search-input" id="search" type="search" placeholder="Tìm theo tên trường, mã trường, thành phố">
+          <select id="type" class="search-input">
+            <option value="all">Tất cả loại trường</option>
+            <option value="public">Công lập</option>
+            <option value="private">Tư thục</option>
+          </select>
+          <select id="region" class="search-input">
+            <option value="all">Tất cả khu vực</option>
+            <option value="north">Miền Bắc</option>
+            <option value="central">Miền Trung</option>
+            <option value="south">Miền Nam</option>
+          </select>
+          <select id="category" class="search-input">
+            <option value="all">Tất cả nhóm ngành</option>
+          </select>
+        </div>
+
+        <p><strong id="resultCount">0 trường</strong> được tìm thấy</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid-list" id="universitiesGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="compare-dock" id="compareDock">
+    <div>
+      <strong>Danh sách so sánh</strong>
+      <div class="dock-items" id="compareItems"></div>
+    </div>
+    <div class="row-actions">
+      <button class="btn-ghost" id="clearCompare">Xóa</button>
+      <button class="btn-primary" id="openCompare">So sánh</button>
+    </div>
+  </div>
+
+  <div class="modal" id="compareModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span class="section-badge">So sánh</span>
+          <h2>So sánh trường đại học</h2>
+        </div>
+        <button class="mini-btn" id="closeModal">Đóng</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <a class="brand" href="../index.html"><span class="brand-mark">U</span> UniMatch</a>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="majors.html">Ngành học</a>
+        <a href="map.html">Bản đồ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/app-data.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/universities-page.js"></script>
+</body>
+</html>

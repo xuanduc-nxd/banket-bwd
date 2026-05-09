@@ -1,32 +1,44 @@
-# UniBlue
+# UniMatch
 
-Website tư vấn chọn trường đại học dùng HTML, CSS và JavaScript thuần.
+UniMatch là website tĩnh hỗ trợ học sinh xây dựng chiến lược chọn nguyện vọng đại học dựa trên điểm thi, tổ hợp xét tuyển, lĩnh vực quan tâm, khu vực và học phí.
 
 ## Cấu trúc
 
 ```text
-BWD-demo/
-├── assets/
-│   ├── icons/
-│   └── images/
+BestWebDesign/
+├── index.html
 ├── css/
-│   └── style.css
+│   ├── style.css
+│   ├── base.css
+│   ├── layout.css
+│   ├── components.css
+│   ├── pages.css
+│   └── responsive.css
 ├── js/
-│   └── main.js
+│   ├── app-data.js
+│   ├── app.js
+│   ├── universities-page.js
+│   ├── majors-page.js
+│   └── map-page.js
 ├── pages/
-│   ├── detail.html
-│   ├── map.html
-│   └── suggestions.html
-└── index.html
+│   ├── universities.html
+│   ├── majors.html
+│   └── map.html
+└── docs/
+    └── Thiet_ke_de_tai_UniMatch.doc
 ```
 
-## Các trang chính
+## Chức năng chính
 
-- `index.html`: Trang chủ Blue với form nhập liệu trung tâm, hashtag, tiêu đề gradient xanh và phần About Us.
-- `pages/suggestions.html`: Danh sách trường theo chiều dọc, có tag "Phù hợp nhất" và "Cân nhắc".
-- `pages/map.html`: Bản đồ minh họa vị trí trường và địa chỉ nhà.
-- `pages/detail.html`: Trang chi tiết trường, học phí và bảng điểm chuẩn.
+- Tư vấn trường/ngành theo tổ hợp môn, điểm thi, sở thích, khu vực và học phí.
+- Phân loại lựa chọn thành An toàn, Phù hợp và Thử thách.
+- Giải thích lý do gợi ý dựa trên điểm, xu hướng điểm chuẩn và tiêu chí cá nhân.
+- Tra cứu, lọc và so sánh trường đại học.
+- Khám phá ngành học, quiz định hướng và so sánh ngành.
+- Xem vị trí trường trên bản đồ bằng Leaflet/OpenStreetMap.
 
 ## Cách chạy
 
-Mở trực tiếp file `index.html` bằng trình duyệt.
+Mở trực tiếp `index.html` bằng trình duyệt.
+
+Trang bản đồ cần kết nối mạng để tải Leaflet và bản đồ OpenStreetMap.

@@ -3,576 +3,214 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UniMatch - Tìm Trường Đại Học Phù Hợp</title>
+  <title>UniMatch - Tư vấn chọn nguyện vọng đại học</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Header -->
   <header class="site-header">
-    <a href="index.html" class="brand">UniMatch</a>
+    <a class="brand" href="index.html">
+      <span class="brand-mark">U</span>
+      UniMatch
+    </a>
     <nav class="site-nav" id="mainNav">
-      <a href="#home" class="is-active">Trang chủ</a>
-      <a href="universities.html">Trường ĐH</a>
-      <a href="majors.html">Ngành học</a>
+      <a class="is-active" href="index.html">Trang chủ</a>
+      <a href="pages/universities.html">Trường ĐH</a>
+      <a href="pages/majors.html">Ngành học</a>
       <a href="pages/map.html">Bản đồ</a>
       <a href="#about">Giới thiệu</a>
     </nav>
-    <div class="header-actions">
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
+    <button class="nav-toggle" aria-label="Mở menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
   <main>
-    <!-- Hero Section -->
-    <section class="hero-section" id="home">
-      <div class="hero-content">
-        <div class="hero-badge" data-animate="fadeInDown">
-          <span class="badge-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-              <polyline points="22 4 12 14.01 9 11.01"/>
-            </svg>
-          </span>
-          Hơn 256 trường đại học & cao đẳng
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Tư vấn nguyện vọng có chiến lược</span>
+          <h1>Chọn trường đại học <span>ít rủi ro hơn</span>, rõ lý do hơn.</h1>
+          <p class="hero-lead">
+            UniMatch phân tích điểm thi, tổ hợp xét tuyển, sở thích, khu vực và học phí để gợi ý trường/ngành theo ba nhóm: An toàn, Phù hợp và Thử thách.
+          </p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="#match">Bắt đầu tư vấn</a>
+            <a class="btn-secondary" href="pages/majors.html">Khám phá ngành</a>
+          </div>
         </div>
-        <h1 data-animate="fadeInUp" data-delay="100">
-          Tìm kiếm ngôi trường<br>
-          <span>tương lai hoàn hảo</span>
-        </h1>
-        <p data-animate="fadeInUp" data-delay="200">
-          UniMatch giúp bạn định hướng chọn trường đại học phù hợp với điểm thi, 
-          khối xét tuyển và lĩnh vực yêu thích. Gợi ý thông minh, chính xác.
-        </p>
+
+        <aside class="insight-panel">
+          <p class="panel-title">Chiến lược nguyện vọng mẫu</p>
+          <div class="strategy-stack">
+            <div class="strategy-card">
+              <span class="strategy-dot safe"></span>
+              <div><strong>An toàn</strong><span>Cao hơn điểm chuẩn tham khảo từ 2 điểm</span></div>
+              <b>30%</b>
+            </div>
+            <div class="strategy-card">
+              <span class="strategy-dot fit"></span>
+              <div><strong>Phù hợp</strong><span>Điểm gần ngưỡng, ngành đúng định hướng</span></div>
+              <b>50%</b>
+            </div>
+            <div class="strategy-card">
+              <span class="strategy-dot reach"></span>
+              <div><strong>Thử thách</strong><span>Trường/ngành mơ ước, cần cân nhắc rủi ro</span></div>
+              <b>20%</b>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <!-- Smart Match Form -->
-    <section class="match-section" id="match">
+    <section class="section" id="match">
       <div class="container">
-        <div class="section-header" data-animate="fadeInUp">
-          <span class="section-badge">Định hướng</span>
-          <h2>Tìm trường phù hợp với bạn</h2>
-          <p>Nhập thông tin để nhận gợi ý trường đại học tốt nhất</p>
+        <div class="section-header">
+          <div>
+            <span class="section-badge">Smart Match</span>
+            <h2>Tạo chiến lược chọn nguyện vọng</h2>
+            <p>Đi từng bước ngắn, kết quả cuối cùng sẽ giải thích vì sao trường/ngành đó phù hợp với bạn.</p>
+          </div>
         </div>
 
-        <div class="match-form-container" data-animate="fadeInUp" data-delay="100">
-          <!-- Step Indicator -->
-          <div class="step-indicator">
-            <div class="step-item active" data-step="1">
-              <div class="step-number">1</div>
-              <div class="step-label">Chọn khối</div>
-            </div>
-            <div class="step-line"></div>
-            <div class="step-item" data-step="2">
-              <div class="step-number">2</div>
-              <div class="step-label">Nhập điểm</div>
-            </div>
-            <div class="step-line"></div>
-            <div class="step-item" data-step="3">
-              <div class="step-number">3</div>
-              <div class="step-label">Lĩnh vực</div>
-            </div>
-            <div class="step-line"></div>
-            <div class="step-item" data-step="4">
-              <div class="step-number">4</div>
-              <div class="step-label">Kết quả</div>
-            </div>
+        <div class="smart-card">
+          <div class="steps">
+            <div class="step-tab is-active" data-step="1"><span class="step-number">1</span> Tổ hợp</div>
+            <div class="step-tab" data-step="2"><span class="step-number">2</span> Điểm</div>
+            <div class="step-tab" data-step="3"><span class="step-number">3</span> Ưu tiên</div>
+            <div class="step-tab" data-step="4"><span class="step-number">4</span> Kết quả</div>
           </div>
 
-          <!-- Form Steps -->
-          <form class="smart-match-form" id="smartMatchForm">
-            <!-- Step 1: Choose Subject Group -->
-            <div class="form-step active" data-step="1">
-              <div class="step-header">
-                <h3>Bước 1: Chọn khối xét tuyển</h3>
-                <p>Chọn khối thi phù hợp với bạn</p>
-              </div>
-              
-              <div class="subject-group-grid">
-                <div class="subject-group-btn" data-group="A" data-subjects='["A00","A01","A02","A03","A04","A05","A06","A07","A08","A09","A10","A11","A12","A13","A14","A15","A16","A17","A18","A19"]'>
-                  <span class="group-letter">A</span>
-                  <span class="group-fullname">Khối A</span>
-                  <span class="group-desc">Toán, Lý, Hóa</span>
-                </div>
-                
-                <div class="subject-group-btn" data-group="B" data-subjects='["B00","B01","B02","B03","B04","B05","B08"]'>
-                  <span class="group-letter">B</span>
-                  <span class="group-fullname">Khối B</span>
-                  <span class="group-desc">Toán, Hóa, Sinh</span>
-                </div>
-                
-                <div class="subject-group-btn" data-group="C" data-subjects='["C00","C01","C02","C03","C04","C05","C06","C07","C08","C09","C10","C12","C13","C14","C15","C16","C17","C18","C19","C20"]'>
-                  <span class="group-letter">C</span>
-                  <span class="group-fullname">Khối C</span>
-                  <span class="group-desc">Văn, Sử, Địa</span>
-                </div>
-                
-                <div class="subject-group-btn" data-group="D" data-subjects='["D01","D02","D03","D04","D05","D06","D07","D08","D09","D10","D11","D12"]'>
-                  <span class="group-letter">D</span>
-                  <span class="group-fullname">Khối D</span>
-                  <span class="group-desc">Toán, Văn, Anh</span>
-                </div>
-                
-                <div class="subject-group-btn" data-group="other" data-subjects='["M00","M01","M02","M03","M04","M05","N00","N01","N02","N03","N04","H00","H01","H02","H03","H04","S00","S01","S02","S03","T00","T01","T02","T03","V00","V01","V02","R00","R01","R02","K00","K01","K02","K03","K04"]'>
-                  <span class="group-letter">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                  </span>
-                  <span class="group-fullname">Khối khác</span>
-                  <span class="group-desc">M, N, H, S, T, V, R, K</span>
+          <form id="strategyForm">
+            <section class="form-step is-active" data-step="1">
+              <div class="form-grid">
+                <div class="field full">
+                  <label for="combination">Tổ hợp xét tuyển</label>
+                  <select id="combination" required>
+                    <option value="">Chọn tổ hợp môn</option>
+                  </select>
                 </div>
               </div>
-
-              <!-- Subject Combination Dropdown -->
-              <div class="combination-select-wrapper" id="combinationSelectWrapper" style="display: none;">
-                <label for="combinationSelect">Chọn tổ hợp môn cụ thể:</label>
-                <select id="combinationSelect" class="combination-select">
-                  <option value="">-- Chọn tổ hợp môn --</option>
-                </select>
+              <div class="form-actions">
+                <button class="btn-primary" type="button" data-next>Tiếp tục</button>
               </div>
+            </section>
 
-              <div class="step-action">
-                <button type="button" class="btn-next" id="step1Next" disabled>
-                  Tiếp theo: Nhập điểm
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                </button>
+            <section class="form-step" data-step="2">
+              <div>
+                <span class="field-label">Nhập điểm từng môn</span>
+                <div class="score-grid" id="scoreGrid"></div>
+                <div class="score-total">Tổng điểm: <span id="scoreTotal">0.00 / 30</span></div>
               </div>
-            </div>
-
-            <!-- Step 2: Enter Scores -->
-            <div class="form-step" data-step="2">
-              <div class="step-header">
-                <h3>Bước 2: Nhập điểm dự kiến</h3>
-                <p>Nhập điểm của bạn cho tổ hợp <span id="selectedCombination">A00</span></p>
+              <div class="form-actions">
+                <button class="btn-ghost" type="button" data-prev>Quay lại</button>
+                <button class="btn-primary" type="button" data-next>Tiếp tục</button>
               </div>
-              
-              <div class="score-inputs-grid" id="scoreInputsGrid">
-                <!-- Dynamic score inputs will be inserted here -->
-              </div>
+            </section>
 
-              <div class="step-action">
-                <button type="button" class="btn-prev" id="step2Prev">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
-                  </svg>
-                  Quay lại
-                </button>
-                <button type="button" class="btn-next" id="step2Next" disabled>
-                  Tiếp theo: Chọn lĩnh vực
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <!-- Step 3: Choose Interests -->
-            <div class="form-step" data-step="3">
-              <div class="step-header">
-                <h3>Bước 3: Chọn lĩnh vực yêu thích</h3>
-                <p>Chọn những lĩnh vực bạn quan tâm để nhận gợi ý chính xác hơn</p>
-              </div>
-              
-              <div class="interests-grid">
-                <label class="interest-card">
-                  <input type="checkbox" name="interests" value="cntt">
-                  <div class="interest-content">
-                    <div class="interest-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                        <line x1="8" y1="21" x2="16" y2="21"/>
-                        <line x1="12" y1="17" x2="12" y2="21"/>
-                      </svg>
-                    </div>
-                    <span class="interest-name">Công nghệ thông tin</span>
-                    <span class="interest-desc">CNTT, Phần mềm, AI</span>
-                  </div>
-                </label>
-
-                <label class="interest-card">
-                  <input type="checkbox" name="interests" value="kinhte">
-                  <div class="interest-content">
-                    <div class="interest-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="12" y1="1" x2="12" y2="23"/>
-                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                      </svg>
-                    </div>
-                    <span class="interest-name">Kinh tế - Tài chính</span>
-                    <span class="interest-desc">Kinh tế, Ngân hàng, Kế toán</span>
-                  </div>
-                </label>
-
-                <label class="interest-card">
-                  <input type="checkbox" name="interests" value="yte">
-                  <div class="interest-content">
-                    <div class="interest-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                      </svg>
-                    </div>
-                    <span class="interest-name">Y dược - Sức khỏe</span>
-                    <span class="interest-desc">Y khoa, Dược, Điều dưỡng</span>
-                  </div>
-                </label>
-
-                <label class="interest-card">
-                  <input type="checkbox" name="interests" value="kysu">
-                  <div class="interest-content">
-                    <div class="interest-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-                        <polyline points="2 17 12 22 22 17"/>
-                        <polyline points="2 12 12 17 22 12"/>
-                      </svg>
-                    </div>
-                    <span class="interest-name">Kỹ sư - Kiến trúc</span>
-                    <span class="interest-desc">Xây dựng, Cơ khí, Kiến trúc</span>
-                  </div>
-                </label>
-
-                <label class="interest-card">
-                  <input type="checkbox" name="interests" value="marketing">
-                  <div class="interest-content">
-                    <div class="interest-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-                      </svg>
-                    </div>
-                    <span class="interest-name">Marketing - Truyền thông</span>
-                    <span class="interest-desc">Marketing, Báo chí, PR</span>
-                  </div>
-                </label>
-
-                <label class="interest-card">
-                  <input type="checkbox" name="interests" value="luat">
-                  <div class="interest-content">
-                    <div class="interest-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 16v-4"/>
-                        <path d="M12 8h.01"/>
-                      </svg>
-                    </div>
-                    <span class="interest-name">Luật - Pháp lý</span>
-                    <span class="interest-desc">Luật, Tư pháp, Hành chính</span>
-                  </div>
-                </label>
-
-                <label class="interest-card">
-                  <input type="checkbox" name="interests" value="sudp">
-                  <div class="interest-content">
-                    <div class="interest-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                      </svg>
-                    </div>
-                    <span class="interest-name">Sư phạm - Giáo dục</span>
-                    <span class="interest-desc">Sư phạm, Giáo dục mầm non</span>
-                  </div>
-                </label>
-
-                <label class="interest-card">
-                  <input type="checkbox" name="interests" value="nn">
-                  <div class="interest-content">
-                    <div class="interest-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="2" y1="12" x2="22" y2="12"/>
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                      </svg>
-                    </div>
-                    <span class="interest-name">Ngoại ngữ - Du lịch</span>
-                    <span class="interest-desc">NN, Du lịch, Khách sạn</span>
-                  </div>
-                </label>
-
-                <label class="interest-card">
-                  <input type="checkbox" name="interests" value="nnl">
-                  <div class="interest-content">
-                    <div class="interest-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                      </svg>
-                    </div>
-                    <span class="interest-name">An ninh - Quân sự</span>
-                    <span class="interest-desc">An ninh, Công an, Quân đội</span>
-                  </div>
-                </label>
-
-                <label class="interest-card">
-                  <input type="checkbox" name="interests" value="nangsong">
-                  <div class="interest-content">
-                    <div class="interest-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18V5l12-2v13"/>
-                        <circle cx="6" cy="18" r="3"/>
-                        <circle cx="18" cy="16" r="3"/>
-                      </svg>
-                    </div>
-                    <span class="interest-name">Nghệ thuật - Năng khiếu</span>
-                    <span class="interest-desc">Mỹ thuật, Âm nhạc, Sân khấu</span>
-                  </div>
-                </label>
-              </div>
-
-              <div class="step-action">
-                <button type="button" class="btn-prev" id="step3Prev">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
-                  </svg>
-                  Quay lại
-                </button>
-                <button type="submit" class="btn-search" id="searchBtn">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path d="m21 21-4.3-4.3"/>
-                  </svg>
-                  Tìm trường phù hợp
-                </button>
-              </div>
-            </div>
-
-            <!-- Step 4: Results -->
-            <div class="form-step" data-step="4">
-              <div class="step-header">
-                <h3>Kết quả gợi ý</h3>
-                <p>Dựa trên thông tin của bạn, đây là top 10 trường phù hợp nhất</p>
-              </div>
-              
-              <div class="results-summary" id="resultsSummary">
-                <div class="summary-item">
-                  <span class="summary-label">Tổ hợp môn:</span>
-                  <span class="summary-value" id="summaryCombination">A00</span>
+            <section class="form-step" data-step="3">
+              <div class="form-grid">
+                <div class="field full">
+                  <span class="field-label">Lĩnh vực bạn quan tâm</span>
+                  <div class="chip-grid" id="interestGrid"></div>
                 </div>
-                <div class="summary-item">
-                  <span class="summary-label">Tổng điểm:</span>
-                  <span class="summary-value" id="summaryScore">--</span>
+                <div class="field">
+                  <label for="region">Khu vực ưu tiên</label>
+                  <select id="region">
+                    <option value="all">Toàn quốc</option>
+                    <option value="north">Miền Bắc</option>
+                    <option value="central">Miền Trung</option>
+                    <option value="south">Miền Nam</option>
+                  </select>
                 </div>
-                <div class="summary-item">
-                  <span class="summary-label">Lĩnh vực:</span>
-                  <span class="summary-value" id="summaryInterests">--</span>
+                <div class="field">
+                  <label for="schoolType">Loại trường</label>
+                  <select id="schoolType">
+                    <option value="all">Không giới hạn</option>
+                    <option value="public">Công lập</option>
+                    <option value="private">Tư thục</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="maxTuition">Học phí tối đa/năm (triệu)</label>
+                  <input id="maxTuition" type="number" min="0" step="1" placeholder="Ví dụ: 30">
                 </div>
               </div>
-
-              <div class="results-list" id="resultsList">
-                <!-- Results will be inserted here -->
+              <div class="form-actions">
+                <button class="btn-ghost" type="button" data-prev>Quay lại</button>
+                <button class="btn-primary" type="submit">Xem kết quả</button>
               </div>
+            </section>
 
-              <div class="step-action">
-                <button type="button" class="btn-restart" id="restartBtn">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
-                    <path d="M21 3v5h-5"/>
-                  </svg>
-                  Tìm kiếm lại
-                </button>
+            <section class="form-step" data-step="4">
+              <div class="results-layout">
+                <div>
+                  <div class="section-header">
+                    <div>
+                      <span class="section-badge">Kết quả</span>
+                      <h2>Danh sách gợi ý</h2>
+                    </div>
+                  </div>
+                  <div class="results-list" id="resultsList"></div>
+                  <div class="form-actions">
+                    <a class="btn-secondary" href="pages/map.html">Xem trên bản đồ</a>
+                    <button class="btn-ghost" type="button" id="restartPlan">Làm lại</button>
+                  </div>
+                </div>
+                <aside class="side-summary smart-card" id="resultSummary"></aside>
               </div>
-            </div>
+            </section>
           </form>
         </div>
       </div>
     </section>
 
-    <!-- University Types Selection -->
-    <section class="university-types-section" id="universities">
+    <section class="section" id="about">
       <div class="container">
-        <div class="section-header" data-animate="fadeInUp">
-          <span class="section-badge">Lựa chọn</span>
-          <h2>Chọn loại trường đại học</h2>
-          <p>Tìm kiếm trường đại học phù hợp với bạn</p>
-        </div>
-        
-        <div class="university-types-grid">
-          <a href="universities.html?type=public" class="university-type-card" data-animate="fadeInUp" data-delay="100">
-            <div class="type-card-icon type-public">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M3 21h18"/>
-                <path d="M5 21V7l8-4v18"/>
-                <path d="M19 21V11l-6-4"/>
-                <path d="M9 9v.01"/>
-                <path d="M9 12v.01"/>
-                <path d="M9 15v.01"/>
-                <path d="M9 18v.01"/>
-              </svg>
-            </div>
-            <div class="type-card-content">
-              <h3>Trường Công Lập</h3>
-              <p>Các trường do Nhà nước đầu tư và quản lý</p>
-              <div class="type-card-stats">
-                <span class="stat-item">
-                  <strong>30+</strong>
-                  <small>Trường</small>
-                </span>
-                <span class="stat-item">
-                  <strong>2M+</strong>
-                  <small>Sinh viên</small>
-                </span>
-              </div>
-              <div class="type-card-btn">
-                <span>Xem danh sách</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M5 12h14"/>
-                  <path d="m12 5 7 7-7 7"/>
-                </svg>
-              </div>
-            </div>
-          </a>
-
-          <a href="universities.html?type=private" class="university-type-card" data-animate="fadeInUp" data-delay="200">
-            <div class="type-card-icon type-private">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                <path d="M2 17l10 5 10-5"/>
-                <path d="M2 12l10 5 10-5"/>
-              </svg>
-            </div>
-            <div class="type-card-content">
-              <h3>Trường Tư Thục</h3>
-              <p>Các trường do tổ chức hoặc cá nhân thành lập</p>
-              <div class="type-card-stats">
-                <span class="stat-item">
-                  <strong>20+</strong>
-                  <small>Trường</small>
-                </span>
-                <span class="stat-item">
-                  <strong>200K+</strong>
-                  <small>Sinh viên</small>
-                </span>
-              </div>
-              <div class="type-card-btn">
-                <span>Xem danh sách</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M5 12h14"/>
-                  <path d="m12 5 7 7-7 7"/>
-                </svg>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about-section" id="about">
-      <div class="container">
-        <div class="about-grid">
-          <div class="about-content" data-animate="fadeInLeft">
-            <span class="section-badge">Về UniMatch</span>
-            <h2>Ra quyết định chọn trường tự tin hơn</h2>
+        <div class="section-header">
+          <div>
+            <span class="section-badge">Khác biệt</span>
+            <h2>Không chỉ tìm trường, mà giúp chọn nguyện vọng có cơ sở</h2>
             <p>
-              UniMatch là nền tảng hỗ trợ học sinh lựa chọn trường đại học phù hợp, 
-              kết hợp giữa điểm thi, khối xét tuyển, sở thích ngành nghề và dữ liệu 
-              tuyển sinh từ các trường đại học trên toàn quốc.
+              UniMatch ưu tiên logic ra quyết định: giải thích điểm mạnh/yếu của từng lựa chọn, cảnh báo xu hướng điểm chuẩn và hỗ trợ so sánh theo các tiêu chí học sinh thật sự quan tâm.
             </p>
-            
-            <div class="about-stats">
-              <div class="about-stat">
-                <strong>256+</strong>
-                <span>Trường đại học</span>
-              </div>
-              <div class="about-stat">
-                <strong>1000+</strong>
-                <span>Ngành xét tuyển</span>
-              </div>
-              <div class="about-stat">
-                <strong>2.3M+</strong>
-                <span>Sinh viên</span>
-              </div>
-            </div>
           </div>
-          
-          <div class="about-cta" data-animate="fadeInRight" data-delay="200">
-            <div class="cta-card">
-              <div class="cta-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                  <polyline points="22 4 12 14.01 9 11.01"/>
-                </svg>
-              </div>
-              <h3>Bắt đầu ngay</h3>
-              <p>Điền thông tin của bạn để nhận gợi ý trường phù hợp nhất</p>
-              <a href="#match" class="btn-primary">
-                Tìm trường ngay
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="9 18 15 12 9 6"/>
-                </svg>
-              </a>
-            </div>
-          </div>
+        </div>
+        <div class="trend-grid">
+          <article class="tool-card trend-card">
+            <span class="pill safe">1</span>
+            <h3>Phân tầng rủi ro</h3>
+            <p>Kết quả được chia thành An toàn, Phù hợp và Thử thách thay vì một danh sách chung chung.</p>
+          </article>
+          <article class="tool-card trend-card">
+            <span class="pill fit">2</span>
+            <h3>Giải thích minh bạch</h3>
+            <p>Mỗi gợi ý có lý do dựa trên điểm, ngành, khu vực, học phí và xu hướng điểm chuẩn.</p>
+          </article>
+          <article class="tool-card trend-card">
+            <span class="pill reach">3</span>
+            <h3>Dữ liệu gọn, dễ mở rộng</h3>
+            <p>Dữ liệu trường, ngành và điểm chuẩn được tách riêng để thuận tiện nâng cấp thành database.</p>
+          </article>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <a href="index.html" class="brand">UniMatch</a>
-          <p>Hỗ trợ học sinh chọn trường đại học phù hợp</p>
-        </div>
-        <div class="footer-links">
-          <div class="footer-column">
-            <h4>Trường học</h4>
-            <a href="universities.html">Top trường</a>
-            <a href="universities.html">Theo khu vực</a>
-            <a href="universities.html">Theo ngành</a>
-          </div>
-          <div class="footer-column">
-            <h4>Hỗ trợ</h4>
-            <a href="#about">Giới thiệu</a>
-            <a href="#">Hướng dẫn</a>
-            <a href="#">Liên hệ</a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 UniMatch. Mọi quyền được bảo lưu.</p>
+    <div class="container footer-grid">
+      <a class="brand" href="index.html"><span class="brand-mark">U</span> UniMatch</a>
+      <div class="footer-links">
+        <a href="pages/universities.html">Trường ĐH</a>
+        <a href="pages/majors.html">Ngành học</a>
+        <a href="pages/map.html">Bản đồ</a>
       </div>
     </div>
   </footer>
 
-  <script src="./js/main.js"></script>
-  <script src="./js/subject-data.js"></script>
-  <script src="./js/universities.js"></script>
-  <script src="./js/smart-match.js"></script>
-
-  <!-- Back to Top Button -->
-  <button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Lên đầu trang">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="18 15 12 9 6 15"></polyline>
-    </svg>
-  </button>
-  <script>
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    window.addEventListener('scroll', function() {
-      var btn = document.getElementById('backToTop');
-      if (btn) {
-        if (window.scrollY > 400) {
-          btn.classList.add('show');
-        } else {
-          btn.classList.remove('show');
-        }
-      }
-    });
-  </script>
+  <script src="js/app-data.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

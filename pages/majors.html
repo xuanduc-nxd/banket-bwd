@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ngành học - UniMatch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span class="brand-mark">U</span> UniMatch</a>
+    <nav class="site-nav">
+      <a href="../index.html">Trang chủ</a>
+      <a href="universities.html">Trường ĐH</a>
+      <a class="is-active" href="majors.html">Ngành học</a>
+      <a href="map.html">Bản đồ</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Mở menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <span class="section-badge">Định hướng ngành</span>
+        <h1>Khám phá ngành học</h1>
+        <p>Tìm ngành theo sở thích, tổ hợp xét tuyển, độ khó, cơ hội nghề nghiệp và mức lương tham khảo.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container major-layout">
+        <aside class="filter-panel smart-card">
+          <div class="field">
+            <label for="search">Tìm ngành</label>
+            <input id="search" type="search" placeholder="Ví dụ: AI, Marketing, Y khoa">
+          </div>
+          <div class="field" style="margin-top:14px">
+            <label for="difficulty">Độ khó tối đa</label>
+            <select id="difficulty">
+              <option value="10">Tất cả</option>
+              <option value="6">Dễ đến trung bình</option>
+              <option value="8">Khá khó</option>
+            </select>
+          </div>
+          <div style="margin-top:18px">
+            <span class="field-label">Nhóm ngành</span>
+            <div class="chip-grid" id="categoryChips" style="margin-top:10px"></div>
+          </div>
+        </aside>
+
+        <div>
+          <div class="quiz-box smart-card" id="quizBox"></div>
+
+          <div class="section-header">
+            <div>
+              <span class="section-badge">Danh sách</span>
+              <h2>Tất cả ngành học</h2>
+            </div>
+            <strong id="majorCount">0 ngành</strong>
+          </div>
+          <div class="grid-list" id="majorsGrid"></div>
+
+          <div class="section-header" style="margin-top:34px">
+            <div>
+              <span class="section-badge">Xu hướng</span>
+              <h2>Nhóm ngành đáng chú ý</h2>
+            </div>
+          </div>
+          <div class="trend-grid" id="trendGrid"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="compare-dock" id="compareDock">
+    <div>
+      <strong>Ngành đang so sánh</strong>
+      <div class="dock-items" id="compareItems"></div>
+    </div>
+    <div class="row-actions">
+      <button class="btn-ghost" id="clearCompare">Xóa</button>
+      <button class="btn-primary" id="openCompare">So sánh</button>
+    </div>
+  </div>
+
+  <div class="modal" id="compareModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span class="section-badge">So sánh</span>
+          <h2>So sánh ngành học</h2>
+        </div>
+        <button class="mini-btn" id="closeModal">Đóng</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <a class="brand" href="../index.html"><span class="brand-mark">U</span> UniMatch</a>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="universities.html">Trường ĐH</a>
+        <a href="map.html">Bản đồ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/app-data.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/majors-page.js"></script>
+</body>
+</html>
