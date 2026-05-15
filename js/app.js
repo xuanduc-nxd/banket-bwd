@@ -157,6 +157,9 @@
         const major = DATA.getMajor(majorId);
         if (!major) return;
         if (!major.combos.includes(profile.combination)) return;
+        
+        // Lọc theo khu vực nếu người dùng có chọn cụ thể
+        if (profile.region !== "all" && university.region !== "all" && university.region !== profile.region) return;
 
         const cutoff = cutoffs[2025] || cutoffs[2024] || cutoffs[2023];
         const delta = totalScore - cutoff;
@@ -236,7 +239,9 @@
   function renderResultCard(match, index, options = {}) {
     const typeClass = match.university.type === "public" ? "public" : "private";
     const typeLabel = match.university.type === "public" ? "Công lập" : "Tư thục";
-    const mapHref = `map.html?university=${encodeURIComponent(match.university.id)}`;
+    const isInPages = window.location.pathname.includes('/pages/');
+    const mapPath = isInPages ? 'map.html' : 'pages/map.html';
+    const mapHref = `${mapPath}?university=${encodeURIComponent(match.university.id)}`;
 
     return `
       <article class="result-card">

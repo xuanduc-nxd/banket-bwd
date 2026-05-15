@@ -73,8 +73,8 @@ DE SU DUNG TRONG MOI TRANG VA MOI THANH PHAN TREN WEBSITE.
   const _universitiesData = typeof universitiesData !== 'undefined' ? universitiesData : null;
   if (_universitiesData) {
     const allUnis = [
-      ...(_universitiesData.public || []).map(u => ({...u, type: 'public'})),
-      ...(_universitiesData.private || []).map(u => ({...u, type: 'private'}))
+      ...(_universitiesData.public || []).map(u => ({ ...u, type: 'public' })),
+      ...(_universitiesData.private || []).map(u => ({ ...u, type: 'private' }))
     ];
 
     function getRegion(location) {
@@ -86,37 +86,157 @@ DE SU DUNG TRONG MOI TRANG VA MOI THANH PHAN TREN WEBSITE.
       return "south";
     }
 
-    function getLat(location) {
-      if (location.includes("Hà Nội")) return 21.0285 + (Math.random() - 0.5) * 0.1;
-      if (location.includes("Hồ Chí Minh") || location.includes("TP.HCM")) return 10.8231 + (Math.random() - 0.5) * 0.1;
-      if (location.includes("Đà Nẵng")) return 16.0544 + (Math.random() - 0.5) * 0.1;
-      if (location.includes("Huế")) return 16.4637;
-      if (location.includes("Cần Thơ")) return 10.0452;
-      return 16.0;
+    // Danh sách toạ độ chính xác của các trường đại học
+    const realCoords = {
+      "VNU": { lat: 21.0379, lng: 105.7824 },
+      "VNU-HCM": { lat: 10.8700, lng: 106.8031 },
+      "HUST": { lat: 21.0049, lng: 105.8455 },
+      "NEU": { lat: 21.0003, lng: 105.8430 },
+      "FTU": { lat: 21.0233, lng: 105.8056 },
+      "HCMUT": { lat: 10.7733, lng: 106.6597 },
+      "UEH": { lat: 10.7818, lng: 106.6917 },
+      "HNUE": { lat: 21.0366, lng: 105.7845 },
+      "HCMUP": { lat: 10.7634, lng: 106.6821 },
+      "HMU": { lat: 21.0016, lng: 105.8306 },
+      "UMP": { lat: 10.7562, lng: 106.6663 },
+      "CTU": { lat: 10.0299, lng: 105.7706 },
+      "UDN": { lat: 16.0691, lng: 108.2223 },
+      "DUT": { lat: 16.0739, lng: 108.1499 },
+      "DNP": { lat: 16.0605, lng: 108.1670 },
+      "DUE": { lat: 16.0336, lng: 108.2407 },
+      "DFH": { lat: 16.0347, lng: 108.2198 },
+      "DUL": { lat: 16.0270, lng: 108.2393 },
+      "UTE": { lat: 16.0782, lng: 108.2138 },
+      "VKU": { lat: 15.9753, lng: 108.2533 },
+      "DSA": { lat: 10.7628, lng: 106.6896 },
+      "UIT": { lat: 10.8700, lng: 106.8030 },
+      "HCMUTE": { lat: 10.8506, lng: 106.7719 },
+      "UFM": { lat: 10.7645, lng: 106.6881 },
+      "UTT": { lat: 10.8033, lng: 106.7161 },
+      "ULAW": { lat: 10.7628, lng: 106.7001 },
+      "UAH": { lat: 10.7838, lng: 106.6961 },
+      "NLU": { lat: 10.8690, lng: 106.7936 },
+      "FAH": { lat: 10.8016, lng: 106.6908 },
+      "HCMOU": { lat: 10.7770, lng: 106.6910 },
+      "TDMU": { lat: 10.9804, lng: 106.6680 },
+      "TDT": { lat: 10.7327, lng: 106.6980 },
+      "HUE": { lat: 16.4589, lng: 107.5921 },
+      "VNUH": { lat: 18.6654, lng: 105.6966 },
+      "TNU": { lat: 21.5830, lng: 105.8115 },
+      "HLU": { lat: 21.0223, lng: 105.8055 },
+      "VNUA": { lat: 21.0028, lng: 105.9333 },
+      "IUH": { lat: 10.8222, lng: 106.6875 },
+      "HUI": { lat: 21.0543, lng: 105.7350 },
+      "HUB": { lat: 10.7716, lng: 106.6963 },
+      "BAV": { lat: 21.0089, lng: 105.8286 },
+      "HAU": { lat: 20.9856, lng: 105.7972 },
+      "NUCE": { lat: 21.0035, lng: 105.8436 },
+      "UTC": { lat: 21.0256, lng: 105.8034 },
+      "TLU": { lat: 21.0069, lng: 105.8247 },
+      "HUMG": { lat: 21.0718, lng: 105.7735 },
+      "FTA": { lat: 10.8407, lng: 106.6433 },
+      "CSG": { lat: 10.7615, lng: 106.6826 },
+      "APD": { lat: 21.0116, lng: 105.7335 },
+      "TMU": { lat: 21.0366, lng: 105.7735 },
+      "AOF": { lat: 21.0734, lng: 105.7766 },
+      "HUP": { lat: 21.0195, lng: 105.8560 },
+      "AAM": { lat: 20.9664, lng: 105.7938 },
+      "HANU": { lat: 20.9850, lng: 105.7963 },
+      "AJC": { lat: 21.0350, lng: 105.7891 },
+      "NAPA": { lat: 21.0221, lng: 105.8020 },
+      "NAV": { lat: 21.0423, lng: 105.8105 },
+      "AIU": { lat: 21.0232, lng: 105.8270 },
+      "HC": { lat: 21.0236, lng: 105.8291 },
+      "PTIT": { lat: 20.9806, lng: 105.7874 },
+      "DTU": { lat: 16.0601, lng: 108.2096 },
+      "PCT": { lat: 15.9388, lng: 108.2443 },
+      "PXT": { lat: 16.4526, lng: 107.5956 },
+      "DAU": { lat: 16.0351, lng: 108.2198 },
+      "ADU": { lat: 16.0394, lng: 108.2127 },
+      "RMIT": { lat: 10.7300, lng: 106.6946 },
+      "FUV": { lat: 10.7305, lng: 106.7214 },
+      "FPTU": { lat: 21.0135, lng: 105.5273 },
+      "AUV": { lat: 15.9620, lng: 108.2570 },
+      "VinUni": { lat: 20.9853, lng: 105.9405 },
+      "BUV": { lat: 20.9634, lng: 105.9351 },
+      "STL": { lat: 20.9754, lng: 105.8183 },
+      "PNU": { lat: 20.9608, lng: 105.7483 }
+    };
+
+
+    // TODO: Cần thêm các trường đại học mới vào danh sách trên 
+    function getLat(shortName, location, region, rand) {
+      if (realCoords[shortName]) return realCoords[shortName].lat;
+
+      const loc = location.toLowerCase();
+      let lat = 16.0;
+      if (loc.includes("hà nội")) lat = 21.0285;
+      else if (loc.includes("hồ chí minh") || loc.includes("hcm")) lat = 10.8231;
+      else if (loc.includes("đà nẵng")) lat = 16.0544;
+      else if (loc.includes("huế")) lat = 16.4637;
+      else if (loc.includes("cần thơ")) lat = 10.0452;
+      else if (loc.includes("bình dương")) lat = 10.9804;
+      else if (loc.includes("thái nguyên")) lat = 21.5941;
+      else if (loc.includes("nghệ an") || loc.includes("vinh")) lat = 18.6735;
+      else if (loc.includes("hải phòng")) lat = 20.8449;
+      else if (loc.includes("nam định")) lat = 20.4231;
+      else if (loc.includes("khánh hòa") || loc.includes("nha trang")) lat = 12.2451;
+      else if (loc.includes("lâm đồng") || loc.includes("đà lạt")) lat = 11.9404;
+      else if (loc.includes("quảng nam")) lat = 15.5673;
+      else if (loc.includes("thanh hóa")) lat = 19.8067;
+      else {
+        // Fallback to region center
+        if (region === "north") lat = 21.0;
+        else if (region === "central") lat = 16.0;
+        else lat = 10.5;
+      }
+      return lat + (rand() - 0.5) * 0.08;
     }
 
-    function getLng(location) {
-      if (location.includes("Hà Nội")) return 105.8542 + (Math.random() - 0.5) * 0.1;
-      if (location.includes("Hồ Chí Minh") || location.includes("TP.HCM")) return 106.6297 + (Math.random() - 0.5) * 0.1;
-      if (location.includes("Đà Nẵng")) return 108.2022 + (Math.random() - 0.5) * 0.1;
-      if (location.includes("Huế")) return 107.5909;
-      if (location.includes("Cần Thơ")) return 105.7469;
-      return 106.0;
+    // TODO: Cần tìm toạ độ các trường đại học 
+    function getLng(shortName, location, region, rand) {
+      if (realCoords[shortName]) return realCoords[shortName].lng;
+
+      const loc = location.toLowerCase();
+      let lng = 106.0;
+      if (loc.includes("hà nội")) lng = 105.8542;
+      else if (loc.includes("hồ chí minh") || loc.includes("hcm")) lng = 106.6297;
+      else if (loc.includes("đà nẵng")) lng = 108.2022;
+      else if (loc.includes("huế")) lng = 107.5909;
+      else if (loc.includes("cần thơ")) lng = 105.7469;
+      else if (loc.includes("bình dương")) lng = 106.6517;
+      else if (loc.includes("thái nguyên")) lng = 105.8481;
+      else if (loc.includes("nghệ an") || loc.includes("vinh")) lng = 105.6813;
+      else if (loc.includes("hải phòng")) lng = 106.6881;
+      else if (loc.includes("nam định")) lng = 106.1683;
+      else if (loc.includes("khánh hòa") || loc.includes("nha trang")) lng = 109.1943;
+      else if (loc.includes("lâm đồng") || loc.includes("đà lạt")) lng = 108.4583;
+      else if (loc.includes("quảng nam")) lng = 108.4817;
+      else if (loc.includes("thanh hóa")) lng = 105.7767;
+      else {
+        // Fallback to region center
+        if (region === "north") lng = 105.8;
+        else if (region === "central") lng = 108.0;
+        else lng = 106.5;
+      }
+      return lng + (rand() - 0.5) * 0.08;
     }
 
-    // Hash string to pseudo-random numbers
+    // Hash string to pseudo-random numbers => để random số thập phân chính xác hơn
     function seededRandom(str) {
       let hash = 0;
       for (let i = 0; i < str.length; i++) hash = Math.imul(31, hash) + str.charCodeAt(i) | 0;
       return () => { hash = Math.imul(1103515245, hash) + 12345 | 0; return ((hash >>> 16) / 0xFFFF); };
     }
 
+    // Tạo danh sách các trường đại học với toạ độ chính xác
     universities = allUnis.map(u => {
       const cutoffs = {};
       const uniCats = u.categories || [];
       const matchingMajors = majors.filter(m => uniCats.includes(m.category)).slice(0, 4);
       const rand = seededRandom(u.shortName);
-      
+
+      // Tạo điểm chuẩn cho các ngành
       matchingMajors.forEach(m => {
         const baseCutoff = 18 + rand() * 8;
         cutoffs[m.id] = {
@@ -126,19 +246,20 @@ DE SU DUNG TRONG MOI TRANG VA MOI THANH PHAN TREN WEBSITE.
         };
       });
 
+      // Trả về object mới để lưu vào danh sách universitie
       return {
         id: u.shortName.toLowerCase(),
         name: u.name,
         shortName: u.shortName,
         type: u.type,
-        city: u.location === "TP. Hồ Chí Minh" ? "TP.HCM" : u.location,
+        city: u.location === "TP. Hồ Chí Minh" ? "TP.HCM" : u.location, //
         region: getRegion(u.location),
         website: u.website || "#",
         tuition: Math.floor(15 + rand() * 25),
         students: u.students,
         majorsCount: parseInt(u.majors) || 20,
-        lat: parseFloat(getLat(u.location).toFixed(4)),
-        lng: parseFloat(getLng(u.location).toFixed(4)),
+        lat: parseFloat(getLat(u.shortName, u.location, getRegion(u.location), rand).toFixed(4)),
+        lng: parseFloat(getLng(u.shortName, u.location, getRegion(u.location), rand).toFixed(4)),
         categories: u.categories,
         cutoffs: cutoffs
       };
