@@ -189,3 +189,24 @@ CAC KIEU GIAO DIEN NAY SE GIUP TOI TAO RA MOT TRANG WEB CO THIET KE NHAT QUAN, D
   flex-wrap: wrap;
   gap: 16px;
 }
+
+/* --- NEW ANIMATIONS --- */
+@keyframes pageFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main {
+  animation: pageFadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+body.is-exiting {
+  opacity: 0;
+  transition: opacity 0.25s ease-out;
+}

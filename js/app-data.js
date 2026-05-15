@@ -36,508 +36,118 @@ DE SU DUNG TRONG MOI TRANG VA MOI THANH PHAN TREN WEBSITE.
     H00: ["Ngữ văn", "Năng khiếu vẽ 1", "Năng khiếu vẽ 2"]
   };
 
-  const majors = [
-    {
-      id: "cntt",
-      name: "Công nghệ thông tin",
-      category: "cntt",
-      description: "Phát triển phần mềm, hệ thống thông tin, dữ liệu, AI và hạ tầng số.",
-      careers: ["Lập trình viên", "Kỹ sư phần mềm", "Data Analyst", "DevOps"],
-      salary: "15-40 triệu/tháng",
-      difficulty: 8,
-      employment: 94,
-      combos: ["A00", "A01", "D01", "D07"]
-    },
-    {
-      id: "ai",
-      name: "Trí tuệ nhân tạo",
-      category: "cntt",
-      description: "Xây dựng mô hình học máy, xử lý dữ liệu lớn và các ứng dụng AI.",
-      careers: ["AI Engineer", "Data Scientist", "ML Engineer"],
-      salary: "22-60 triệu/tháng",
-      difficulty: 9,
-      employment: 96,
-      combos: ["A00", "A01", "D07"]
-    },
-    {
-      id: "attt",
-      name: "An toàn thông tin",
-      category: "cntt",
-      description: "Bảo vệ hệ thống, dữ liệu và hạ tầng mạng trước rủi ro an ninh.",
-      careers: ["Security Analyst", "Pentester", "SOC Engineer"],
-      salary: "18-45 triệu/tháng",
-      difficulty: 8,
-      employment: 93,
-      combos: ["A00", "A01", "D01"]
-    },
-    {
-      id: "marketing",
-      name: "Marketing",
-      category: "kinhte",
-      description: "Nghiên cứu thị trường, xây dựng thương hiệu và triển khai truyền thông số.",
-      careers: ["Digital Marketer", "Brand Executive", "Content Planner"],
-      salary: "10-30 triệu/tháng",
-      difficulty: 6,
-      employment: 88,
-      combos: ["A00", "A01", "D01"]
-    },
-    {
-      id: "taichinh",
-      name: "Tài chính - Ngân hàng",
-      category: "kinhte",
-      description: "Quản trị tài chính, ngân hàng, đầu tư, bảo hiểm và thị trường vốn.",
-      careers: ["Chuyên viên tín dụng", "Financial Analyst", "Kiểm toán"],
-      salary: "12-35 triệu/tháng",
-      difficulty: 7,
-      employment: 90,
-      combos: ["A00", "A01", "D01", "D07"]
-    },
-    {
-      id: "qtkd",
-      name: "Quản trị kinh doanh",
-      category: "kinhte",
-      description: "Quản lý vận hành, nhân sự, bán hàng, marketing và chiến lược doanh nghiệp.",
-      careers: ["Business Analyst", "Sales Manager", "HR Executive"],
-      salary: "10-30 triệu/tháng",
-      difficulty: 6,
-      employment: 86,
-      combos: ["A00", "A01", "D01"]
-    },
-    {
-      id: "ykhoa",
-      name: "Y khoa",
-      category: "yte",
-      description: "Đào tạo bác sĩ đa khoa, chẩn đoán và điều trị bệnh.",
-      careers: ["Bác sĩ", "Bác sĩ chuyên khoa", "Giảng viên y khoa"],
-      salary: "18-55 triệu/tháng",
-      difficulty: 10,
-      employment: 98,
-      combos: ["B00", "D08"]
-    },
-    {
-      id: "duoc",
-      name: "Dược học",
-      category: "yte",
-      description: "Nghiên cứu, sản xuất, phân phối và tư vấn sử dụng thuốc.",
-      careers: ["Dược sĩ", "QA/QC dược", "Trình dược viên"],
-      salary: "12-32 triệu/tháng",
-      difficulty: 8,
-      employment: 93,
-      combos: ["A00", "B00", "D07"]
-    },
-    {
-      id: "cokhi",
-      name: "Kỹ thuật cơ khí",
-      category: "kysu",
-      description: "Thiết kế, chế tạo, vận hành máy móc và hệ thống sản xuất.",
-      careers: ["Kỹ sư cơ khí", "Kỹ sư sản xuất", "CAD/CAM Engineer"],
-      salary: "12-35 triệu/tháng",
-      difficulty: 7,
-      employment: 91,
-      combos: ["A00", "A01"]
-    },
-    {
-      id: "dientu",
-      name: "Kỹ thuật điện - điện tử",
-      category: "kysu",
-      description: "Thiết kế, điều khiển và bảo trì hệ thống điện, điện tử, tự động hóa.",
-      careers: ["Kỹ sư điện", "Automation Engineer", "Embedded Engineer"],
-      salary: "13-38 triệu/tháng",
-      difficulty: 8,
-      employment: 92,
-      combos: ["A00", "A01"]
-    },
-    {
-      id: "suphamtoan",
-      name: "Sư phạm Toán",
-      category: "sudp",
-      description: "Đào tạo giáo viên Toán với năng lực sư phạm và định hướng STEM.",
-      careers: ["Giáo viên Toán", "Gia sư", "Chuyên viên giáo dục"],
-      salary: "8-22 triệu/tháng",
-      difficulty: 7,
-      employment: 89,
-      combos: ["A00", "A01"]
-    },
-    {
-      id: "luat",
-      name: "Luật",
-      category: "luat",
-      description: "Nghiên cứu hệ thống pháp luật, tố tụng, tư vấn và quản trị rủi ro pháp lý.",
-      careers: ["Luật sư", "Pháp chế doanh nghiệp", "Công chứng viên"],
-      salary: "10-35 triệu/tháng",
-      difficulty: 7,
-      employment: 84,
-      combos: ["C00", "D01", "D14"]
-    },
-    {
-      id: "ngonngu_anh",
-      name: "Ngôn ngữ Anh",
-      category: "nn",
-      description: "Ngôn ngữ, biên phiên dịch, giao tiếp quốc tế và văn hóa Anh - Mỹ.",
-      careers: ["Biên phiên dịch", "Giáo viên tiếng Anh", "Chuyên viên đối ngoại"],
-      salary: "10-30 triệu/tháng",
-      difficulty: 6,
-      employment: 88,
-      combos: ["D01", "D14"]
-    },
-    {
-      id: "dulich",
-      name: "Quản trị du lịch",
-      category: "nn",
-      description: "Điều hành tour, khách sạn, dịch vụ du lịch và trải nghiệm khách hàng.",
-      careers: ["Điều hành tour", "Hotel Manager", "Hướng dẫn viên"],
-      salary: "9-26 triệu/tháng",
-      difficulty: 5,
-      employment: 86,
-      combos: ["C00", "D01", "D14"]
-    },
-    {
-      id: "tkdh",
-      name: "Thiết kế đồ họa",
-      category: "design",
-      description: "Thiết kế nhận diện, truyền thông thị giác, sản phẩm số và nội dung sáng tạo.",
-      careers: ["Graphic Designer", "UI Designer", "Art Director"],
-      salary: "10-32 triệu/tháng",
-      difficulty: 7,
-      employment: 87,
-      combos: ["H00", "V00", "D01"]
-    },
-    {
-      id: "nongnghiep",
-      name: "Công nghệ nông nghiệp",
-      category: "nonglam",
-      description: "Ứng dụng công nghệ vào sản xuất nông nghiệp, quản lý cây trồng và chuỗi cung ứng.",
-      careers: ["Kỹ sư nông nghiệp", "Chuyên viên R&D", "Quản lý trang trại"],
-      salary: "9-24 triệu/tháng",
-      difficulty: 6,
-      employment: 84,
-      combos: ["A00", "B00", "D08"]
-    },
-    {
-      id: "kientruc",
-      name: "Kiến trúc",
-      category: "xaydung",
-      description: "Thiết kế công trình, không gian sống, quy hoạch và kiến trúc bền vững.",
-      careers: ["Kiến trúc sư", "Thiết kế nội thất", "Quản lý dự án"],
-      salary: "14-42 triệu/tháng",
-      difficulty: 8,
-      employment: 85,
-      combos: ["V00", "H00"]
-    }
-  ];
+  let majors = [];
+  const _majorsData = typeof majorsData !== 'undefined' ? majorsData : null;
+  if (_majorsData && _majorsData.majors) {
+    majors = _majorsData.majors.map(m => {
+      let combos = ["A00", "A01", "D01"];
+      if (m.category === "yte") combos = ["B00", "A00", "D07"];
+      if (m.category === "design") combos = ["V00", "H00", "D01"];
+      if (m.category === "luat") combos = ["C00", "D01", "D14"];
+      if (m.category === "nn") combos = ["D01", "D14", "D15"];
+      if (m.category === "sudp") combos = ["C00", "D01", "A00"];
+      let mappedCategory = m.category;
+      if (mappedCategory === "nnl") mappedCategory = "nonglam";
+      if (mappedCategory === "kien_truc") mappedCategory = "xaydung";
 
-  const universities = [
-    {
-      id: "vku",
-      name: "Đại học Công nghệ Thông tin và Truyền thông Việt - Hàn",
-      shortName: "VKU",
-      type: "public",
-      city: "Đà Nẵng",
-      region: "central",
-      website: "https://vku.udn.vn",
-      tuition: 18,
-      students: "6.000+",
-      majorsCount: 18,
-      lat: 15.9756,
-      lng: 108.2522,
-      categories: ["cntt", "kinhte", "design"],
-      cutoffs: {
-        cntt: { 2023: 24.1, 2024: 24.6, 2025: 25.0 },
-        ai: { 2023: 24.4, 2024: 25.0, 2025: 25.5 },
-        marketing: { 2023: 22.3, 2024: 22.8, 2025: 23.1 },
-        tkdh: { 2023: 21.8, 2024: 22.2, 2025: 22.6 }
-      }
-    },
-    {
-      id: "dut",
-      name: "Đại học Bách khoa - Đại học Đà Nẵng",
-      shortName: "DUT",
-      type: "public",
-      city: "Đà Nẵng",
-      region: "central",
-      website: "https://dut.udn.vn",
-      tuition: 20,
-      students: "16.000+",
-      majorsCount: 40,
-      lat: 16.0737,
-      lng: 108.1499,
-      categories: ["cntt", "kysu", "xaydung"],
-      cutoffs: {
-        cntt: { 2023: 26.4, 2024: 26.7, 2025: 27.0 },
-        ai: { 2023: 26.5, 2024: 27.0, 2025: 27.4 },
-        cokhi: { 2023: 22.5, 2024: 23.0, 2025: 23.5 },
-        dientu: { 2023: 24.2, 2024: 24.8, 2025: 25.1 },
-        kientruc: { 2023: 21.6, 2024: 22.0, 2025: 22.3 }
-      }
-    },
-    {
-      id: "due",
-      name: "Đại học Kinh tế - Đại học Đà Nẵng",
-      shortName: "DUE",
-      type: "public",
-      city: "Đà Nẵng",
-      region: "central",
-      website: "https://due.udn.vn",
-      tuition: 18,
-      students: "12.000+",
-      majorsCount: 27,
-      lat: 16.0473,
-      lng: 108.2419,
-      categories: ["kinhte", "luat"],
-      cutoffs: {
-        marketing: { 2023: 25.1, 2024: 25.5, 2025: 25.7 },
-        taichinh: { 2023: 24.8, 2024: 25.1, 2025: 25.3 },
-        qtkd: { 2023: 24.3, 2024: 24.9, 2025: 25.0 },
-        luat: { 2023: 23.5, 2024: 24.0, 2025: 24.2 }
-      }
-    },
-    {
-      id: "ued",
-      name: "Đại học Sư phạm - Đại học Đà Nẵng",
-      shortName: "UED",
-      type: "public",
-      city: "Đà Nẵng",
-      region: "central",
-      website: "https://ued.udn.vn",
-      tuition: 12,
-      students: "9.000+",
-      majorsCount: 32,
-      lat: 16.0612,
-      lng: 108.2138,
-      categories: ["sudp", "nn"],
-      cutoffs: {
-        suphamtoan: { 2023: 24.5, 2024: 25.0, 2025: 25.2 },
-        ngonngu_anh: { 2023: 24.0, 2024: 24.4, 2025: 24.6 }
-      }
-    },
-    {
-      id: "vnu",
-      name: "Đại học Quốc gia Hà Nội",
-      shortName: "VNU",
-      type: "public",
-      city: "Hà Nội",
-      region: "north",
-      website: "https://vnu.edu.vn",
-      tuition: 24,
-      students: "40.000+",
-      majorsCount: 150,
-      lat: 21.0379,
-      lng: 105.7824,
-      categories: ["cntt", "kinhte", "luat", "sudp", "nn", "yte"],
-      cutoffs: {
-        cntt: { 2023: 27.8, 2024: 28.0, 2025: 28.2 },
-        ai: { 2023: 28.1, 2024: 28.4, 2025: 28.6 },
-        luat: { 2023: 26.5, 2024: 26.8, 2025: 27.0 },
-        ngonngu_anh: { 2023: 26.0, 2024: 26.4, 2025: 26.7 }
-      }
-    },
-    {
-      id: "hust",
-      name: "Đại học Bách khoa Hà Nội",
-      shortName: "HUST",
-      type: "public",
-      city: "Hà Nội",
-      region: "north",
-      website: "https://hust.edu.vn",
-      tuition: 28,
-      students: "35.000+",
-      majorsCount: 80,
-      lat: 21.0057,
-      lng: 105.8431,
-      categories: ["cntt", "kysu"],
-      cutoffs: {
-        cntt: { 2023: 28.2, 2024: 28.5, 2025: 28.7 },
-        ai: { 2023: 28.4, 2024: 28.7, 2025: 29.0 },
-        cokhi: { 2023: 24.7, 2024: 25.0, 2025: 25.4 },
-        dientu: { 2023: 26.0, 2024: 26.4, 2025: 26.8 }
-      }
-    },
-    {
-      id: "neu",
-      name: "Đại học Kinh tế Quốc dân",
-      shortName: "NEU",
-      type: "public",
-      city: "Hà Nội",
-      region: "north",
-      website: "https://neu.edu.vn",
-      tuition: 25,
-      students: "25.000+",
-      majorsCount: 35,
-      lat: 21.0007,
-      lng: 105.8421,
-      categories: ["kinhte"],
-      cutoffs: {
-        marketing: { 2023: 27.5, 2024: 27.8, 2025: 28.0 },
-        taichinh: { 2023: 27.2, 2024: 27.5, 2025: 27.8 },
-        qtkd: { 2023: 26.8, 2024: 27.1, 2025: 27.4 }
-      }
-    },
-    {
-      id: "hmu",
-      name: "Đại học Y Hà Nội",
-      shortName: "HMU",
-      type: "public",
-      city: "Hà Nội",
-      region: "north",
-      website: "https://hmu.edu.vn",
-      tuition: 28,
-      students: "12.000+",
-      majorsCount: 12,
-      lat: 21.0026,
-      lng: 105.8316,
-      categories: ["yte"],
-      cutoffs: {
-        ykhoa: { 2023: 27.7, 2024: 28.0, 2025: 28.2 },
-        duoc: { 2023: 25.8, 2024: 26.0, 2025: 26.2 }
-      }
-    },
-    {
-      id: "vnu-hcm",
-      name: "Đại học Quốc gia TP.HCM",
-      shortName: "VNU-HCM",
-      type: "public",
-      city: "TP.HCM",
-      region: "south",
-      website: "https://vnuhcm.edu.vn",
-      tuition: 26,
-      students: "45.000+",
-      majorsCount: 120,
-      lat: 10.8701,
-      lng: 106.8034,
-      categories: ["cntt", "kinhte", "kysu", "luat", "nn"],
-      cutoffs: {
-        cntt: { 2023: 27.4, 2024: 27.8, 2025: 28.0 },
-        ai: { 2023: 27.8, 2024: 28.1, 2025: 28.4 },
-        marketing: { 2023: 26.0, 2024: 26.3, 2025: 26.6 },
-        luat: { 2023: 25.2, 2024: 25.6, 2025: 25.9 }
-      }
-    },
-    {
-      id: "uit",
-      name: "Đại học Công nghệ Thông tin - ĐHQG TP.HCM",
-      shortName: "UIT",
-      type: "public",
-      city: "TP.HCM",
-      region: "south",
-      website: "https://uit.edu.vn",
-      tuition: 28,
-      students: "10.000+",
-      majorsCount: 17,
-      lat: 10.8706,
-      lng: 106.8031,
-      categories: ["cntt"],
-      cutoffs: {
-        cntt: { 2023: 27.0, 2024: 27.5, 2025: 27.8 },
-        ai: { 2023: 27.2, 2024: 27.7, 2025: 28.0 },
-        attt: { 2023: 26.4, 2024: 26.8, 2025: 27.1 }
-      }
-    },
-    {
-      id: "ueh",
-      name: "Đại học Kinh tế TP.HCM",
-      shortName: "UEH",
-      type: "public",
-      city: "TP.HCM",
-      region: "south",
-      website: "https://ueh.edu.vn",
-      tuition: 30,
-      students: "30.000+",
-      majorsCount: 51,
-      lat: 10.7627,
-      lng: 106.6916,
-      categories: ["kinhte", "luat"],
-      cutoffs: {
-        marketing: { 2023: 26.7, 2024: 27.0, 2025: 27.3 },
-        taichinh: { 2023: 26.2, 2024: 26.5, 2025: 26.8 },
-        qtkd: { 2023: 25.8, 2024: 26.2, 2025: 26.4 }
-      }
-    },
-    {
-      id: "ump",
-      name: "Đại học Y Dược TP.HCM",
-      shortName: "UMP",
-      type: "public",
-      city: "TP.HCM",
-      region: "south",
-      website: "https://ump.edu.vn",
-      tuition: 35,
-      students: "14.000+",
-      majorsCount: 14,
-      lat: 10.7557,
-      lng: 106.6648,
-      categories: ["yte"],
-      cutoffs: {
-        ykhoa: { 2023: 27.3, 2024: 27.7, 2025: 27.9 },
-        duoc: { 2023: 25.5, 2024: 25.8, 2025: 26.1 }
-      }
-    },
-    {
-      id: "fpt",
-      name: "Đại học FPT",
-      shortName: "FPTU",
-      type: "private",
-      city: "Nhiều cơ sở",
-      region: "all",
-      website: "https://daihoc.fpt.edu.vn",
-      tuition: 58,
-      students: "30.000+",
-      majorsCount: 25,
-      lat: 21.0133,
-      lng: 105.5258,
-      categories: ["cntt", "kinhte", "nn", "design"],
-      cutoffs: {
-        cntt: { 2023: 21.0, 2024: 21.0, 2025: 21.5 },
-        ai: { 2023: 22.0, 2024: 22.5, 2025: 23.0 },
-        marketing: { 2023: 20.0, 2024: 20.5, 2025: 21.0 },
-        tkdh: { 2023: 19.5, 2024: 20.0, 2025: 20.5 },
-        ngonngu_anh: { 2023: 20.0, 2024: 20.5, 2025: 21.0 }
-      }
-    },
-    {
-      id: "duytan",
-      name: "Đại học Duy Tân",
-      shortName: "DTU",
-      type: "private",
-      city: "Đà Nẵng",
-      region: "central",
-      website: "https://duytan.edu.vn",
-      tuition: 24,
-      students: "20.000+",
-      majorsCount: 55,
-      lat: 16.0603,
-      lng: 108.2114,
-      categories: ["cntt", "kinhte", "yte", "nn", "xaydung"],
-      cutoffs: {
-        cntt: { 2023: 18.5, 2024: 19.0, 2025: 19.5 },
-        marketing: { 2023: 18.0, 2024: 18.5, 2025: 19.0 },
-        ykhoa: { 2023: 22.5, 2024: 23.0, 2025: 23.5 },
-        duoc: { 2023: 21.0, 2024: 21.5, 2025: 22.0 },
-        kientruc: { 2023: 18.0, 2024: 18.5, 2025: 19.0 }
-      }
-    },
-    {
-      id: "vanlang",
-      name: "Đại học Văn Lang",
-      shortName: "VLU",
-      type: "private",
-      city: "TP.HCM",
-      region: "south",
-      website: "https://vlu.edu.vn",
-      tuition: 42,
-      students: "28.000+",
-      majorsCount: 60,
-      lat: 10.8271,
-      lng: 106.6948,
-      categories: ["kinhte", "design", "nn", "xaydung", "yte"],
-      cutoffs: {
-        marketing: { 2023: 18.5, 2024: 19.0, 2025: 19.2 },
-        tkdh: { 2023: 18.0, 2024: 18.5, 2025: 19.0 },
-        kientruc: { 2023: 18.0, 2024: 18.4, 2025: 18.8 },
-        duoc: { 2023: 21.0, 2024: 21.4, 2025: 21.8 },
-        ngonngu_anh: { 2023: 18.0, 2024: 18.5, 2025: 18.8 }
-      }
+      return {
+        id: m.id,
+        name: m.name,
+        category: mappedCategory,
+        description: m.description,
+        careers: m.careers,
+        salary: m.avgSalary,
+        difficulty: m.difficulty,
+        employment: parseInt(m.employmentRate) || 90,
+        combos: combos
+      };
+    });
+  } else {
+    majors = [
+      { id: "cntt", name: "Công nghệ thông tin", category: "cntt", description: "Phát triển phần mềm, hệ thống...", careers: ["Lập trình viên", "Kỹ sư phần mềm"], salary: "15-40 triệu/tháng", difficulty: 8, employment: 94, combos: ["A00", "A01", "D01", "D07"] },
+      { id: "marketing", name: "Marketing", category: "kinhte", description: "Nghiên cứu thị trường...", careers: ["Digital Marketer", "Brand Executive"], salary: "10-30 triệu/tháng", difficulty: 6, employment: 88, combos: ["A00", "A01", "D01"] }
+    ];
+  }
+
+  let universities = [];
+  const _universitiesData = typeof universitiesData !== 'undefined' ? universitiesData : null;
+  if (_universitiesData) {
+    const allUnis = [
+      ...(_universitiesData.public || []).map(u => ({...u, type: 'public'})),
+      ...(_universitiesData.private || []).map(u => ({...u, type: 'private'}))
+    ];
+
+    function getRegion(location) {
+      const north = ["Hà Nội", "Thái Nguyên", "Nghệ An"];
+      const central = ["Đà Nẵng", "Huế"];
+      if (north.some(n => location.includes(n))) return "north";
+      if (central.some(n => location.includes(n))) return "central";
+      if (location.includes("Nhiều cơ sở")) return "all";
+      return "south";
     }
-  ];
+
+    function getLat(location) {
+      if (location.includes("Hà Nội")) return 21.0285 + (Math.random() - 0.5) * 0.1;
+      if (location.includes("Hồ Chí Minh") || location.includes("TP.HCM")) return 10.8231 + (Math.random() - 0.5) * 0.1;
+      if (location.includes("Đà Nẵng")) return 16.0544 + (Math.random() - 0.5) * 0.1;
+      if (location.includes("Huế")) return 16.4637;
+      if (location.includes("Cần Thơ")) return 10.0452;
+      return 16.0;
+    }
+
+    function getLng(location) {
+      if (location.includes("Hà Nội")) return 105.8542 + (Math.random() - 0.5) * 0.1;
+      if (location.includes("Hồ Chí Minh") || location.includes("TP.HCM")) return 106.6297 + (Math.random() - 0.5) * 0.1;
+      if (location.includes("Đà Nẵng")) return 108.2022 + (Math.random() - 0.5) * 0.1;
+      if (location.includes("Huế")) return 107.5909;
+      if (location.includes("Cần Thơ")) return 105.7469;
+      return 106.0;
+    }
+
+    // Hash string to pseudo-random numbers
+    function seededRandom(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) hash = Math.imul(31, hash) + str.charCodeAt(i) | 0;
+      return () => { hash = Math.imul(1103515245, hash) + 12345 | 0; return ((hash >>> 16) / 0xFFFF); };
+    }
+
+    universities = allUnis.map(u => {
+      const cutoffs = {};
+      const uniCats = u.categories || [];
+      const matchingMajors = majors.filter(m => uniCats.includes(m.category)).slice(0, 4);
+      const rand = seededRandom(u.shortName);
+      
+      matchingMajors.forEach(m => {
+        const baseCutoff = 18 + rand() * 8;
+        cutoffs[m.id] = {
+          2023: parseFloat((baseCutoff).toFixed(1)),
+          2024: parseFloat((baseCutoff + rand() * 0.5 - 0.2).toFixed(1)),
+          2025: parseFloat((baseCutoff + rand() * 1.0 - 0.2).toFixed(1))
+        };
+      });
+
+      return {
+        id: u.shortName.toLowerCase(),
+        name: u.name,
+        shortName: u.shortName,
+        type: u.type,
+        city: u.location === "TP. Hồ Chí Minh" ? "TP.HCM" : u.location,
+        region: getRegion(u.location),
+        website: u.website || "#",
+        tuition: Math.floor(15 + rand() * 25),
+        students: u.students,
+        majorsCount: parseInt(u.majors) || 20,
+        lat: parseFloat(getLat(u.location).toFixed(4)),
+        lng: parseFloat(getLng(u.location).toFixed(4)),
+        categories: u.categories,
+        cutoffs: cutoffs
+      };
+    });
+  } else {
+    universities = [
+      { id: "vnu", name: "Đại học Quốc gia Hà Nội", shortName: "VNU", type: "public", city: "Hà Nội", region: "north", website: "https://vnu.edu.vn", tuition: 24, students: "40.000+", majorsCount: 150, lat: 21.0379, lng: 105.7824, categories: ["cntt", "kinhte"], cutoffs: { cntt: { 2023: 27.8, 2024: 28.0, 2025: 28.2 } } }
+    ];
+  }
 
   function getCategory(id) {
     return categories.find((item) => item.id === id);

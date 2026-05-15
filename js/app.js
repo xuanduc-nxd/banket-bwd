@@ -38,6 +38,30 @@
     });
   }
 
+  function initPageTransitions() {
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (!link || !link.href) return;
+      
+      try {
+        const url = new URL(link.href);
+        const isSameOrigin = url.origin === location.origin;
+        const isSamePage = url.pathname === location.pathname;
+        const isHash = url.hash && isSamePage;
+        const isBlank = link.target === '_blank';
+        const isDownload = link.hasAttribute('download');
+        
+        if (isSameOrigin && !isHash && !isBlank && !isDownload && !e.ctrlKey && !e.metaKey) {
+          e.preventDefault();
+          document.body.classList.add('is-exiting');
+          setTimeout(() => {
+            window.location.href = link.href;
+          }, 250);
+        }
+      } catch (err) {}
+    });
+  }
+
   function classify(delta) {
     if (delta >= 2) return { id: "safe", label: "An toàn" };
     if (delta >= -1) return { id: "fit", label: "Phù hợp" };
@@ -369,6 +393,7 @@
   };
 
   document.addEventListener("DOMContentLoaded", () => {
+    initPageTransitions();
     initNav();
     initSmartMatch();
   });
