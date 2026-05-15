@@ -90,18 +90,32 @@ CAC KIEU GIAO DIEN NAY SE GIUP TOI TAO RA MOT TRANG WEB CO THIET KE NHAT QUAN, D
 }
 
 .hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
-  gap: 34px;
-  align-items: center;
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+
+  max-width: 1200px;
+  margin: 0 auto; /* căn giữa khối */
 }
 
 .hero h1 {
   margin: 18px 0 16px;
   max-width: 780px;
-  font-size: clamp(2.3rem, 6vw, 4.8rem);
-  line-height: 1.08;
+  font-size: clamp(2.3rem, 6vw, 4.8rem); 
+  line-height: 1.08; 
   letter-spacing: 0;
+}
+.hero h3{
+  margin: 0 0 16px;
+  max-width: 780px;
+  font-size: clamp(1rem, 3vw, 1.8rem); 
+  line-height: 1.3; 
+  letter-spacing: 0;
+  font-style: italic;
+
+  color: #070083;
+
+
 }
 
 .hero h1 span {
@@ -171,15 +185,15 @@ CAC KIEU GIAO DIEN NAY SE GIUP TOI TAO RA MOT TRANG WEB CO THIET KE NHAT QUAN, D
 }
 
 .site-footer {
-  margin-top: 60px;
-  padding: 34px 0;
-  color: rgba(255, 255, 255, 0.74);
-  background: var(--surface-2);
-  border-top: 1px solid var(--border);
+  margin-top: 60px; 
+  padding: 34px 0; 
+  color: var(--muted);
+  background: var(--surface-2); 
+  border-top: 1px solid var(--border); 
 }
 
 .footer-grid {
-  display: flex;
+  display: flex; 
   justify-content: space-between;
   gap: 24px;
   align-items: center;
