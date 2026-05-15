@@ -6,7 +6,7 @@ VA BO CUC RIENG CHO MOI TRANG, GIUP NANG CAO TRAI NGHIEM NGUOI DUNG VA LAM CHO N
   padding: 22px;
   border: 1px solid var(--border);
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--surface);
   box-shadow: var(--shadow);
 }
 
@@ -92,14 +92,14 @@ VA BO CUC RIENG CHO MOI TRANG, GIUP NANG CAO TRAI NGHIEM NGUOI DUNG VA LAM CHO N
   padding: 13px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--surface);
   color: var(--text);
   text-align: left;
 }
 
 .quiz-option.is-selected {
   border-color: var(--primary-2);
-  background: #e9f7fb;
+  background: var(--surface-2);
 }
 
 .trend-grid {
@@ -142,10 +142,10 @@ VA BO CUC RIENG CHO MOI TRANG, GIUP NANG CAO TRAI NGHIEM NGUOI DUNG VA LAM CHO N
   padding: 13px;
   border: 1px solid var(--border);
   border-radius: 14px;
-  background: #fff;
+  background: var(--surface);
 }
 
 .map-item.is-active {
   border-color: var(--primary-2);
-  background: #e9f7fb;
+  background: var(--surface-2);
 }

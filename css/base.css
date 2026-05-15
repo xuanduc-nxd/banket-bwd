@@ -23,6 +23,18 @@ CAC KIEU GIAO DIEN NAY SE GIUP TOI TAO RA MOT TRANG WEB CO THIET KE NHAT QUAN, D
   --font: "Be Vietnam Pro", Arial, sans-serif;
 }
 
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-2: #0f172a;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --primary: #38bdf8;
+  --primary-2: #0ea5e9;
+  --border: #334155;
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -36,9 +48,8 @@ body {
   min-height: 100vh;
   font-family: var(--font);
   color: var(--text);
-  background:
-    radial-gradient(circle at top left, rgba(0, 168, 204, 0.12), transparent 30%),
-    linear-gradient(135deg, #f8fbfd 0%, var(--bg) 55%, #ffffff 100%);
+  background: var(--bg);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {

@@ -62,6 +62,68 @@
     });
   }
 
+  function initDarkMode() {
+    const header = $(".site-header");
+    if (!header) return;
+
+    const toggle = document.createElement("button");
+    toggle.className = "mini-btn";
+    toggle.id = "themeToggle";
+    toggle.innerHTML = "🌙";
+    toggle.title = "Chuyển giao diện tối";
+
+    const saved = localStorage.getItem("unimatch_theme");
+    if (saved === "dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+      toggle.innerHTML = "☀️";
+    }
+
+    toggle.addEventListener("click", () => {
+      toggle.classList.remove("theme-animate");
+      void toggle.offsetWidth; // trigger reflow
+      toggle.classList.add("theme-animate");
+
+      setTimeout(() => {
+        const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+        if (isDark) {
+          document.documentElement.removeAttribute("data-theme");
+          localStorage.setItem("unimatch_theme", "light");
+          toggle.innerHTML = "🌙";
+        } else {
+          document.documentElement.setAttribute("data-theme", "dark");
+          localStorage.setItem("unimatch_theme", "dark");
+          toggle.innerHTML = "☀️";
+        }
+      }, 200);
+    });
+
+    const nav = $(".site-nav");
+    if (nav) {
+      header.insertBefore(toggle, nav.nextSibling);
+    } else {
+      header.appendChild(toggle);
+    }
+  }
+
+  function initScrollReveal() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: "0px 0px -50px 0px",
+      threshold: 0.1
+    });
+
+    $all(".section-header, .smart-card, .tool-card, .hero-grid > div").forEach(el => {
+      el.classList.add("reveal");
+      observer.observe(el);
+    });
+  }
+
   function classify(delta) {
     if (delta >= 2) return { id: "safe", label: "An toàn" };
     if (delta >= -1) return { id: "fit", label: "Phù hợp" };
@@ -174,7 +236,7 @@
   function renderResultCard(match, index, options = {}) {
     const typeClass = match.university.type === "public" ? "public" : "private";
     const typeLabel = match.university.type === "public" ? "Công lập" : "Tư thục";
-    const mapHref = options.rootPrefix ? `${options.rootPrefix}pages/map.html?university=${encodeURIComponent(match.university.id)}` : `pages/map.html?university=${encodeURIComponent(match.university.id)}`;
+    const mapHref = `map.html?university=${encodeURIComponent(match.university.id)}`;
 
     return `
       <article class="result-card">
@@ -394,6 +456,8 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     initPageTransitions();
+    initDarkMode();
+    initScrollReveal();
     initNav();
     initSmartMatch();
   });

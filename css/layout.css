@@ -43,10 +43,10 @@ CAC KIEU GIAO DIEN NAY SE GIUP TOI TAO RA MOT TRANG WEB CO THIET KE NHAT QUAN, D
   align-items: center;
   gap: 4px;
   padding: 6px;
-  border: 1px solid rgba(216, 229, 238, 0.88);
+  border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 10px 28px rgba(15, 76, 129, 0.08);
+  background: var(--surface);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
 }
 
 .site-nav a {
@@ -60,7 +60,7 @@ CAC KIEU GIAO DIEN NAY SE GIUP TOI TAO RA MOT TRANG WEB CO THIET KE NHAT QUAN, D
 .site-nav a:hover,
 .site-nav a.is-active {
   color: var(--primary);
-  background: #e4f4fb;
+  background: var(--surface-2);
 }
 
 .nav-toggle {
@@ -170,7 +170,8 @@ CAC KIEU GIAO DIEN NAY SE GIUP TOI TAO RA MOT TRANG WEB CO THIET KE NHAT QUAN, D
   margin-top: 60px;
   padding: 34px 0;
   color: rgba(255, 255, 255, 0.74);
-  background: #132334;
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
 }
 
 .footer-grid {
@@ -181,7 +182,7 @@ CAC KIEU GIAO DIEN NAY SE GIUP TOI TAO RA MOT TRANG WEB CO THIET KE NHAT QUAN, D
 }
 
 .footer-grid .brand {
-  color: #fff;
+  color: var(--text);
 }
 
 .footer-links {
@@ -191,6 +192,17 @@ CAC KIEU GIAO DIEN NAY SE GIUP TOI TAO RA MOT TRANG WEB CO THIET KE NHAT QUAN, D
 }
 
 /* --- NEW ANIMATIONS --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @keyframes pageFadeInUp {
   from {
     opacity: 0;

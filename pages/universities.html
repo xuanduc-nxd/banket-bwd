@@ -8,12 +8,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <script>
+    if (localStorage.getItem('unimatch_theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="../index.html"><span class="brand-mark">U</span> UniMatch</a>
+    <a class="brand" href="index.html"><span class="brand-mark">U</span> UniMatch</a>
     <nav class="site-nav">
-      <a href="../index.html">Trang chủ</a>
+      <a href="index.html">Trang chủ</a>
       <a class="is-active" href="universities.html">Trường ĐH</a>
       <a href="majors.html">Ngành học</a>
       <a href="map.html">Bản đồ</a>
@@ -84,9 +89,9 @@
 
   <footer class="site-footer">
     <div class="container footer-grid">
-      <a class="brand" href="../index.html"><span class="brand-mark">U</span> UniMatch</a>
+      <a class="brand" href="index.html"><span class="brand-mark">U</span> UniMatch</a>
       <div class="footer-links">
-        <a href="../index.html">Trang chủ</a>
+        <a href="index.html">Trang chủ</a>
         <a href="majors.html">Ngành học</a>
         <a href="map.html">Bản đồ</a>
       </div>
