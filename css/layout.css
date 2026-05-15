@@ -15,7 +15,9 @@ CAC KIEU GIAO DIEN NAY SE GIUP TOI TAO RA MOT TRANG WEB CO THIET KE NHAT QUAN, D
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(50px);
+  background: var(--primary) --alpha(0.5);  /* Thay đổi màu nền của header thành màu primary với độ trong suốt 80% */
+  border-radius: 0 0 0 12px;  
 }
 
 .brand {
@@ -24,7 +26,7 @@ CAC KIEU GIAO DIEN NAY SE GIUP TOI TAO RA MOT TRANG WEB CO THIET KE NHAT QUAN, D
   gap: 10px;
   font-weight: 900;
   color: var(--primary);
-  letter-spacing: 0;
+  letter-spacing: 10;
 }
 
 .brand-mark {
@@ -36,6 +38,8 @@ CAC KIEU GIAO DIEN NAY SE GIUP TOI TAO RA MOT TRANG WEB CO THIET KE NHAT QUAN, D
   color: #fff;
   background: linear-gradient(135deg, var(--primary), var(--primary-2));
   box-shadow: 0 12px 28px rgba(0, 109, 156, 0.25);
+  padding: 6px;
+
 }
 
 .site-nav {
