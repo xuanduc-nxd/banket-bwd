@@ -4,6 +4,8 @@
   const DATA = window.UniMatchData;
   const UI = window.UniMatch;
   let compare = [];
+  let isExpanded = false;
+  const INITIAL_LIMIT = 12;
 
   function universityMatches(uni, query, type, region, category) {
     const normalized = query.trim().toLowerCase();
@@ -27,36 +29,47 @@
     const filtered = DATA.universities.filter((uni) => universityMatches(uni, query, type, region, category));
     UI.$("#resultCount").textContent = `${filtered.length} trường`;
 
-    list.innerHTML = filtered.length ? filtered.map((uni) => {
-      const mainCutoffs = Object.entries(uni.cutoffs).slice(0, 3).map(([majorId, cutoffs]) => {
-        const major = DATA.getMajor(majorId);
-        return major ? `<span class="pill">${major.name}: ${cutoffs[2025].toFixed(1)}</span>` : "";
-      }).join("");
+    const displayList = isExpanded ? filtered : filtered.slice(0, INITIAL_LIMIT);
+
+    list.innerHTML = displayList.length ? displayList.map((uni) => {
       const typeLabel = uni.type === "public" ? "Công lập" : "Tư thục";
 
       return `
-        <article class="university-card">
+        <article class="university-card is-compact">
           <div class="card-top">
             <div class="logo-box ${uni.type === "private" ? "private" : ""}">${uni.shortName}</div>
             <span class="pill ${uni.type}">${typeLabel}</span>
           </div>
           <div class="card-body">
             <h3>${uni.name}</h3>
-            <p>${uni.city} - ${uni.majorsCount} ngành - ${uni.students} sinh viên</p>
-            <div class="meta-row">
-              <span class="pill">Học phí: ${DATA.money(uni.tuition)}</span>
-              ${uni.categories.map((id) => `<span class="pill">${DATA.getCategory(id)?.name || id}</span>`).join("")}
+            <div class="summary-list" style="margin-top: 8px;">
+              <div class="summary-item" style="border: none; padding: 2px 0;"><span>TP</span><strong>${uni.city}</strong></div>
+              <div class="summary-item" style="border: none; padding: 2px 0;"><span>Ngành</span><strong>${uni.majorsCount}</strong></div>
+              <div class="summary-item" style="border: none; padding: 2px 0;"><span>SV</span><strong>${uni.students}</strong></div>
+              <div class="summary-item" style="border: none; padding: 2px 0;"><span>Phí</span><strong>${DATA.money(uni.tuition)}</strong></div>
             </div>
-            <div class="meta-row">${mainCutoffs}</div>
           </div>
           <div class="card-actions">
-            <a class="mini-btn" href="${uni.website}" target="_blank" rel="noopener">Website</a>
-            <a class="mini-btn" href="map.html?university=${encodeURIComponent(uni.id)}">Bản đồ</a>
+            <a class="mini-btn" href="${uni.website}" target="_blank" rel="noopener">Web</a>
+            <a class="mini-btn" href="map.html?university=${encodeURIComponent(uni.id)}">Map</a>
             <button class="mini-btn" data-compare="${uni.id}">So sánh</button>
           </div>
         </article>
       `;
     }).join("") : `<div class="empty-state">Không tìm thấy trường phù hợp với bộ lọc.</div>`;
+
+    // Thêm nút Xem thêm nếu còn trường ẩn
+    if (!isExpanded && filtered.length > INITIAL_LIMIT) {
+      list.insertAdjacentHTML("beforeend", `
+        <div class="load-more-wrapper">
+          <button class="load-more-btn" id="loadMore">Xem thêm (${filtered.length - INITIAL_LIMIT} trường khác)</button>
+        </div>
+      `);
+      UI.$("#loadMore").addEventListener("click", () => {
+        isExpanded = true;
+        render();
+      });
+    }
 
     UI.$all("[data-compare]").forEach((button) => {
       button.addEventListener("click", () => addCompare(button.dataset.compare));
@@ -113,7 +126,10 @@
     });
 
     ["search", "type", "region", "category"].forEach((id) => {
-      UI.$(`#${id}`).addEventListener("input", render);
+      UI.$(`#${id}`).addEventListener("input", () => {
+        isExpanded = false; // Reset trạng thái khi lọc
+        render();
+      });
     });
 
     UI.$("#clearCompare").addEventListener("click", () => {

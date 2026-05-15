@@ -110,8 +110,97 @@ VA BO CUC RIENG CHO MOI TRANG, GIUP NANG CAO TRAI NGHIEM NGUOI DUNG VA LAM CHO N
   gap: 14px;
 }
 
+.list-frame {
+  max-height: 720px;
+  overflow-y: auto;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  position: relative;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Tùy chỉnh thanh cuộn cho khung danh sách */
+.list-frame::-webkit-scrollbar {
+  width: 6px;
+}
+
+.list-frame::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.list-frame::-webkit-scrollbar-thumb {
+  background: rgba(0, 109, 156, 0.2);
+  border-radius: 10px;
+}
+
+.list-frame::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
 .trend-card {
   padding: 16px;
+}
+
+.grid-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.load-more-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0 10px;
+  grid-column: 1 / -1;
+}
+
+.load-more-btn {
+  padding: 10px 24px;
+  border: 1px solid var(--primary);
+  border-radius: 999px;
+  color: var(--primary);
+  background: var(--surface-2);
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.load-more-btn:hover {
+  background: var(--primary);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* Tối ưu thẻ compact cho trang danh sách */
+.university-card.is-compact {
+  padding: 14px;
+  border-radius: 16px;
+}
+
+.university-card.is-compact .logo-box {
+  width: 38px;
+  height: 38px;
+  font-size: 0.7rem;
+  border-radius: 10px;
+}
+
+.university-card.is-compact h3 {
+  font-size: 0.95rem;
+  margin-top: 10px;
+}
+
+.university-card.is-compact .summary-item {
+  font-size: 0.8rem;
+}
+
+.university-card.is-compact .mini-btn {
+  font-size: 0.75rem;
+  min-height: 32px;
+  padding: 0 8px;
 }
 
 .map-layout {
