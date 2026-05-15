@@ -66,6 +66,20 @@ VA BO CUC RIENG CHO MOI TRANG, GIUP NANG CAO TRAI NGHIEM NGUOI DUNG VA LAM CHO N
   color: var(--primary);
 }
 
+.card{
+    width: 200px;
+  height: 120px;
+  margin: 20px;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s;
+}
+
 .major-layout {
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -175,32 +189,60 @@ VA BO CUC RIENG CHO MOI TRANG, GIUP NANG CAO TRAI NGHIEM NGUOI DUNG VA LAM CHO N
   transform: scale(1.05);
 }
 
-/* Tối ưu thẻ compact cho trang danh sách */
+/* Tối ưu thẻ compact cho trang danh sách với phong cách Premium */
 .university-card.is-compact {
-  padding: 14px;
-  border-radius: 16px;
+  padding: 16px;
+  border-radius: 20px;
+  /* Glassmorphism */
+  background: rgba(var(--surface-rgb, 255, 255, 255), 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+[data-theme="dark"] .university-card.is-compact {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.university-card.is-compact:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 109, 156, 0.15);
+  border-color: var(--primary-2);
+  background: rgba(var(--surface-rgb, 255, 255, 255), 0.85);
 }
 
 .university-card.is-compact .logo-box {
-  width: 38px;
-  height: 38px;
-  font-size: 0.7rem;
-  border-radius: 10px;
+  width: 42px;
+  height: 42px;
+  font-size: 0.75rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .university-card.is-compact h3 {
-  font-size: 0.95rem;
-  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: 800;
+  margin-top: 12px;
+  color: var(--text);
 }
 
 .university-card.is-compact .summary-item {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
 }
 
 .university-card.is-compact .mini-btn {
-  font-size: 0.75rem;
-  min-height: 32px;
-  padding: 0 8px;
+  font-size: 0.78rem;
+  min-height: 34px;
+  padding: 0 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 109, 156, 0.1);
+}
+
+[data-theme="dark"] .university-card.is-compact .mini-btn {
+  background: rgba(15, 23, 42, 0.4);
 }
 
 .map-layout {
