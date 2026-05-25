@@ -20,7 +20,6 @@
     grid-template-columns: 1fr;
   }
 
-  .map-layout,
   .major-layout,
   .major-top-panel {
     grid-template-columns: 1fr;
@@ -37,6 +36,36 @@
 
   .trend-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .map-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .page-map main {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .map-page.section {
+    overflow: visible;
+  }
+
+  .map-page .container {
+    height: auto;
+  }
+
+  .map-sidebar {
+    max-height: min(28dvh, 280px);
+  }
+
+  .map-canvas-wrap {
+    min-height: min(28dvh, 280px);
+    height: min(28dvh, 280px);
   }
 }
 

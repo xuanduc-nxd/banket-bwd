@@ -10,6 +10,7 @@
   let activeFilter = "all";
   let recommendedIds = [];
   let mapReady = false;
+  const MAP_BLOCK_HEIGHT_RATIO = 0.5;
 
   function getVisibleUniversities() {
     const query = UI.$("#mapSearch").value.trim().toLowerCase();
@@ -24,10 +25,52 @@
     });
   }
 
+  function resizeMap() {
+    if (map && mapReady && typeof map.resize === "function") {
+      map.resize();
+    }
+  }
+
+  function syncMapViewport() {
+    const header = document.querySelector(".site-header");
+    const top = header?.offsetHeight || 0;
+    document.documentElement.style.setProperty("--map-chrome-top", `${top}px`);
+
+    const layout = document.querySelector(".map-layout");
+    const mapWrap = document.querySelector(".map-canvas-wrap");
+    if (!layout || !mapWrap) {
+      resizeMap();
+      return;
+    }
+
+    const isStacked = window.matchMedia("(max-width: 768px)").matches;
+
+    requestAnimationFrame(() => {
+      const mapWidth = Math.round(mapWrap.getBoundingClientRect().width);
+      if (mapWidth <= 0) {
+        resizeMap();
+        return;
+      }
+
+      if (isStacked) {
+        layout.style.height = "";
+        layout.style.minHeight = "";
+        document.documentElement.style.removeProperty("--map-block-height");
+      } else {
+        const blockHeight = `${Math.round(mapWidth * MAP_BLOCK_HEIGHT_RATIO)}px`;
+        document.documentElement.style.setProperty("--map-block-height", blockHeight);
+        layout.style.height = blockHeight;
+        layout.style.minHeight = blockHeight;
+      }
+
+      resizeMap();
+    });
+  }
+
   function showMapSetupMessage(message) {
     const el = UI.$("#map");
     if (!el) return;
-    el.innerHTML = `<div class="empty-state" style="height:100%;min-height:360px;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center">${message}</div>`;
+    el.innerHTML = `<div class="empty-state" style="height:100%;min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center">${message}</div>`;
   }
 
   function createMarkerElement(uni) {
@@ -86,6 +129,9 @@
       });
 
       render();
+      requestAnimationFrame(() => {
+        requestAnimationFrame(syncMapViewport);
+      });
     });
 
     map.on("error", (e) => {
@@ -145,6 +191,8 @@
       visible.forEach((uni) => bounds.extend([uni.lng, uni.lat]));
       map.fitBounds(bounds, { padding: 48, maxZoom: 13, duration: 600 });
     }
+
+    requestAnimationFrame(syncMapViewport);
   }
 
   function selectUniversity(id, fly) {
@@ -184,9 +232,11 @@
     recommendedIds = Array.from(new Set(plan.matches.slice(0, 10).map((match) => match.university.id)));
     UI.$("#recommendBox").style.display = "block";
     UI.$("#recommendText").textContent = `Đang hiển thị ${recommendedIds.length} trường từ kết quả tư vấn ${plan.totalScore.toFixed(1)} điểm.`;
+    requestAnimationFrame(syncMapViewport);
   }
 
   document.addEventListener("DOMContentLoaded", () => {
+    syncMapViewport();
     initMap();
     loadPlan();
 
@@ -203,6 +253,28 @@
       recommendedIds = [];
       UI.$("#recommendBox").style.display = "none";
       render();
+      syncMapViewport();
+    });
+
+    const pageHeader = document.querySelector(".page-header");
+    const recommendBox = UI.$("#recommendBox");
+    const mapLayout = document.querySelector(".map-layout");
+    if (pageHeader) {
+      new ResizeObserver(() => syncMapViewport()).observe(pageHeader);
+    }
+    if (recommendBox) {
+      new ResizeObserver(() => syncMapViewport()).observe(recommendBox);
+    }
+    if (mapLayout) {
+      new ResizeObserver(() => syncMapViewport()).observe(mapLayout);
+    }
+
+    window.addEventListener("load", syncMapViewport);
+
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(syncMapViewport, 150);
     });
 
     const params = new URLSearchParams(window.location.search);

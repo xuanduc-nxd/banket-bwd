@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://unpkg.com/@vietmap/vietmap-gl-js@6.0.1/dist/vietmap-gl.css">
   <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="page-map">
   <header class="site-header">
     <a class="brand" href="../index.html"><span class="brand-mark">U</span> UNIMATCH</a>
     <nav class="site-nav">
@@ -24,7 +24,7 @@
   </header>
 
   <main>
-    <section class="page-header">
+    <section class="page-header page-header--compact">
       <div class="container">
         <span class="section-badge">Map</span>
         <h1>Bản đồ trường</h1>
@@ -43,20 +43,24 @@
       </div>
     </section>
 
-    <section class="section">
-      <div class="container map-layout">
-        <aside class="map-panel">
-          <div class="section-header" style="margin-bottom:10px">
+    <section class="section map-page">
+      <div class="container">
+        <div class="map-layout">
+        <aside class="map-sidebar">
+          <div class="map-sidebar__head">
             <span class="section-badge">List</span>
-            <h2 id="mapCount" style="margin:0;font-size:1rem">0 trường</h2>
+            <h2 id="mapCount">0 trường</h2>
           </div>
           <div class="map-list" id="mapList"></div>
-          <div class="map-panel" id="infoPanel" style="margin-top:12px;background:var(--mustard)">
+          <div class="map-info-panel" id="infoPanel">
             <h3>Chọn trường</h3>
             <p>Nhấn marker hoặc tên trong list.</p>
           </div>
         </aside>
-        <div id="map"></div>
+        <div class="map-canvas-wrap">
+          <div id="map"></div>
+        </div>
+        </div>
       </div>
     </section>
   </main>
