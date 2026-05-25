@@ -5,6 +5,25 @@
   const UI = window.UniMatch;
   let selectedCategory = "all";
   let compare = [];
+  try {
+    compare = JSON.parse(localStorage.getItem("unimatch_compare_majors") || "[]");
+  } catch (e) {
+    compare = [];
+  }
+
+  let bookmarked = [];
+  try {
+    bookmarked = JSON.parse(localStorage.getItem("unimatch_bookmarked_majors") || "[]");
+  } catch (e) {
+    bookmarked = [];
+  }
+
+  let recentSearches = [];
+  try {
+    recentSearches = JSON.parse(localStorage.getItem("unimatch_recent_searches_major") || "[]");
+  } catch (e) {
+    recentSearches = [];
+  }
   let quizIndex = 0;
   let quizScores = {};
   let majorsExpanded = false;
@@ -59,17 +78,21 @@
   function renderMajors() {
     const query = UI.$("#search").value.trim().toLowerCase();
     const difficulty = Number(UI.$("#difficulty").value || 10);
+    const bookmarkFilter = UI.$("#bookmarkFilter") ? UI.$("#bookmarkFilter").value : "all";
+
     const list = DATA.majors.filter((major) => {
       const text = `${major.name} ${major.description} ${major.careers.join(" ")}`.toLowerCase();
       if (query && !text.includes(query)) return false;
       if (selectedCategory !== "all" && major.category !== selectedCategory) return false;
       if (major.difficulty > difficulty) return false;
+      if (bookmarkFilter === "bookmarked" && !bookmarked.includes(major.id)) return false;
       return true;
     });
 
     UI.$("#majorCount").textContent = `${list.length} ngành`;
     UI.$("#majorsGrid").innerHTML = list.length ? list.map((major) => majorCard(major)).join("") : `<div class="empty-state">Không tìm thấy ngành phù hợp.</div>`;
     UI.$all("[data-compare]").forEach((button) => button.addEventListener("click", () => addCompare(button.dataset.compare)));
+    UI.$all("[data-bookmark]").forEach((button) => button.addEventListener("click", () => toggleBookmark(button.dataset.bookmark)));
     applyMajorsRowLimit();
   }
 
@@ -131,6 +154,8 @@
 
   function majorCard(major) {
     const cat = DATA.getCategory(major.category);
+    const isBookmarked = bookmarked.includes(major.id);
+    const bookmarkText = isBookmarked ? "Đã lưu ❤️" : "Lưu ♡";
     return `
       <article class="major-card">
         <div class="card-top">
@@ -149,6 +174,7 @@
         </div>
         <div class="card-actions">
           <button class="mini-btn" data-compare="${major.id}">So sánh</button>
+          <button class="mini-btn" data-bookmark="${major.id}">${bookmarkText}</button>
         </div>
       </article>
     `;
@@ -164,7 +190,103 @@
       return;
     }
     compare.push(id);
+    localStorage.setItem("unimatch_compare_majors", JSON.stringify(compare));
     renderCompare();
+  }
+
+  function toggleBookmark(id) {
+    const idx = bookmarked.indexOf(id);
+    if (idx > -1) {
+      bookmarked.splice(idx, 1);
+      UI.toast("Đã bỏ lưu ngành học này.");
+    } else {
+      bookmarked.push(id);
+      UI.toast("Đã lưu ngành học thành công ❤️");
+    }
+    localStorage.setItem("unimatch_bookmarked_majors", JSON.stringify(bookmarked));
+    renderMajors();
+  }
+
+  function saveFilters() {
+    const filters = {
+      query: UI.$("#search").value,
+      difficulty: UI.$("#difficulty").value,
+      selectedCategory: selectedCategory,
+      bookmarkFilter: UI.$("#bookmarkFilter") ? UI.$("#bookmarkFilter").value : "all"
+    };
+    localStorage.setItem("unimatch_major_filters", JSON.stringify(filters));
+  }
+
+  function restoreFilters() {
+    try {
+      const saved = JSON.parse(localStorage.getItem("unimatch_major_filters"));
+      if (saved) {
+        if (saved.query !== undefined) UI.$("#search").value = saved.query;
+        if (saved.difficulty !== undefined) UI.$("#difficulty").value = saved.difficulty;
+        if (saved.selectedCategory !== undefined) {
+          selectedCategory = saved.selectedCategory;
+          // Cập nhật class active cho chip nhóm ngành
+          const box = UI.$("#categoryChips");
+          if (box) {
+            UI.$all("[data-category]", box).forEach((btn) => {
+              btn.classList.toggle("is-active", btn.dataset.category === selectedCategory);
+            });
+          }
+        }
+        if (saved.bookmarkFilter !== undefined && UI.$("#bookmarkFilter")) {
+          UI.$("#bookmarkFilter").value = saved.bookmarkFilter;
+        }
+      }
+    } catch (e) {
+      console.error("Error restoring filters", e);
+    }
+  }
+
+  function renderRecentSearches() {
+    const container = UI.$("#recentSearches");
+    const tagsContainer = UI.$("#recentTags");
+    if (!container || !tagsContainer) return;
+
+    if (recentSearches.length === 0) {
+      container.style.display = "none";
+      return;
+    }
+
+    container.style.display = "block";
+    tagsContainer.innerHTML = recentSearches.map((tag) => `
+      <span class="recent-tag" data-tag="${tag}">${tag} ✕</span>
+    `).join("");
+
+    UI.$all("[data-tag]", tagsContainer).forEach((el) => {
+      el.addEventListener("click", (e) => {
+        const tag = el.dataset.tag;
+        if (e.target.textContent.includes("✕") && e.offsetX > el.offsetWidth - 20) {
+          e.stopPropagation();
+          removeRecentSearch(tag);
+        } else {
+          UI.$("#search").value = tag;
+          majorsExpanded = false;
+          saveFilters();
+          renderMajors();
+        }
+      });
+    });
+  }
+
+  function addRecentSearch(query) {
+    const cleaned = query.trim();
+    if (!cleaned) return;
+    recentSearches = recentSearches.filter((t) => t !== cleaned);
+    recentSearches.unshift(cleaned);
+    recentSearches = recentSearches.slice(0, 5);
+    localStorage.setItem("unimatch_recent_searches_major", JSON.stringify(recentSearches));
+    renderRecentSearches();
+  }
+
+  function removeRecentSearch(query) {
+    recentSearches = recentSearches.filter((t) => t !== query);
+    localStorage.setItem("unimatch_recent_searches_major", JSON.stringify(recentSearches));
+    renderRecentSearches();
   }
 
   function renderCompare() {
@@ -265,18 +387,52 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     renderCategories();
+    restoreFilters();
     renderMajors();
     renderQuiz();
     renderTrends();
 
     UI.$("#search").addEventListener("input", () => {
       majorsExpanded = false;
+      saveFilters();
       renderMajors();
     });
     UI.$("#difficulty").addEventListener("input", () => {
       majorsExpanded = false;
+      saveFilters();
       renderMajors();
     });
+    if (UI.$("#bookmarkFilter")) {
+      UI.$("#bookmarkFilter").addEventListener("change", () => {
+        majorsExpanded = false;
+        saveFilters();
+        renderMajors();
+      });
+    }
+
+    // Capture search category chip click to save filters
+    const box = UI.$("#categoryChips");
+    if (box) {
+      box.addEventListener("click", (e) => {
+        if (e.target.dataset.category) {
+          saveFilters();
+        }
+      });
+    }
+
+    UI.$("#search").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const val = e.target.value.trim();
+        if (val) {
+          addRecentSearch(val);
+          saveFilters();
+          renderMajors();
+        }
+      }
+    });
+
+    renderRecentSearches();
+
     UI.$("#showMoreMajors").addEventListener("click", () => {
       majorsExpanded = true;
       applyMajorsRowLimit();
@@ -291,6 +447,7 @@
     });
     UI.$("#clearCompare").addEventListener("click", () => {
       compare = [];
+      localStorage.removeItem("unimatch_compare_majors");
       renderCompare();
     });
     UI.$("#openCompare").addEventListener("click", openCompare);
@@ -298,5 +455,7 @@
     UI.$("#compareModal").addEventListener("click", (event) => {
       if (event.target.id === "compareModal") event.currentTarget.classList.remove("is-open");
     });
+
+    renderCompare();
   });
 })();

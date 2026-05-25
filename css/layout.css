@@ -98,9 +98,9 @@
   font-size: clamp(2rem, 5.5vw, 3.75rem);
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   line-height: 0.95;
-  color: var(--ink);
+  color: var(--mustard);
   text-shadow: var(--shadow-hero);
   margin-bottom: 20px;
 }
@@ -388,6 +388,7 @@
 .page-header h1 {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   text-transform: uppercase;
+  color: var(--mustard);
   text-shadow: 4px 4px 0 var(--ink);
 }
 
@@ -414,5 +415,31 @@
 
   .site-nav.is-open {
     display: flex;
+  }
+}
+
+/* Results step 4 layout */
+.results-layout {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  gap: 24px;
+  align-items: start;
+  margin-top: 16px;
+}
+
+.results-main {
+  min-width: 0;
+}
+
+.results-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .results-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }

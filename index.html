@@ -150,48 +150,31 @@
             </section>
 
             <section class="form-step" data-step="4">
-              <div class="aspiration-matrix-wrap brutal-card" style="background:var(--white)">
-                <div class="section-header" style="margin-bottom:12px">
-                  <div>
-                    <span class="section-badge">Kết quả</span>
-                    <h2 style="margin:0">Aspiration Matrix</h2>
+              <div class="results-layout">
+                <div class="results-main">
+                  <div class="aspiration-matrix-wrap brutal-card" style="background:var(--white)">
+                    <div class="section-header" style="margin-bottom:12px">
+                      <div>
+                        <span class="section-badge">Kết quả</span>
+                        <h2 style="margin:0">Danh sách gợi ý</h2>
+                      </div>
+                    </div>
+                    <p class="matrix-intro">
+                      Danh sách các trường đại học thuộc nhóm <strong>An toàn (Safe)</strong> phù hợp với thông tin xét tuyển của bạn.
+                    </p>
+
+                    <div class="results-list" id="resultsList"></div>
                   </div>
                 </div>
-                <p class="matrix-intro">
-                  Phân bổ gợi ý theo tỷ lệ <strong>30% An toàn</strong> · <strong>50% Sweet spot</strong> ·
-                  <strong>20% Dream</strong>. Mỗi thẻ gồm học phí, điểm chuẩn và lý do match.
-                </p>
 
-                <div class="aspiration-matrix" id="strategyMatrix">
-                  <div class="matrix-block matrix-block--safe">
-                    <div class="matrix-block__head">
-                      <span>⚓ An toàn</span>
-                      <span class="matrix-block__pct">30%</span>
-                    </div>
-                    <div class="matrix-block__body" id="resultsSafe"></div>
-                  </div>
-                  <div class="matrix-block matrix-block--fit">
-                    <div class="matrix-block__head">
-                      <span>🎯 Sweet spot</span>
-                      <span class="matrix-block__pct">50%</span>
-                    </div>
-                    <div class="matrix-block__body" id="resultsFit"></div>
-                  </div>
-                  <div class="matrix-block matrix-block--reach">
-                    <div class="matrix-block__head">
-                      <span>🚀 Dream</span>
-                      <span class="matrix-block__pct">20%</span>
-                    </div>
-                    <div class="matrix-block__body" id="resultsReach"></div>
+                <div class="results-sidebar">
+                  <aside class="side-summary" id="resultSummary"></aside>
+
+                  <div class="results-footer">
+                    <a class="btn-secondary" href="pages/map.html">Xem bản đồ</a>
+                    <button class="btn-ghost" type="button" id="restartPlan">Làm lại từ đầu</button>
                   </div>
                 </div>
-              </div>
-
-              <aside class="side-summary" id="resultSummary"></aside>
-
-              <div class="results-footer">
-                <a class="btn-secondary" href="pages/map.html">Xem bản đồ</a>
-                <button class="btn-ghost" type="button" id="restartPlan">Làm lại từ đầu</button>
               </div>
             </section>
           </form>

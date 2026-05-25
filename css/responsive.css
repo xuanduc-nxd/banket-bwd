@@ -25,11 +25,6 @@
     grid-template-columns: 1fr;
   }
 
-  .major-top-panel__filter {
-    border-right: none;
-    border-bottom: var(--border);
-  }
-
   .toolbar {
     grid-template-columns: 1fr;
   }

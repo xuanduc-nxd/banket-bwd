@@ -8,8 +8,24 @@
   margin-bottom: 24px;
 }
 
-.results-layout {
-  display: block;
+.results-layout .aspiration-matrix-wrap {
+  margin-top: 0;
+}
+
+.results-sidebar .side-summary {
+  margin-top: 0;
+}
+
+.results-sidebar .results-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.results-sidebar .results-footer .btn-secondary,
+.results-sidebar .results-footer .btn-ghost {
+  width: 100%;
 }
 
 .matrix-intro {
@@ -19,12 +35,4 @@
   background: var(--canvas);
   border: var(--border);
   border-radius: 8px;
-}
-
-.results-footer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: space-between;
-  margin-top: 20px;
 }

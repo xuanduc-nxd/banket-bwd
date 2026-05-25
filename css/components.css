@@ -264,6 +264,29 @@
   align-items: stretch;
 }
 
+.results-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 8px;
+  margin-top: 16px;
+}
+
+/* Custom scrollbar for Neo-Brutalism feel */
+.results-list::-webkit-scrollbar {
+  width: 10px;
+}
+.results-list::-webkit-scrollbar-track {
+  background: var(--canvas);
+  border-left: 2px solid var(--ink);
+}
+.results-list::-webkit-scrollbar-thumb {
+  background: var(--ink);
+  border: 2px solid var(--canvas);
+}
+
 .matrix-block {
   display: flex;
   flex-direction: column;
@@ -543,9 +566,31 @@
 
 .toolbar {
   display: grid;
-  grid-template-columns: 1fr repeat(3, minmax(120px, 1fr));
+  grid-template-columns: 1.2fr repeat(4, minmax(120px, 1fr));
   gap: 10px;
   margin: 16px 0;
+}
+
+.recent-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.75rem;
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.recent-tag:hover {
+  background: var(--mustard);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
 }
 
 .toolbar .chip {
@@ -793,20 +838,14 @@
 .major-top-panel {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0;
-  background: var(--white);
-  border: var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-card);
-  overflow: hidden;
-}
-
-.major-top-panel__filter {
+  gap: 20px;
+  background: none;
   border: none;
   border-radius: 0;
   box-shadow: none;
-  border-right: var(--border);
+  overflow: visible;
 }
+
 
 .major-top-panel__quiz {
   display: flex;
@@ -816,9 +855,6 @@
 .major-top-panel__quiz .quiz-box {
   flex: 1;
   margin-bottom: 0;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
 }
 
 .majors-catalog {

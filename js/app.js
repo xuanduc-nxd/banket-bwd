@@ -209,33 +209,20 @@
   }
 
   function renderResultsMatrix(matches) {
-    const safeEl = $("#resultsSafe");
-    const fitEl = $("#resultsFit");
-    const reachEl = $("#resultsReach");
-    if (!safeEl || !fitEl || !reachEl) return;
+    const listEl = $("#resultsList");
+    if (!listEl) return;
 
-    const buckets = { safe: [], fit: [], reach: [] };
-    matches.forEach((m) => {
-      if (buckets[m.risk.id]) buckets[m.risk.id].push(m);
-    });
+    const safeMatches = matches.filter((m) => m.risk.id === "safe");
+    const empty = '<div class="empty-state">Không có trường gợi ý phù hợp (An toàn).</div>';
 
-    const limits = { safe: 4, fit: 6, reach: 3 };
-    const empty = '<div class="empty-state">Chưa có lựa chọn trong vùng này.</div>';
-
-    [["safe", safeEl], ["fit", fitEl], ["reach", reachEl]].forEach(([key, el]) => {
-      const list = buckets[key].slice(0, limits[key]);
-      el.innerHTML = list.length
-        ? list.map((m, i) => renderResultCard(m, i)).join("")
-        : empty;
-    });
+    listEl.innerHTML = safeMatches.length
+      ? safeMatches.map((m, i) => renderResultCard(m, i)).join("")
+      : empty;
   }
 
   function clearResultsMatrix() {
-    const empty = '<div class="empty-state">Chưa có lựa chọn trong vùng này.</div>';
-    ["#resultsSafe", "#resultsFit", "#resultsReach"].forEach((sel) => {
-      const el = $(sel);
-      if (el) el.innerHTML = empty;
-    });
+    const el = $("#resultsList");
+    if (el) el.innerHTML = '<div class="empty-state">Chưa có lựa chọn nào.</div>';
   }
 
   function renderPlanSummary(plan, container) {
@@ -250,9 +237,7 @@
         <div class="summary-item"><span>Tổ hợp</span><strong>${plan.profile.combination}</strong></div>
         <div class="summary-item"><span>Tổng điểm</span><strong>${plan.totalScore.toFixed(2)}</strong></div>
         <div class="summary-item"><span>Khu vực</span><strong>${regionLabel(plan.profile.region)}</strong></div>
-        <div class="summary-item"><span>An toàn (30%)</span><strong>${counts.safe || 0}</strong></div>
-        <div class="summary-item"><span>Sweet spot (50%)</span><strong>${counts.fit || 0}</strong></div>
-        <div class="summary-item"><span>Dream (20%)</span><strong>${counts.reach || 0}</strong></div>
+        <div class="summary-item"><span>Số trường gợi ý (An toàn)</span><strong>${counts.safe || 0}</strong></div>
       </div>
     `;
   }
@@ -283,6 +268,15 @@
       $("#interestGrid").appendChild(label);
     });
 
+    function saveDraft() {
+      if (step === 4) return;
+      const draft = {
+        step,
+        profile: getProfile()
+      };
+      localStorage.setItem("unimatch_form_draft", JSON.stringify(draft));
+    }
+
     function go(next) {
       step = Math.max(1, Math.min(4, next));
       stepEls.forEach((el) => el.classList.toggle("is-active", Number(el.dataset.step) === step));
@@ -291,6 +285,7 @@
         tab.classList.toggle("is-active", tabStep === step);
         tab.classList.toggle("is-done", tabStep < step);
       });
+      saveDraft();
       $(".smart-card").scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
@@ -385,13 +380,14 @@
       };
 
       savePlan(plan);
+      localStorage.removeItem("unimatch_form_draft");
       if (matches.length) {
         renderResultsMatrix(matches);
       } else {
         clearResultsMatrix();
-        const fitEl = $("#resultsFit");
-        if (fitEl) {
-          fitEl.innerHTML = `<div class="empty-state">Không có kết quả. Thử nới học phí hoặc khu vực.</div>`;
+        const listEl = $("#resultsList");
+        if (listEl) {
+          listEl.innerHTML = `<div class="empty-state">Không có kết quả. Thử nới học phí hoặc khu vực.</div>`;
         }
       }
       renderPlanSummary(plan, summary);
@@ -400,6 +396,7 @@
 
     $("#restartPlan")?.addEventListener("click", () => {
       clearPlan();
+      localStorage.removeItem("unimatch_form_draft");
       form.reset();
       scoreGrid.innerHTML = "";
       totalEl.textContent = "0.00 / 30";
@@ -408,11 +405,62 @@
       go(1);
     });
 
+    // Auto-save form draft on any input change
+    form.addEventListener("input", saveDraft);
+    form.addEventListener("change", saveDraft);
+
     const saved = getPlan();
     if (saved?.matches?.length) {
       renderResultsMatrix(saved.matches);
       renderPlanSummary(saved, summary);
       go(4);
+    } else {
+      const draftStr = localStorage.getItem("unimatch_form_draft");
+      if (draftStr) {
+        try {
+          const draft = JSON.parse(draftStr);
+          if (draft && draft.profile) {
+            // Restore combination
+            combination.value = draft.profile.combination || "";
+            if (combination.value) {
+              renderScores();
+              // Restore scores
+              const inputs = $all("input", scoreGrid);
+              inputs.forEach((input) => {
+                if (draft.profile.scores && draft.profile.scores[input.name] !== undefined) {
+                  input.value = draft.profile.scores[input.name];
+                }
+              });
+              updateTotal();
+            }
+
+            // Restore interests
+            if (Array.isArray(draft.profile.interests)) {
+              $all('input[name="interest"]').forEach((cb) => {
+                cb.checked = draft.profile.interests.includes(cb.value);
+              });
+            }
+
+            // Restore other filters
+            $("#region").value = draft.profile.region || "all";
+            $("#schoolType").value = draft.profile.schoolType || "all";
+            $("#maxTuition").value = draft.profile.maxTuition || "";
+
+            // Restore step manually to avoid screen scroll and saveDraft triggers
+            if (draft.step && draft.step >= 1 && draft.step <= 3) {
+              step = draft.step;
+              stepEls.forEach((el) => el.classList.toggle("is-active", Number(el.dataset.step) === step));
+              tabs.forEach((tab) => {
+                const tabStep = Number(tab.dataset.step);
+                tab.classList.toggle("is-active", tabStep === step);
+                tab.classList.toggle("is-done", tabStep < step);
+              });
+            }
+          }
+        } catch (e) {
+          console.error("Error restoring draft", e);
+        }
+      }
     }
   }
 

@@ -4,8 +4,27 @@
   const DATA = window.UniMatchData;
   const UI = window.UniMatch;
   let compare = [];
+  try {
+    compare = JSON.parse(localStorage.getItem("unimatch_compare_list") || "[]");
+  } catch (e) {
+    compare = [];
+  }
   let isExpanded = false;
   const INITIAL_LIMIT = 12;
+
+  let bookmarked = [];
+  try {
+    bookmarked = JSON.parse(localStorage.getItem("unimatch_bookmarked_unis") || "[]");
+  } catch (e) {
+    bookmarked = [];
+  }
+
+  let recentSearches = [];
+  try {
+    recentSearches = JSON.parse(localStorage.getItem("unimatch_recent_searches_uni") || "[]");
+  } catch (e) {
+    recentSearches = [];
+  }
 
   function universityMatches(uni, query, type, region, category) {
     const normalized = query.trim().toLowerCase();
@@ -25,14 +44,20 @@
     const type = UI.$("#type").value;
     const region = UI.$("#region").value;
     const category = UI.$("#category").value;
+    const bookmarkFilter = UI.$("#bookmarkFilter") ? UI.$("#bookmarkFilter").value : "all";
 
-    const filtered = DATA.universities.filter((uni) => universityMatches(uni, query, type, region, category));
+    const filtered = DATA.universities.filter((uni) => {
+      if (bookmarkFilter === "bookmarked" && !bookmarked.includes(uni.id)) return false;
+      return universityMatches(uni, query, type, region, category);
+    });
     UI.$("#resultCount").textContent = `${filtered.length} trường`;
 
     const displayList = isExpanded ? filtered : filtered.slice(0, INITIAL_LIMIT);
 
     list.innerHTML = displayList.length ? displayList.map((uni) => {
       const typeLabel = uni.type === "public" ? "Công lập" : "Tư thục";
+      const isBookmarked = bookmarked.includes(uni.id);
+      const bookmarkText = isBookmarked ? "Đã lưu ❤️" : "Lưu ♡";
 
       return `
         <article class="university-card is-compact">
@@ -53,6 +78,7 @@
             <a class="mini-btn" href="${uni.website}" target="_blank" rel="noopener">Web</a>
             <a class="mini-btn" href="map.html?university=${encodeURIComponent(uni.id)}">Map</a>
             <button class="mini-btn" data-compare="${uni.id}">So sánh</button>
+            <button class="mini-btn" data-bookmark="${uni.id}">${bookmarkText}</button>
           </div>
         </article>
       `;
@@ -74,6 +100,98 @@
     UI.$all("[data-compare]").forEach((button) => {
       button.addEventListener("click", () => addCompare(button.dataset.compare));
     });
+
+    UI.$all("[data-bookmark]").forEach((button) => {
+      button.addEventListener("click", () => toggleBookmark(button.dataset.bookmark));
+    });
+  }
+
+  function toggleBookmark(id) {
+    const idx = bookmarked.indexOf(id);
+    if (idx > -1) {
+      bookmarked.splice(idx, 1);
+      UI.toast("Đã bỏ lưu trường này.");
+    } else {
+      bookmarked.push(id);
+      UI.toast("Đã lưu trường thành công ❤️");
+    }
+    localStorage.setItem("unimatch_bookmarked_unis", JSON.stringify(bookmarked));
+    render();
+  }
+
+  function saveFilters() {
+    const filters = {
+      query: UI.$("#search").value,
+      type: UI.$("#type").value,
+      region: UI.$("#region").value,
+      category: UI.$("#category").value,
+      bookmarkFilter: UI.$("#bookmarkFilter") ? UI.$("#bookmarkFilter").value : "all"
+    };
+    localStorage.setItem("unimatch_uni_filters", JSON.stringify(filters));
+  }
+
+  function restoreFilters() {
+    try {
+      const saved = JSON.parse(localStorage.getItem("unimatch_uni_filters"));
+      if (saved) {
+        if (saved.query !== undefined) UI.$("#search").value = saved.query;
+        if (saved.type !== undefined) UI.$("#type").value = saved.type;
+        if (saved.region !== undefined) UI.$("#region").value = saved.region;
+        if (saved.category !== undefined) UI.$("#category").value = saved.category;
+        if (saved.bookmarkFilter !== undefined && UI.$("#bookmarkFilter")) {
+          UI.$("#bookmarkFilter").value = saved.bookmarkFilter;
+        }
+      }
+    } catch (e) {
+      console.error("Error restoring filters", e);
+    }
+  }
+
+  function renderRecentSearches() {
+    const container = UI.$("#recentSearches");
+    const tagsContainer = UI.$("#recentTags");
+    if (!container || !tagsContainer) return;
+
+    if (recentSearches.length === 0) {
+      container.style.display = "none";
+      return;
+    }
+
+    container.style.display = "flex";
+    tagsContainer.innerHTML = recentSearches.map((tag) => `
+      <span class="recent-tag" data-tag="${tag}">${tag} ✕</span>
+    `).join("");
+
+    UI.$all("[data-tag]", tagsContainer).forEach((el) => {
+      el.addEventListener("click", (e) => {
+        const tag = el.dataset.tag;
+        if (e.target.textContent.includes("✕") && e.offsetX > el.offsetWidth - 20) {
+          e.stopPropagation();
+          removeRecentSearch(tag);
+        } else {
+          UI.$("#search").value = tag;
+          isExpanded = false;
+          saveFilters();
+          render();
+        }
+      });
+    });
+  }
+
+  function addRecentSearch(query) {
+    const cleaned = query.trim();
+    if (!cleaned) return;
+    recentSearches = recentSearches.filter((t) => t !== cleaned);
+    recentSearches.unshift(cleaned);
+    recentSearches = recentSearches.slice(0, 5);
+    localStorage.setItem("unimatch_recent_searches_uni", JSON.stringify(recentSearches));
+    renderRecentSearches();
+  }
+
+  function removeRecentSearch(query) {
+    recentSearches = recentSearches.filter((t) => t !== query);
+    localStorage.setItem("unimatch_recent_searches_uni", JSON.stringify(recentSearches));
+    renderRecentSearches();
   }
 
   function addCompare(id) {
@@ -86,6 +204,7 @@
       return;
     }
     compare.push(id);
+    localStorage.setItem("unimatch_compare_list", JSON.stringify(compare));
     renderCompareDock();
   }
 
@@ -125,15 +244,34 @@
       category.insertAdjacentHTML("beforeend", `<option value="${item.id}">${item.name}</option>`);
     });
 
-    ["search", "type", "region", "category"].forEach((id) => {
-      UI.$(`#${id}`).addEventListener("input", () => {
-        isExpanded = false; // Reset trạng thái khi lọc
-        render();
-      });
+    ["search", "type", "region", "category", "bookmarkFilter"].forEach((id) => {
+      const el = UI.$(`#${id}`);
+      if (el) {
+        el.addEventListener("input", () => {
+          isExpanded = false; // Reset trạng thái khi lọc
+          saveFilters();
+          render();
+        });
+      }
     });
+
+    UI.$("#search").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const val = e.target.value.trim();
+        if (val) {
+          addRecentSearch(val);
+          saveFilters();
+          render();
+        }
+      }
+    });
+
+    restoreFilters();
+    renderRecentSearches();
 
     UI.$("#clearCompare").addEventListener("click", () => {
       compare = [];
+      localStorage.removeItem("unimatch_compare_list");
       renderCompareDock();
     });
     UI.$("#openCompare").addEventListener("click", openCompare);
@@ -142,6 +280,7 @@
       if (event.target.id === "compareModal") event.currentTarget.classList.remove("is-open");
     });
 
+    renderCompareDock();
     render();
   });
 })();

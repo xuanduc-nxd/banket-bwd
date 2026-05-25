@@ -30,6 +30,10 @@
             <div class="field">
               <label for="search">Tìm ngành</label>
               <input id="search" type="search" placeholder="AI, Marketing, Y khoa...">
+              <div id="recentSearches" style="margin-top:8px; display:none;">
+                <span style="font-size:0.75rem; font-weight:700; text-transform:uppercase; display:block; margin-bottom:4px;">Gần đây:</span>
+                <div id="recentTags" class="chip-grid" style="gap:4px;"></div>
+              </div>
             </div>
             <div class="field" style="margin-top:14px">
               <label for="difficulty">Độ khó tối đa</label>
@@ -37,6 +41,13 @@
                 <option value="10">Tất cả</option>
                 <option value="6">Dễ — TB</option>
                 <option value="8">Khá khó</option>
+              </select>
+            </div>
+            <div class="field" style="margin-top:14px">
+              <label for="bookmarkFilter">Lọc yêu thích</label>
+              <select id="bookmarkFilter">
+                <option value="all">Tất cả ngành</option>
+                <option value="bookmarked">Ngành đã lưu ❤️</option>
               </select>
             </div>
             <div style="margin-top:16px">
