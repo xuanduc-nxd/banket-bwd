@@ -21,8 +21,14 @@
   }
 
   .map-layout,
-  .major-layout {
+  .major-layout,
+  .major-top-panel {
     grid-template-columns: 1fr;
+  }
+
+  .major-top-panel__filter {
+    border-right: none;
+    border-bottom: var(--border);
   }
 
   .toolbar {

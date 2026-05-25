@@ -7,6 +7,8 @@
   let compare = [];
   let quizIndex = 0;
   let quizScores = {};
+  let majorsExpanded = false;
+  const MAX_VISIBLE_ROWS = 3;
 
   const questions = [
     {
@@ -48,6 +50,7 @@
       button.addEventListener("click", () => {
         selectedCategory = button.dataset.category;
         UI.$all("[data-category]", box).forEach((item) => item.classList.toggle("is-active", item === button));
+        majorsExpanded = false;
         renderMajors();
       });
     });
@@ -67,6 +70,63 @@
     UI.$("#majorCount").textContent = `${list.length} ngành`;
     UI.$("#majorsGrid").innerHTML = list.length ? list.map((major) => majorCard(major)).join("") : `<div class="empty-state">Không tìm thấy ngành phù hợp.</div>`;
     UI.$all("[data-compare]").forEach((button) => button.addEventListener("click", () => addCompare(button.dataset.compare)));
+    applyMajorsRowLimit();
+  }
+
+  function applyMajorsRowLimit() {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(applyMajorsRowLimitNow);
+    });
+  }
+
+  function applyMajorsRowLimitNow() {
+    const wrap = UI.$("#majorsGridWrap");
+    const grid = UI.$("#majorsGrid");
+    const showMoreWrap = UI.$(".majors-show-more-wrap");
+    const showMoreBtn = UI.$("#showMoreMajors");
+    const cards = [...grid.querySelectorAll(".major-card")];
+
+    if (!cards.length) {
+      wrap.style.maxHeight = "";
+      wrap.classList.remove("majors-grid-wrap--collapsed");
+      showMoreWrap.classList.add("is-hidden");
+      return;
+    }
+
+    if (majorsExpanded) {
+      wrap.style.maxHeight = "";
+      wrap.classList.remove("majors-grid-wrap--collapsed");
+      showMoreWrap.classList.add("is-hidden");
+      cards.forEach((card) => { card.style.display = ""; });
+      return;
+    }
+
+    cards.forEach((card) => { card.style.display = ""; });
+
+    const rowTops = [...new Set(cards.map((card) => card.offsetTop))].sort((a, b) => a - b);
+    const visibleTops = new Set(rowTops.slice(0, MAX_VISIBLE_ROWS));
+    let hiddenCount = 0;
+
+    cards.forEach((card) => {
+      const visible = visibleTops.has(card.offsetTop);
+      card.style.display = visible ? "" : "none";
+      if (!visible) hiddenCount += 1;
+    });
+
+    if (hiddenCount === 0) {
+      wrap.style.maxHeight = "";
+      wrap.classList.remove("majors-grid-wrap--collapsed");
+      showMoreWrap.classList.add("is-hidden");
+      return;
+    }
+
+    const lastVisible = cards.filter((card) => visibleTops.has(card.offsetTop)).pop();
+    const wrapRect = wrap.getBoundingClientRect();
+    const lastRect = lastVisible.getBoundingClientRect();
+    wrap.style.maxHeight = `${lastRect.bottom - wrapRect.top + 8}px`;
+    wrap.classList.add("majors-grid-wrap--collapsed");
+    showMoreWrap.classList.remove("is-hidden");
+    showMoreBtn.textContent = "Xem thêm";
   }
 
   function majorCard(major) {
@@ -157,6 +217,7 @@
         UI.$all("[data-category]").forEach((item) => {
           item.classList.toggle("is-active", item.dataset.category === selectedCategory);
         });
+        majorsExpanded = false;
         renderMajors();
       });
       UI.$("#restartQuiz").addEventListener("click", () => {
@@ -208,8 +269,26 @@
     renderQuiz();
     renderTrends();
 
-    UI.$("#search").addEventListener("input", renderMajors);
-    UI.$("#difficulty").addEventListener("input", renderMajors);
+    UI.$("#search").addEventListener("input", () => {
+      majorsExpanded = false;
+      renderMajors();
+    });
+    UI.$("#difficulty").addEventListener("input", () => {
+      majorsExpanded = false;
+      renderMajors();
+    });
+    UI.$("#showMoreMajors").addEventListener("click", () => {
+      majorsExpanded = true;
+      applyMajorsRowLimit();
+    });
+
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (!majorsExpanded) applyMajorsRowLimit();
+      }, 150);
+    });
     UI.$("#clearCompare").addEventListener("click", () => {
       compare = [];
       renderCompare();

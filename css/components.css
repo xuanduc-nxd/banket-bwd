@@ -722,6 +722,72 @@
   gap: 20px;
 }
 
+.major-top-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--white);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.major-top-panel__filter {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  border-right: var(--border);
+}
+
+.major-top-panel__quiz {
+  display: flex;
+  min-height: 100%;
+}
+
+.major-top-panel__quiz .quiz-box {
+  flex: 1;
+  margin-bottom: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.majors-catalog {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.majors-grid-wrap--collapsed {
+  position: relative;
+  overflow: hidden;
+}
+
+.majors-grid-wrap--collapsed::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, var(--canvas));
+  pointer-events: none;
+}
+
+.majors-show-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.majors-show-more-wrap.is-hidden {
+  display: none;
+}
+
+.majors-show-more {
+  min-width: 160px;
+}
+
 .filter-panel {
   padding: 18px;
   background: var(--white);
