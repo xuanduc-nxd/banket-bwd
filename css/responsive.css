@@ -1,82 +1,50 @@
-/*  CHUCWS NANG CUA FILE LA DE LAM CHO TRANG WEB CO THE TU DONG DIEU CHINH GIAO DIEN THEO KICHCO MAN HINH CUA THIET BI NGUOI DUNG, NHU DIEN THOAI HOAC MAY TINH BANG, DE DAM BAO TRANG WEB VAN HIEN THI TOT VA DE SU DUNG TRONG MOI TRUONG.  
-    
-*/
-@media (max-width: 980px) {
-  .hero-grid,
-  .results-layout,
-  .major-layout,
-  .map-layout {
+@media (max-width: 1024px) {
+  .aspiration-matrix {
     grid-template-columns: 1fr;
   }
 
-  .grid-list,
-  .trend-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .matrix-block {
+    min-height: auto;
+  }
+
+  .matrix-block--fit {
+    order: -1;
+  }
+
+  .steps,
+  .wizard-stepper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .map-layout,
+  .major-layout {
+    grid-template-columns: 1fr;
   }
 
   .toolbar {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
-  .side-summary,
-  .filter-panel {
-    position: static;
-  }
-}
-
-@media (max-width: 720px) {
-  .site-header {
-    align-items: start;
-  }
-
-  .nav-toggle {
-    display: block;
-  }
-
-  .site-nav {
-    position: absolute;
-    top: 64px;
-    left: 0;
-    right: 0;
-    display: none;
-    flex-direction: column;
-    align-items: stretch;
-    border-radius: 18px;
-  }
-
-  .site-nav.is-open {
-    display: flex;
-  }
-
-  .site-nav a {
-    border-radius: 12px;
-  }
-
-  .steps {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .form-grid,
-  .score-grid,
-  .toolbar,
-  .grid-list,
   .trend-grid {
     grid-template-columns: 1fr;
   }
+}
 
-  .result-card {
+@media (max-width: 520px) {
+  .hero-headline {
+    font-size: 1.65rem;
+  }
+
+  .steps,
+  .wizard-stepper {
     grid-template-columns: 1fr;
   }
 
-  .section-header,
-  .footer-grid,
-  .compare-dock,
-  .wishlist-dock {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  #map {
-    min-height: 430px;
+  .uni-card__metrics {
+    grid-template-columns: 1fr;
   }
 }

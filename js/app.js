@@ -62,67 +62,6 @@
     });
   }
 
-  function initDarkMode() {
-    const header = $(".site-header");
-    if (!header) return;
-
-    const toggle = document.createElement("button");
-    toggle.className = "mini-btn";
-    toggle.id = "themeToggle";
-    toggle.innerHTML = "🌙";
-    toggle.title = "Chuyển giao diện tối";
-
-    const saved = localStorage.getItem("unimatch_theme");
-    if (saved === "dark") {
-      document.documentElement.setAttribute("data-theme", "dark");
-      toggle.innerHTML = "☀️";
-    }
-
-    toggle.addEventListener("click", () => {
-      toggle.classList.remove("theme-animate");
-      void toggle.offsetWidth; // trigger reflow
-      toggle.classList.add("theme-animate");
-
-      setTimeout(() => {
-        const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-        if (isDark) {
-          document.documentElement.removeAttribute("data-theme");
-          localStorage.setItem("unimatch_theme", "light");
-          toggle.innerHTML = "🌙";
-        } else {
-          document.documentElement.setAttribute("data-theme", "dark");
-          localStorage.setItem("unimatch_theme", "dark");
-          toggle.innerHTML = "☀️";
-        }
-      }, 200);
-    });
-
-    const nav = $(".site-nav");
-    if (nav) {
-      header.insertBefore(toggle, nav.nextSibling);
-    } else {
-      header.appendChild(toggle);
-    }
-  }
-
-  function initScrollReveal() {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      rootMargin: "0px 0px -50px 0px",
-      threshold: 0.1
-    });
-
-    $all(".section-header, .smart-card, .tool-card, .hero-grid > div").forEach(el => {
-      el.classList.add("reveal");
-      observer.observe(el);
-    });
-  }
 
   function classify(delta) {
     if (delta >= 2) return { id: "safe", label: "An toàn" };
@@ -236,38 +175,67 @@
     return delta.toFixed(1);
   }
 
-  function renderResultCard(match, index, options = {}) {
-    const typeClass = match.university.type === "public" ? "public" : "private";
-    const typeLabel = match.university.type === "public" ? "Công lập" : "Tư thục";
-    const isInPages = window.location.pathname.includes('/pages/');
-    const mapPath = isInPages ? 'map.html' : 'pages/map.html';
+  function renderResultCard(match, index) {
+    const isInPages = window.location.pathname.includes("/pages/");
+    const mapPath = isInPages ? "map.html" : "pages/map.html";
     const mapHref = `${mapPath}?university=${encodeURIComponent(match.university.id)}`;
+    const reasonShort = match.reason.length > 120 ? `${match.reason.slice(0, 117)}…` : match.reason;
 
     return `
-      <article class="result-card">
-        <div class="result-rank">#${index + 1}</div>
-        <div>
-          <h3>${match.major.name} - ${match.university.name}</h3>
-          <p>${match.reason}</p>
-          <div class="meta-row">
-            <span class="pill ${match.risk.id}">${match.risk.label}</span>
-            <span class="pill ${typeClass}">${typeLabel}</span>
-            <span class="pill">${match.university.city}</span>
-            <span class="pill">Điểm chuẩn 2025: ${match.cutoff.toFixed(1)}</span>
-            <span class="pill">Chênh lệch: ${formatDelta(match.delta)}</span>
-            <span class="pill">Học phí: ${DATA.money(match.university.tuition)}</span>
+      <article class="uni-card">
+        <div class="uni-card__rank">#${index + 1}</div>
+        <h4 class="uni-card__title">${match.major.name}</h4>
+        <p class="uni-card__school">${match.university.shortName} · ${match.university.city}</p>
+        <div class="uni-card__metrics">
+          <div class="metric">
+            <span class="tag tag--blue">Benchmark '25</span>
+            <strong>${match.cutoff.toFixed(1)}</strong>
           </div>
-          <div class="card-actions">
-            <a class="mini-btn" href="${match.university.website}" target="_blank" rel="noopener">Website</a>
-            <a class="mini-btn" href="${mapHref}">Xem bản đồ</a>
+          <div class="metric">
+            <span class="tag tag--green">Học phí</span>
+            <strong>${DATA.money(match.university.tuition)}</strong>
           </div>
         </div>
-        <div class="match-score">
-          <strong>${match.score}%</strong>
-          <span>phù hợp</span>
+        <p class="uni-card__why">${reasonShort}</p>
+        <div class="uni-card__foot">
+          <span class="match-pct">${match.score}% match</span>
+          <div class="card-actions">
+            <a class="mini-btn" href="${match.university.website}" target="_blank" rel="noopener">Web</a>
+            <a class="mini-btn" href="${mapHref}">Map</a>
+          </div>
         </div>
       </article>
     `;
+  }
+
+  function renderResultsMatrix(matches) {
+    const safeEl = $("#resultsSafe");
+    const fitEl = $("#resultsFit");
+    const reachEl = $("#resultsReach");
+    if (!safeEl || !fitEl || !reachEl) return;
+
+    const buckets = { safe: [], fit: [], reach: [] };
+    matches.forEach((m) => {
+      if (buckets[m.risk.id]) buckets[m.risk.id].push(m);
+    });
+
+    const limits = { safe: 4, fit: 6, reach: 3 };
+    const empty = '<div class="empty-state">Chưa có lựa chọn trong vùng này.</div>';
+
+    [["safe", safeEl], ["fit", fitEl], ["reach", reachEl]].forEach(([key, el]) => {
+      const list = buckets[key].slice(0, limits[key]);
+      el.innerHTML = list.length
+        ? list.map((m, i) => renderResultCard(m, i)).join("")
+        : empty;
+    });
+  }
+
+  function clearResultsMatrix() {
+    const empty = '<div class="empty-state">Chưa có lựa chọn trong vùng này.</div>';
+    ["#resultsSafe", "#resultsFit", "#resultsReach"].forEach((sel) => {
+      const el = $(sel);
+      if (el) el.innerHTML = empty;
+    });
   }
 
   function renderPlanSummary(plan, container) {
@@ -282,9 +250,9 @@
         <div class="summary-item"><span>Tổ hợp</span><strong>${plan.profile.combination}</strong></div>
         <div class="summary-item"><span>Tổng điểm</span><strong>${plan.totalScore.toFixed(2)}</strong></div>
         <div class="summary-item"><span>Khu vực</span><strong>${regionLabel(plan.profile.region)}</strong></div>
-        <div class="summary-item"><span>An toàn</span><strong>${counts.safe || 0} lựa chọn</strong></div>
-        <div class="summary-item"><span>Phù hợp</span><strong>${counts.fit || 0} lựa chọn</strong></div>
-        <div class="summary-item"><span>Thử thách</span><strong>${counts.reach || 0} lựa chọn</strong></div>
+        <div class="summary-item"><span>An toàn (30%)</span><strong>${counts.safe || 0}</strong></div>
+        <div class="summary-item"><span>Sweet spot (50%)</span><strong>${counts.fit || 0}</strong></div>
+        <div class="summary-item"><span>Dream (20%)</span><strong>${counts.reach || 0}</strong></div>
       </div>
     `;
   }
@@ -298,7 +266,6 @@
     const combination = $("#combination");
     const scoreGrid = $("#scoreGrid");
     const totalEl = $("#scoreTotal");
-    const results = $("#resultsList");
     const summary = $("#resultSummary");
     let step = 1;
 
@@ -418,27 +385,34 @@
       };
 
       savePlan(plan);
-      results.innerHTML = matches.length
-        ? matches.slice(0, 10).map((match, index) => renderResultCard(match, index)).join("")
-        : `<div class="empty-state">Chưa có lựa chọn phù hợp với bộ lọc hiện tại. Hãy nới học phí hoặc khu vực.</div>`;
+      if (matches.length) {
+        renderResultsMatrix(matches);
+      } else {
+        clearResultsMatrix();
+        const fitEl = $("#resultsFit");
+        if (fitEl) {
+          fitEl.innerHTML = `<div class="empty-state">Không có kết quả. Thử nới học phí hoặc khu vực.</div>`;
+        }
+      }
       renderPlanSummary(plan, summary);
       go(4);
     });
 
-    $("#restartPlan").addEventListener("click", () => {
+    $("#restartPlan")?.addEventListener("click", () => {
       clearPlan();
       form.reset();
       scoreGrid.innerHTML = "";
       totalEl.textContent = "0.00 / 30";
-      results.innerHTML = "";
+      clearResultsMatrix();
       summary.innerHTML = "";
       go(1);
     });
 
     const saved = getPlan();
     if (saved?.matches?.length) {
-      results.innerHTML = saved.matches.slice(0, 10).map((match, index) => renderResultCard(match, index)).join("");
+      renderResultsMatrix(saved.matches);
       renderPlanSummary(saved, summary);
+      go(4);
     }
   }
 
@@ -449,6 +423,7 @@
     initNav,
     calculateMatches,
     renderResultCard,
+    renderResultsMatrix,
     renderPlanSummary,
     getPlan,
     savePlan,
@@ -461,8 +436,6 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     initPageTransitions();
-    initDarkMode();
-    initScrollReveal();
     initNav();
     initSmartMatch();
   });

@@ -1,41 +1,24 @@
-/*  CHUCWS NANG CUA FILE LA DE DINH NGHIA CAC KIEU GIAO DIEN CHUNG CHO TOAN BO TRANG WEB,
-NHU THANH DIEU HUONG, THANH CONG CU, THANH TRANG, VA CAC THANH PHAN BO CUC KHAC.
-CAC KIEU GIAO DIEN NAY SE GIUP TOI TAO RA MOT TRANG WEB CO THIET KE NHAT QUAN, DE SU DUNG TRONG MOI TRANG VA MOI THANH PHAN TREN WEBSITE.  
-*/
-
+/* UniMatch — Neo-Brutalism design system */
 :root {
-  --bg: #f6f8fb;
-  --surface: #ffffff;
-  --surface-2: #eef6fb;
-  --text: #132334;
-  --muted: #64748b;
-  --primary: #006d9c;
-  --primary-2: #00a8cc;
-  --accent: #14b8a6;
-  --warning: #f59e0b;
-  --danger: #ef4444;
-  --success: #16a34a;
-  --border: #d8e5ee;
-  --shadow: 0 24px 70px rgba(15, 76, 129, 0.12);
-  --container: 1180px;
-  --radius: 14px;
-  --radius-sm: 9px;
-  --font: "Be Vietnam Pro", Arial, sans-serif;
+  --canvas: #f9f6ee;
+  --ink: #000000;
+  --mustard: #ffd23f;
+  --scholar-blue: #3a86ff;
+  --sage-green: #38b000;
+  --white: #ffffff;
+  --border: 3px solid var(--ink);
+  --radius: 12px;
+  --shadow-card: 5px 5px 0 var(--ink);
+  --shadow-btn: 5px 5px 0 var(--ink);
+  --shadow-hero: 6px 6px 0 var(--ink);
+  --container: 1200px;
+  --font-display: "Space Grotesk", "Lexend Deca", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
 }
 
-[data-theme="dark"] {
-  --bg: #0f172a;
-  --surface: #1e293b;
-  --surface-2: #0f172a;
-  --text: #f1f5f9;
-  --muted: #94a3b8;
-  --primary: #38bdf8;
-  --primary-2: #0ea5e9;
-  --border: #334155;
-  --shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
-}
-
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -46,28 +29,44 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: var(--font);
-  color: var(--text);
-  background: var(--bg);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+  background-color: var(--canvas);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
 }
 
 a {
   color: inherit;
-  text-decoration: none;
 }
 
 button,
 input,
-select {
-  font: inherit;
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
 }
 
 button {
   cursor: pointer;
 }
 
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 0.5em;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
 .container {
-  width: min(100% - 40px, var(--container));
+  width: min(100% - 32px, var(--container));
   margin: 0 auto;
 }

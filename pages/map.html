@@ -3,21 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bản đồ trường đại học - UniMatch</title>
+  <title>Bản đồ — UniMatch</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@vietmap/vietmap-gl-js@6.0.1/dist/vietmap-gl.css">
   <link rel="stylesheet" href="../css/style.css">
-  <script>
-    if (localStorage.getItem('unimatch_theme') === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
-  </script>
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="../index.html"><span class="brand-mark">U</span> UniMatch</a>
+    <a class="brand" href="../index.html"><span class="brand-mark">U</span> UNIMATCH</a>
     <nav class="site-nav">
       <a href="../index.html">Trang chủ</a>
       <a href="universities.html">Trường ĐH</a>
@@ -25,27 +20,25 @@
       <a class="is-active" href="map.html">Bản đồ</a>
       <a href="../index.html#about">Giới thiệu</a>
     </nav>
-    <button class="nav-toggle" aria-label="Mở menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <button class="nav-toggle" aria-label="Mở menu"><span></span><span></span><span></span></button>
   </header>
 
   <main>
     <section class="page-header">
       <div class="container">
-        <span class="section-badge">Bản đồ</span>
-        <h1>Vị trí trường đại học</h1>
-        <p>Xem trường theo khu vực, loại trường hoặc chỉ hiển thị những trường đã được gợi ý từ kết quả tư vấn.</p>
-
-        <div class="toolbar" style="grid-template-columns:minmax(240px,1fr) auto auto auto">
-          <input class="search-input" id="mapSearch" type="search" placeholder="Tìm trường, mã trường, thành phố">
-          <button class="chip is-active" data-filter="all">Tất cả</button>
-          <button class="chip" data-filter="public">Công lập</button>
-          <button class="chip" data-filter="private">Tư thục</button>
+        <span class="section-badge">Map</span>
+        <h1>Bản đồ trường</h1>
+        <p>Pin trường trên bản đồ <strong>VietMap</strong> (tuân thủ chủ quyền Việt Nam).</p>
+        <div class="toolbar" style="grid-template-columns:minmax(200px,1fr) auto auto auto">
+          <input class="search-input" id="mapSearch" type="search" placeholder="Tìm trường, thành phố...">
+          <button class="chip is-active" type="button" data-filter="all">Tất cả</button>
+          <button class="chip" type="button" data-filter="public">Công lập</button>
+          <button class="chip" type="button" data-filter="private">Tư thục</button>
         </div>
-
-        <div class="tool-card" id="recommendBox" style="display:none;padding:14px">
-          <strong>Kết quả tư vấn đang được áp dụng</strong>
+        <div class="recommend-box" id="recommendBox" style="display:none">
+          <strong>Đang lọc theo kết quả tư vấn</strong>
           <p id="recommendText"></p>
-          <button class="mini-btn" id="clearRecommendation">Hiển thị tất cả trường</button>
+          <button class="mini-btn" type="button" id="clearRecommendation">Hiển thị tất cả</button>
         </div>
       </div>
     </section>
@@ -53,16 +46,14 @@
     <section class="section">
       <div class="container map-layout">
         <aside class="map-panel">
-          <div class="section-header" style="margin-bottom:14px">
-            <div>
-              <span class="section-badge">Danh sách</span>
-              <h2 id="mapCount">0 trường</h2>
-            </div>
+          <div class="section-header" style="margin-bottom:10px">
+            <span class="section-badge">List</span>
+            <h2 id="mapCount" style="margin:0;font-size:1rem">0 trường</h2>
           </div>
           <div class="map-list" id="mapList"></div>
-          <div class="map-panel" id="infoPanel" style="margin-top:16px">
-            <h3>Chọn một trường</h3>
-            <p>Nhấn vào marker hoặc tên trường để xem thông tin nhanh.</p>
+          <div class="map-panel" id="infoPanel" style="margin-top:12px;background:var(--mustard)">
+            <h3>Chọn trường</h3>
+            <p>Nhấn marker hoặc tên trong list.</p>
           </div>
         </aside>
         <div id="map"></div>
@@ -75,13 +66,14 @@
       <a class="brand" href="../index.html"><span class="brand-mark">U</span> UniMatch</a>
       <div class="footer-links">
         <a href="../index.html">Trang chủ</a>
-        <a href="universities.html">Trường ĐH</a>
-        <a href="majors.html">Ngành học</a>
+        <a href="universities.html">Trường</a>
+        <a href="majors.html">Ngành</a>
       </div>
     </div>
   </footer>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/@vietmap/vietmap-gl-js@6.0.1/dist/vietmap-gl.js"></script>
+  <script src="../js/map-config.js"></script>
   <script src="../js/majors.js"></script>
   <script src="../js/universities.js"></script>
   <script src="../js/app-data.js"></script>

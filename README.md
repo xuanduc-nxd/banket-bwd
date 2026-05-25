@@ -1,44 +1,33 @@
 # UniMatch
 
-UniMatch là website tĩnh hỗ trợ học sinh xây dựng chiến lược chọn nguyện vọng đại học dựa trên điểm thi, tổ hợp xét tuyển, lĩnh vực quan tâm, khu vực và học phí.
+Website tư vấn chọn nguyện vọng đại học — giao diện **Neo-Brutalism** cho Gen-Z.
 
-## Cấu trúc
+## Design tokens
 
-```text
-BestWebDesign/
-├── index.html
-├── css/
-│   ├── style.css
-│   ├── base.css
-│   ├── layout.css
-│   ├── components.css
-│   ├── pages.css
-│   └── responsive.css
-├── js/
-│   ├── app-data.js
-│   ├── app.js
-│   ├── universities-page.js
-│   ├── majors-page.js
-│   └── map-page.js
-├── pages/
-│   ├── universities.html
-│   ├── majors.html
-│   └── map.html
-└── docs/
-    └── Thiet_ke_de_tai_UniMatch.doc
-```
+| Token | Value |
+|-------|--------|
+| Canvas | `#F9F6EE` |
+| Border | `3px #000000` |
+| Mustard (primary) | `#FFD23F` |
+| Scholar Blue | `#3A86FF` |
+| Sage Green | `#38B000` |
+| Shadow | `5px 5px 0 #000` (no blur) |
 
-## Chức năng chính
+Fonts: **Space Grotesk** (display), **Inter** (body).
 
-- Tư vấn trường/ngành theo tổ hợp môn, điểm thi, sở thích, khu vực và học phí.
-- Phân loại lựa chọn thành An toàn, Phù hợp và Thử thách.
-- Giải thích lý do gợi ý dựa trên điểm, xu hướng điểm chuẩn và tiêu chí cá nhân.
-- Tra cứu, lọc và so sánh trường đại học.
-- Khám phá ngành học, quiz định hướng và so sánh ngành.
-- Xem vị trí trường trên bản đồ bằng Leaflet/OpenStreetMap.
+## Tính năng UI
 
-## Cách chạy
+- Hero: `UNIMATCH: HACK SỐ PHẬN, CHỌN ĐÚNG TRƯỜNG.`
+- **Aspiration Matrix**: grid 3fr · 5fr · 2fr (30/50/20), 3 khối bất đối xứng
+- Thẻ trường: benchmark score, học phí, lý do match
 
-Mở trực tiếp `index.html` bằng trình duyệt.
+## Bản đồ (VietMap)
 
-Trang bản đồ cần kết nối mạng để tải Leaflet và bản đồ OpenStreetMap.
+Trang bản đồ **không dùng OpenStreetMap**. UniMatch dùng **VietMap** (bản đồ tuân thủ quy định Việt Nam).
+
+1. Đăng ký API key: https://maps.vietmap.vn/console/register  
+2. Điền `apiKey` trong `js/map-config.js` (mẫu: `js/map-config.example.js`)
+
+## Chạy
+
+Mở `index.html` trong trình duyệt. Bản đồ cần mạng (VietMap GL JS).

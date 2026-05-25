@@ -4,27 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UniMatch - Tư vấn chọn nguyện vọng đại học</title>
+  <title>UniMatch — Hack số phận, chọn đúng trường</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <!-- thu vien hieu ung aos-->
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
-  <!-- Thêm đoạn script để áp dụng chế độ tối nếu người dùng đã chọn trước đó -->
-  <script>
-    if (localStorage.getItem('unimatch_theme') === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');  <!-- Áp dụng chế độ tối nếu đã lưu trong localStorage -->
-    }
-  </script>
 </head>
 
 <body>
-  <!-- Khối div này dùng để chứa hiệu ứng Vanta Globe chạy ngầm ở hình nền. 
-       - position: fixed, top/left: 0, width/height: 100%: Phủ kín toàn bộ màn hình và cố định khi cuộn.
-       - z-index: -1: Đưa lớp này xuống dưới cùng để không che khuất các nội dung khác của trang web -->
-  <div id="vanta-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
   <header class="site-header">
     <a class="brand" href="index.html">
       <span class="brand-mark">U</span>
@@ -32,7 +19,7 @@
     </a>
     <nav class="site-nav" id="mainNav">
       <a class="is-active" href="index.html">Trang chủ</a>
-      <a href="pages/universities.html">Trường Đại Học</a>
+      <a href="pages/universities.html">Trường ĐH</a>
       <a href="pages/majors.html">Ngành học</a>
       <a href="pages/map.html">Bản đồ</a>
       <a href="#about">Giới thiệu</a>
@@ -45,74 +32,65 @@
   <main>
     <section class="hero">
       <div class="container hero-grid">
-        <!-- data-aos="fade-right": Thuộc tính của AOS, tạo hiệu ứng trượt nội dung từ phải sang trái khi hiển thị -->
-        <div data-aos="fade-right">
-          <span class="eyebrow">Tư vấn nguyện vọng có chiến lược</span>
-          <h1>Chọn trường đại học với <span class="glith-wavev"> UNIMATCH</span> </h1>
-          <h3>
-            <span id="typing"></span>
-          </h3>
+        <div>
+          <span class="eyebrow">Gen-Z college strategy</span>
+          <h1 class="hero-headline">
+            UNIMATCH:
+            <span>HACK SỐ PHẬN,</span>
+            <span>CHỌN ĐÚNG TRƯỜNG.</span>
+          </h1>
           <p class="hero-lead">
-            UniMatch phân tích điểm thi, tổ hợp xét tuyển, sở thích, khu vực và học phí để gợi ý trường/ngành theo ba
-            nhóm: An toàn, Phù hợp và Thử thách.
+            Không phải danh sách trường vô tri — UniMatch chia nguyện vọng theo tỷ lệ 30/50/20: an toàn, chuẩn, và
+            dream. Raw data, lý do rõ ràng, zero corporate fluff.
           </p>
           <div class="hero-actions">
-            <a class="btn-primary" href="#match">Bắt đầu tư vấn</a>
+            <a class="btn-primary" href="#match">Bắt đầu ngay</a>
             <a class="btn-secondary" href="pages/majors.html">Khám phá ngành</a>
           </div>
-          <br><br>
-
-
-          <!-- data-aos="fade-left": Hiệu ứng trượt từ trái sang phải.
-             data-aos-delay="200": Chờ 200ms rồi mới bắt đầu chạy hiệu ứng, giúp các khối xuất hiện lần lượt -->
-          <aside class="insight-panel" data-aos="fade-left" data-aos-delay="200">
-            <p class="panel-title">Chiến lược nguyện vọng mẫu</p>
-            <div class="strategy-stack">
-              <div class="strategy-card">
-                <span class="strategy-dot safe"></span>
-                <div><strong>An toàn</strong><span>Cao hơn điểm chuẩn tham khảo từ 2 điểm</span></div>
-                <b>30%</b>
-              </div>
-              <div class="strategy-card">
-                <span class="strategy-dot fit"></span>
-                <div><strong>Phù hợp</strong><span>Điểm gần ngưỡng, ngành đúng định hướng</span></div>
-                <b>50%</b>
-              </div>
-              <div class="strategy-card">
-                <span class="strategy-dot reach"></span>
-                <div><strong>Thử thách</strong><span>Trường/ngành mơ ước, cần cân nhắc rủi ro</span></div>
-                <b>20%</b>
-              </div>
-            </div>
-          </aside>
         </div>
+
+        <aside class="insight-panel">
+          <p class="panel-title">Chiến lược 30 · 50 · 20</p>
+          <div class="strategy-stack">
+            <div class="strategy-card">
+              <span class="strategy-dot safe"></span>
+              <div><strong>An toàn</strong><span>Điểm cao hơn ngưỡng ≥ 2</span></div>
+              <b>30%</b>
+            </div>
+            <div class="strategy-card">
+              <span class="strategy-dot fit"></span>
+              <div><strong>Sweet spot</strong><span>Đúng ngành, đúng điểm</span></div>
+              <b>50%</b>
+            </div>
+            <div class="strategy-card">
+              <span class="strategy-dot reach"></span>
+              <div><strong>Dream</strong><span>Thử thách, tính rủi ro</span></div>
+              <b>20%</b>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 
     <section class="section" id="match">
       <div class="container">
-        <!-- data-aos="fade-up": Hiệu ứng trượt nội dung từ dưới lên trên -->
-        <div class="section-header" data-aos="fade-left">
+        <div class="section-header">
           <div>
-            <span class="section-badge glith-wavev">Smart Match</span>
-            <br>
-            <h2> Tạo chiến lược chọn nguyện vọng</h2>
-            <p>Đi từng bước ngắn, kết quả cuối cùng sẽ giải thích vì sao trường/ngành đó phù hợp với bạn.</p>
+            <span class="section-badge">Smart Match</span>
+            <h2>Tạo chiến lược nguyện vọng</h2>
+            <p>4 bước — kết quả hiện trong Aspiration Matrix với 3 khối bất đối xứng 30/50/20.</p>
           </div>
         </div>
 
-        <div class="smart-card" data-aos="fade-right" data-aos-delay="150">
+        <div class="smart-card">
           <div class="steps">
             <div class="step-tab is-active" data-step="1"><span class="step-number">1</span> Tổ hợp</div>
             <div class="step-tab" data-step="2"><span class="step-number">2</span> Điểm</div>
-            <div class="step-tab" data-step="3"><span class="step-number">3</span> Ưu tiên</div>
-            <div class="step-tab" data-step="4"><span class="step-number">4</span> Kết quả</div>
+            <div class="step-tab" data-step="3"><span class="step-number">3</span> Lọc</div>
+            <div class="step-tab" data-step="4"><span class="step-number">4</span> Matrix</div>
           </div>
 
           <form id="strategyForm">
-
-            <!-- ===LUONG NHAP DIEM===== -->
-            <!-- === BUOC 1-->
             <section class="form-step is-active" data-step="1">
               <div class="form-grid">
                 <div class="field full">
@@ -123,24 +101,20 @@
                 </div>
               </div>
               <div class="form-actions">
-                <button class="btn-primary" type="button" data-next>Tiếp tục</button>
+                <button class="btn-primary" type="button" data-next>Tiếp tục →</button>
               </div>
             </section>
 
-            <!-- === BUOC 2-->
             <section class="form-step" data-step="2">
-              <div>
-                <span class="field-label">Nhập điểm từng môn</span>
-                <div class="score-grid" id="scoreGrid"></div>
-                <div class="score-total">Tổng điểm: <span id="scoreTotal">0.00 / 30</span></div>
-              </div>
+              <span class="field-label">Nhập điểm từng môn</span>
+              <div class="score-grid" id="scoreGrid"></div>
+              <div class="score-total">Tổng điểm: <span id="scoreTotal">0.00 / 30</span></div>
               <div class="form-actions">
-                <button class="btn-ghost" type="button" data-prev>Quay lại</button>
-                <button class="btn-primary" type="button" data-next>Tiếp tục</button>
+                <button class="btn-ghost" type="button" data-prev>← Quay lại</button>
+                <button class="btn-primary" type="button" data-next>Tiếp tục →</button>
               </div>
             </section>
 
-            <!-- === BUOC 3-->
             <section class="form-step" data-step="3">
               <div class="form-grid">
                 <div class="field full">
@@ -166,32 +140,58 @@
                 </div>
                 <div class="field">
                   <label for="maxTuition">Học phí tối đa/năm (triệu)</label>
-                  <input id="maxTuition" type="number" min="0" step="1" placeholder="Ví dụ: 30">
+                  <input id="maxTuition" type="number" min="0" step="1" placeholder="VD: 30">
                 </div>
               </div>
               <div class="form-actions">
-                <button class="btn-ghost" type="button" data-prev>Quay lại</button>
-                <button class="btn-primary" type="submit">Xem kết quả</button>
+                <button class="btn-ghost" type="button" data-prev>← Quay lại</button>
+                <button class="btn-primary" type="submit">Chạy Matrix →</button>
               </div>
             </section>
 
-            <!-- === BUOC 4 - HIEN THI KET QUA -->
             <section class="form-step" data-step="4">
-              <div class="results-layout">
-                <div>
-                  <div class="section-header">
-                    <div>
-                      <span class="section-badge">Kết quả</span>
-                      <h2>Danh sách gợi ý</h2>
-                    </div>
-                  </div>
-                  <div class="results-list" id="resultsList"></div>
-                  <div class="form-actions">
-                    <a class="btn-secondary" href="pages/map.html">Xem trên bản đồ</a>
-                    <button class="btn-ghost" type="button" id="restartPlan">Làm lại</button>
+              <div class="aspiration-matrix-wrap brutal-card" style="background:var(--white)">
+                <div class="section-header" style="margin-bottom:12px">
+                  <div>
+                    <span class="section-badge">Kết quả</span>
+                    <h2 style="margin:0">Aspiration Matrix</h2>
                   </div>
                 </div>
-                <aside class="side-summary smart-card" id="resultSummary"></aside>
+                <p class="matrix-intro">
+                  Phân bổ gợi ý theo tỷ lệ <strong>30% An toàn</strong> · <strong>50% Sweet spot</strong> ·
+                  <strong>20% Dream</strong>. Mỗi thẻ gồm học phí, điểm chuẩn và lý do match.
+                </p>
+
+                <div class="aspiration-matrix" id="strategyMatrix">
+                  <div class="matrix-block matrix-block--safe">
+                    <div class="matrix-block__head">
+                      <span>⚓ An toàn</span>
+                      <span class="matrix-block__pct">30%</span>
+                    </div>
+                    <div class="matrix-block__body" id="resultsSafe"></div>
+                  </div>
+                  <div class="matrix-block matrix-block--fit">
+                    <div class="matrix-block__head">
+                      <span>🎯 Sweet spot</span>
+                      <span class="matrix-block__pct">50%</span>
+                    </div>
+                    <div class="matrix-block__body" id="resultsFit"></div>
+                  </div>
+                  <div class="matrix-block matrix-block--reach">
+                    <div class="matrix-block__head">
+                      <span>🚀 Dream</span>
+                      <span class="matrix-block__pct">20%</span>
+                    </div>
+                    <div class="matrix-block__body" id="resultsReach"></div>
+                  </div>
+                </div>
+              </div>
+
+              <aside class="side-summary" id="resultSummary"></aside>
+
+              <div class="results-footer">
+                <a class="btn-secondary" href="pages/map.html">Xem bản đồ</a>
+                <button class="btn-ghost" type="button" id="restartPlan">Làm lại từ đầu</button>
               </div>
             </section>
           </form>
@@ -201,34 +201,28 @@
 
     <section class="section" id="about">
       <div class="container">
-        <!-- Thêm hiệu ứng trượt từ dưới lên (fade-up) cho thẻ tiêu đề -->
-        <div class="section-header" data-aos="fade-up">
+        <div class="section-header">
           <div>
-            <span class="section-badge glith-wavev">Khác biệt</span>
-            <h2>Không chỉ tìm trường, mà giúp chọn nguyện vọng có cơ sở</h2>
-            <p>
-              UniMatch ưu tiên logic ra quyết định: giải thích điểm mạnh/yếu của từng lựa chọn, cảnh báo xu hướng điểm
-              chuẩn và hỗ trợ so sánh theo các tiêu chí học sinh thật sự quan tâm.
-            </p>
+            <span class="section-badge">Vì sao khác?</span>
+            <h2>Không corporate. Có cơ sở.</h2>
+            <p>Giải thích điểm, xu hướng chuẩn, học phí — để bạn tự tin điền NV thay vì đoán mò.</p>
           </div>
         </div>
         <div class="trend-grid">
-          <!-- Các khối trend-card cũng được thêm hiệu ứng fade-up nhưng với độ trễ (delay) tăng dần (100, 200, 300) 
-               để tạo ra hiệu ứng xuất hiện theo kiểu bậc thang (khối trước xuất hiện xong tới khối sau) -->
-          <article class="tool-card trend-card " data-aos="fade-up" data-aos-delay="100">
-            <span class="pill safe">1</span>
-            <h3>Phân tầng rủi ro</h3>
-            <p>Kết quả được chia thành An toàn, Phù hợp và Thử thách thay vì một danh sách chung chung.</p>
+          <article class="tool-card trend-card">
+            <span class="pill safe">01</span>
+            <h3>30/50/20 split</h3>
+            <p>Ma trận 3 khối bất đối xứng — không nhồi một list dài vô nghĩa.</p>
           </article>
-          <article class="tool-card trend-card " data-aos="fade-up" data-aos-delay="200">
-            <span class="pill fit">2</span>
-            <h3>Giải thích minh bạch</h3>
-            <p>Mỗi gợi ý có lý do dựa trên điểm, ngành, khu vực, học phí và xu hướng điểm chuẩn.</p>
+          <article class="tool-card trend-card">
+            <span class="pill fit">02</span>
+            <h3>Minh bạch</h3>
+            <p>Mỗi gợi ý có học phí, benchmark score và text giải thích.</p>
           </article>
-          <article class="tool-card trend-card" data-aos="fade-up" data-aos-delay="300">
-            <span class="pill reach">3</span>
-            <h3>Dữ liệu gọn, dễ mở rộng</h3>
-            <p>Dữ liệu trường, ngành và điểm chuẩn được tách riêng để thuận tiện nâng cấp thành database.</p>
+          <article class="tool-card trend-card">
+            <span class="pill reach">03</span>
+            <h3>Data-first</h3>
+            <p>Dữ liệu tách file — sẵn sàng nâng cấp API thật.</p>
           </article>
         </div>
       </div>
@@ -239,9 +233,8 @@
     <div class="container footer-grid">
       <a class="brand" href="index.html"><span class="brand-mark">U</span> UniMatch</a>
       <div class="footer-links">
-        <a href="https://web.facebook.com/nguyen.xuan.uc.982793">facebook</a>
-        <a href="#">zalo</a>
-        <a href="https://github.com/xuanduc-nxd">github </a>
+        <a href="https://web.facebook.com/nguyen.xuan.uc.982793">Facebook</a>
+        <a href="https://github.com/xuanduc-nxd">GitHub</a>
       </div>
     </div>
   </footer>
@@ -250,15 +243,6 @@
   <script src="js/universities.js"></script>
   <script src="js/app-data.js"></script>
   <script src="js/app.js"></script>
-  <!-- Thư viện AOS js (Animate On Scroll) dùng để xử lý các hiệu ứng cuộn trang (fade-up, fade-left...) -->
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-  <script src="https://unpkg.com/split-type"></script>
-  <script src="js/index-effects.js"></script>
-
 </body>
 
 </html>
