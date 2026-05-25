@@ -9,7 +9,7 @@
   justify-content: space-between;
   gap: 16px;
   padding: 12px 20px;
-  background: var(--mustard);
+  background: var(--spruce-green);
   border-bottom: var(--border);
 }
 
@@ -21,7 +21,7 @@
   font-weight: 800;
   font-size: 1.25rem;
   text-decoration: none;
-  color: var(--ink);
+  color: var(--white);
   letter-spacing: -0.02em;
 }
 
@@ -30,8 +30,8 @@
   place-items: center;
   width: 36px;
   height: 36px;
-  background: var(--ink);
-  color: var(--mustard);
+  background: var(--white);
+  color: var(--spruce-green);
   border: var(--border);
   font-size: 1rem;
 }
@@ -51,6 +51,7 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   background: var(--white);
+  color: var(--ink);
   border: var(--border);
   box-shadow: 3px 3px 0 var(--ink);
   transition: transform 0.1s, box-shadow 0.1s;
@@ -58,8 +59,8 @@
 
 .site-nav a:hover,
 .site-nav a.is-active {
-  background: var(--scholar-blue);
-  color: var(--white);
+  background: var(--sage-green);
+  color: var(--ink);
   transform: translate(2px, 2px);
   box-shadow: 1px 1px 0 var(--ink);
 }
@@ -93,24 +94,32 @@
   align-items: start;
 }
 
-.hero-headline {
+.hero-card {
+  background: var(--spruce-green);
+  color: var(--white);
+  padding: 32px;
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink);
+}
+
+.hero-card .hero-headline {
   font-family: var(--font-display);
   font-size: clamp(2rem, 5.5vw, 3.75rem);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: -0.01em;
   line-height: 0.95;
-  color: var(--mustard);
-  text-shadow: var(--shadow-hero);
+  color: var(--white);
   margin-bottom: 20px;
 }
 
-.hero-headline span {
+.hero-card .hero-headline span {
   display: block;
-  color: var(--scholar-blue);
+  color: var(--sage-super-light);
 }
 
-.eyebrow {
+.hero-card .eyebrow {
   display: inline-block;
   margin-bottom: 12px;
   padding: 6px 12px;
@@ -119,16 +128,17 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  background: var(--scholar-blue);
-  color: var(--white);
+  background: var(--sage-green);
+  color: var(--ink);
   border: var(--border);
   box-shadow: 3px 3px 0 var(--ink);
 }
 
-.hero-lead {
+.hero-card .hero-lead {
   font-size: 1.05rem;
   max-width: 52ch;
   margin-bottom: 24px;
+  color: #eef3e8;
 }
 
 .hero-actions {
@@ -140,7 +150,8 @@
 /* Strategy preview (30/50/20) */
 .insight-panel {
   padding: 20px;
-  background: var(--mustard);
+  background: var(--spruce-green);
+  color: var(--white);
   border: var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-card);
@@ -152,6 +163,7 @@
   font-size: 0.9rem;
   text-transform: uppercase;
   margin-bottom: 16px;
+  color: var(--white);
 }
 
 .strategy-stack {
@@ -167,6 +179,7 @@
   align-items: center;
   padding: 12px;
   background: var(--white);
+  color: var(--ink);
   border: var(--border);
   border-radius: 8px;
 }
@@ -231,13 +244,13 @@
 }
 
 .footer-brand-section .brand {
-  color: var(--mustard);
+  color: var(--sage-green);
   display: inline-flex;
   width: fit-content;
 }
 
 .footer-brand-section .brand-mark {
-  background: var(--mustard);
+  background: var(--sage-green);
   color: var(--ink);
 }
 
@@ -262,14 +275,14 @@
   font-weight: 700;
   font-size: 0.8rem;
   text-decoration: none !important;
-  box-shadow: 2px 2px 0 var(--mustard);
+  box-shadow: 2px 2px 0 var(--sage-green);
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
 .social-btn:hover {
   transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0 var(--mustard);
-  background: var(--mustard);
+  box-shadow: 1px 1px 0 var(--sage-green);
+  background: var(--sage-green);
 }
 
 .footer-nav-column {
@@ -282,7 +295,7 @@
   font-family: var(--font-display);
   font-size: 1rem;
   text-transform: uppercase;
-  color: var(--mustard);
+  color: var(--sage-green);
   margin-bottom: 4px;
   position: relative;
   width: fit-content;
@@ -388,8 +401,8 @@
 .page-header h1 {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   text-transform: uppercase;
-  color: var(--mustard);
-  text-shadow: 4px 4px 0 var(--ink);
+  color: var(--spruce-green);
+  text-shadow: 4px 4px 0 var(--sage-green);
 }
 
 @media (max-width: 900px) {

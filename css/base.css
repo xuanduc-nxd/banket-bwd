@@ -2,9 +2,15 @@
 :root {
   --canvas: #f9f6ee;
   --ink: #000000;
-  --mustard: #ffd23f;
-  --scholar-blue: #3a86ff;
-  --sage-green: #38b000;
+  --spruce-green: #1a3636;
+  --sage-green: #a3b899;
+  --sage-light: #eef3e8;
+  --sage-super-light: #f2f6ee;
+  
+  /* Retain compatibility with legacy names */
+  --mustard: var(--spruce-green);
+  --scholar-blue: var(--sage-green);
+  
   --white: #ffffff;
   --border: 3px solid var(--ink);
   --radius: 12px;

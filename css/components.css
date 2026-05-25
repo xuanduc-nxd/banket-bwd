@@ -23,12 +23,12 @@
 }
 
 .btn-primary {
-  background: var(--mustard);
+  background: var(--sage-green);
   color: var(--ink);
 }
 
 .btn-secondary {
-  background: var(--scholar-blue);
+  background: var(--spruce-green);
   color: var(--white);
 }
 
@@ -68,7 +68,7 @@
 
 .mini-btn:hover {
   background: var(--scholar-blue);
-  color: var(--white);
+  color: var(--ink);
   transform: translate(2px, 2px);
   box-shadow: 1px 1px 0 var(--ink);
 }
@@ -93,7 +93,7 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   background: var(--ink);
-  color: var(--mustard);
+  color: var(--scholar-blue);
   border: 2px solid var(--ink);
 }
 
@@ -114,6 +114,7 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   background: var(--white);
+  color: var(--ink);
   border: var(--border);
   border-radius: 8px;
   box-shadow: 3px 3px 0 var(--ink);
@@ -122,13 +123,13 @@
 
 .step-tab.is-active {
   background: var(--scholar-blue);
-  color: var(--white);
+  color: var(--ink);
   transform: translate(2px, 2px);
   box-shadow: 1px 1px 0 var(--ink);
 }
 
 .step-tab.is-done {
-  background: var(--sage-green);
+  background: var(--spruce-green);
   color: var(--white);
 }
 
@@ -187,6 +188,7 @@
   padding: 12px 14px;
   font-family: var(--font-body);
   background: var(--white);
+  color: var(--ink);
   border: var(--border);
   border-radius: 8px;
 }
@@ -231,6 +233,7 @@
   font-weight: 600;
   font-size: 0.85rem;
   background: var(--white);
+  color: var(--ink);
   border: var(--border);
   border-radius: 8px;
   cursor: pointer;
@@ -239,7 +242,7 @@
 
 .chip:has(input:checked) {
   background: var(--scholar-blue);
-  color: var(--white);
+  color: var(--ink);
 }
 
 .form-actions {
@@ -329,7 +332,7 @@
 
 .matrix-block--safe .matrix-block__head {
   background: var(--sage-green);
-  color: var(--white);
+  color: var(--ink);
 }
 
 .matrix-block--fit {
@@ -338,7 +341,7 @@
 
 .matrix-block--fit .matrix-block__head {
   background: var(--ink);
-  color: var(--mustard);
+  color: var(--white);
 }
 
 .matrix-block--reach {
@@ -347,7 +350,7 @@
 
 .matrix-block--reach .matrix-block__head {
   background: var(--scholar-blue);
-  color: var(--white);
+  color: var(--ink);
 }
 
 /* University result card inside matrix */
@@ -355,6 +358,7 @@
   margin-bottom: 12px;
   padding: 14px;
   background: var(--white);
+  color: var(--ink);
   border: var(--border);
   border-radius: 8px;
   box-shadow: 3px 3px 0 var(--ink);
@@ -396,8 +400,13 @@
 .metric {
   padding: 8px;
   background: var(--canvas);
+  color: var(--ink);
   border: 2px solid var(--ink);
   border-radius: 6px;
+}
+.metric .tag--blue,
+.metric .tag--green {
+  color: var(--spruce-green);
 }
 
 .metric strong {
@@ -449,6 +458,7 @@
   margin-bottom: 12px;
   padding: 14px;
   background: var(--white);
+  color: var(--ink);
   border: var(--border);
   border-radius: 8px;
   box-shadow: 3px 3px 0 var(--ink);
@@ -458,6 +468,7 @@
   margin-top: 20px;
   padding: 20px;
   background: var(--white);
+  color: var(--ink);
   border: var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-card);
@@ -499,8 +510,8 @@
 .pill.safe { background: var(--sage-green); color: var(--white); }
 .pill.fit { background: var(--mustard); }
 .pill.reach { background: var(--scholar-blue); color: var(--white); }
-.pill.public { background: #d4e8ff; }
-.pill.private { background: #ffe4c4; }
+.pill.public { background: #d4e8ff; color: var(--spruce-green); }
+.pill.private { background: #ffe4c4; color: var(--spruce-green); }
 
 .meta-row {
   display: flex;
@@ -527,9 +538,16 @@
 .tool-card {
   padding: 18px;
   background: var(--mustard);
+  color: var(--white);
   border: var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-card);
+}
+
+.university-card .summary-item span,
+.major-card .summary-item span {
+  color: var(--sage-light);
+  opacity: 0.95;
 }
 
 .university-card .logo-box {
@@ -541,13 +559,13 @@
   font-weight: 800;
   font-size: 0.65rem;
   background: var(--scholar-blue);
-  color: var(--white);
+  color: var(--ink);
   border: var(--border);
 }
 
 .university-card .logo-box.private {
   background: var(--ink);
-  color: var(--mustard);
+  color: var(--white);
 }
 
 .card-top {
@@ -603,7 +621,7 @@
 
 .toolbar .chip.is-active {
   background: var(--scholar-blue);
-  color: var(--white);
+  color: var(--ink);
 }
 
 /* Modal */
@@ -752,9 +770,14 @@
   flex-shrink: 0;
   padding: 14px;
   background: var(--mustard);
+  color: var(--white);
   border: var(--border);
   border-radius: var(--radius);
   box-shadow: 3px 3px 0 var(--ink);
+}
+.map-info-panel .summary-item span {
+  color: var(--sage-light);
+  opacity: 0.95;
 }
 
 .map-canvas-wrap {
@@ -813,7 +836,7 @@
 .map-list-item:hover,
 .map-list-item.is-active {
   background: var(--scholar-blue);
-  color: var(--white);
+  color: var(--ink);
 }
 
 .map-sovereignty-note {
@@ -822,6 +845,7 @@
   font-size: 12px;
   font-weight: 600;
   background: var(--mustard);
+  color: var(--white);
   border: 3px solid var(--ink);
   border-radius: 8px;
   box-shadow: 3px 3px 0 var(--ink);
@@ -953,6 +977,7 @@
   font-weight: 800;
   text-transform: uppercase;
   background: var(--mustard);
+  color: var(--white);
   border: var(--border);
   border-radius: 8px;
   box-shadow: var(--shadow-btn);
@@ -995,6 +1020,7 @@
   padding: 14px;
   margin-bottom: 12px;
   background: var(--mustard);
+  color: var(--white);
   border: var(--border);
   border-radius: 8px;
 }
@@ -1006,4 +1032,21 @@ body.is-exiting {
 
 #themeToggle {
   margin-left: 8px;
+}
+
+/* Smart card dark Spruce Green theme overrides */
+#match .smart-card {
+  background: var(--spruce-green);
+  color: var(--white);
+}
+
+#match .smart-card .field label:not(.chip),
+#match .smart-card .field-label {
+  color: var(--white);
+}
+
+#match .smart-card .score-total {
+  background: var(--sage-light);
+  color: var(--spruce-green);
+  border: var(--border);
 }
