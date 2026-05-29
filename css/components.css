@@ -123,7 +123,7 @@
 
 .step-tab.is-active {
   background: var(--scholar-blue);
-  color: var(--ink);
+  color: var(--white);
   transform: translate(2px, 2px);
   box-shadow: 1px 1px 0 var(--ink);
 }
@@ -242,7 +242,7 @@
 
 .chip:has(input:checked) {
   background: var(--scholar-blue);
-  color: var(--ink);
+  color: var(--white);
 }
 
 .form-actions {
@@ -327,7 +327,7 @@
 }
 
 .matrix-block--safe {
-  background: #e8f8e0;
+  background: #e8f1f2;
 }
 
 .matrix-block--safe .matrix-block__head {
@@ -350,7 +350,7 @@
 
 .matrix-block--reach .matrix-block__head {
   background: var(--scholar-blue);
-  color: var(--ink);
+  color: var(--white);
 }
 
 /* University result card inside matrix */
@@ -507,8 +507,8 @@
   border-radius: 4px;
 }
 
-.pill.safe { background: var(--sage-green); color: var(--white); }
-.pill.fit { background: var(--mustard); }
+.pill.safe { background: var(--sage-green); color: var(--ink); }
+.pill.fit { background: var(--mustard); color: var(--white); }
 .pill.reach { background: var(--scholar-blue); color: var(--white); }
 .pill.public { background: #d4e8ff; color: var(--spruce-green); }
 .pill.private { background: #ffe4c4; color: var(--spruce-green); }
@@ -610,6 +610,7 @@
 
 .recent-tag:hover {
   background: var(--mustard);
+  color: var(--white);
   transform: translate(1px, 1px);
   box-shadow: 1px 1px 0 var(--ink);
 }
@@ -999,6 +1000,7 @@
 
 .quiz-option:hover {
   background: var(--mustard);
+  color: var(--white);
   transform: translate(2px, 2px);
   box-shadow: 1px 1px 0 var(--ink);
 }

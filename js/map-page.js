@@ -75,9 +75,10 @@
 
   function createMarkerElement(uni) {
     const el = document.createElement("div");
-    const bg = uni.type === "private" ? "#000000" : "#3a86ff";
+    const bg = uni.type === "private" ? "#97CADB" : "#018ABE";
+    const textCol = uni.type === "private" ? "#000" : "#fff";
     el.className = "map-marker-pin";
-    el.innerHTML = `<span style="display:grid;place-items:center;width:38px;height:38px;background:${bg};color:#fff;font-size:9px;font-weight:800;font-family:system-ui,sans-serif;border:2px solid #000;border-radius:4px;box-shadow:3px 3px 0 #000;cursor:pointer">${uni.shortName}</span>`;
+    el.innerHTML = `<span style="display:grid;place-items:center;width:38px;height:38px;background:${bg};color:${textCol};font-size:9px;font-weight:800;font-family:system-ui,sans-serif;border:2px solid #000;border-radius:4px;box-shadow:3px 3px 0 #000;cursor:pointer">${uni.shortName}</span>`;
     el.addEventListener("click", (e) => {
       e.stopPropagation();
       selectUniversity(uni.id, false);

@@ -1,15 +1,15 @@
 /* UniMatch — Neo-Brutalism design system */
 :root {
-  --canvas: #f9f6ee;
+  --canvas: #D6E8EE;
   --ink: #000000;
-  --spruce-green: #1a3636;
-  --sage-green: #a3b899;
-  --sage-light: #eef3e8;
-  --sage-super-light: #f2f6ee;
+  --spruce-green: #018ABE;
+  --sage-green: #97CADB;
+  --sage-light: #D6E8EE;
+  --sage-super-light: #ffffff;
   
   /* Retain compatibility with legacy names */
-  --mustard: var(--spruce-green);
-  --scholar-blue: var(--sage-green);
+  --mustard: #018ABE;
+  --scholar-blue: #018ABE;
   
   --white: #ffffff;
   --border: 3px solid var(--ink);
@@ -75,4 +75,43 @@ p {
 .container {
   width: min(100% - 32px, var(--container));
   margin: 0 auto;
+}
+
+/* Dynamic animations & reveal-on-scroll system */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  transition: opacity 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.1),
+              transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.stagger-0 { transition-delay: 0s; }
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+
+/* Smooth scrolling and tactile interactions */
+html {
+  scroll-behavior: smooth;
+}
+
+.click-ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+  animation: ripple-effect 0.5s ease-out;
+}
+
+@keyframes ripple-effect {
+  to {
+    transform: translate(-50%, -50%) scale(4);
+    opacity: 0;
+  }
 }
