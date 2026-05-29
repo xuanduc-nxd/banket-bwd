@@ -90,7 +90,7 @@
     });
 
     UI.$("#majorCount").textContent = `${list.length} ngành`;
-    UI.$("#majorsGrid").innerHTML = list.length ? list.map((major) => majorCard(major)).join("") : `<div class="empty-state">Không tìm thấy ngành phù hợp.</div>`;
+    UI.$("#majorsGrid").innerHTML = list.length ? list.map((major, index) => majorCard(major, index)).join("") : `<div class="empty-state">Không tìm thấy ngành phù hợp.</div>`;
     UI.$all("[data-compare]").forEach((button) => button.addEventListener("click", () => addCompare(button.dataset.compare)));
     UI.$all("[data-bookmark]").forEach((button) => button.addEventListener("click", () => toggleBookmark(button.dataset.bookmark)));
     applyMajorsRowLimit();
@@ -152,12 +152,12 @@
     showMoreBtn.textContent = "Xem thêm";
   }
 
-  function majorCard(major) {
+  function majorCard(major, index = 0) {
     const cat = DATA.getCategory(major.category);
     const isBookmarked = bookmarked.includes(major.id);
     const bookmarkText = isBookmarked ? "Đã lưu ❤️" : "Lưu ♡";
     return `
-      <article class="major-card">
+      <article class="major-card fade-in" style="animation-delay: ${Math.min(index, 8) * 0.04}s">
         <div class="card-top">
           <span class="pill" style="color:${cat.color};background:#f8fafc">${cat.name}</span>
           <span class="pill">Độ khó ${major.difficulty}/10</span>

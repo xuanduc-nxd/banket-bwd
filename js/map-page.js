@@ -168,8 +168,8 @@
     UI.$("#mapList").innerHTML = visible.length
       ? visible
           .map(
-            (uni) => `
-      <button type="button" class="map-list-item" data-id="${uni.id}">
+            (uni, index) => `
+      <button type="button" class="map-list-item fade-in" data-id="${uni.id}" style="animation-delay: ${Math.min(index, 8) * 0.04}s">
         <strong>${uni.name}</strong>
         <div class="meta-row">
           <span class="pill ${uni.type}">${uni.type === "public" ? "Công lập" : "Tư thục"}</span>
@@ -195,6 +195,24 @@
     requestAnimationFrame(syncMapViewport);
   }
 
+  function deselectUniversity() {
+    UI.$all(".map-list-item").forEach((item) => {
+      item.classList.remove("is-active");
+    });
+
+    UI.$("#infoPanel").innerHTML = `
+      <h3>Chọn trường</h3>
+      <p>Nhấn marker hoặc tên trong list.</p>
+    `;
+
+    const visible = getVisibleUniversities();
+    if (visible.length && mapReady) {
+      const bounds = new vietmapgl.LngLatBounds();
+      visible.forEach((uni) => bounds.extend([uni.lng, uni.lat]));
+      map.fitBounds(bounds, { padding: 48, maxZoom: 13, duration: 600 });
+    }
+  }
+
   function selectUniversity(id, fly) {
     const uni = DATA.universities.find((item) => item.id === id);
     if (!uni || !mapReady) return;
@@ -204,7 +222,8 @@
     });
 
     UI.$("#infoPanel").innerHTML = `
-      <h3>${uni.name}</h3>
+      <button class="close-info-btn" id="closeInfo" type="button" aria-label="Quay lại">✕</button>
+      <h3 style="padding-right: 28px;">${uni.name}</h3>
       <p>${uni.city} — ${uni.type === "public" ? "Công lập" : "Tư thục"}</p>
       <div class="summary-list">
         <div class="summary-item"><span>Học phí</span><strong>${DATA.money(uni.tuition)}</strong></div>
@@ -216,6 +235,14 @@
         <a class="btn-primary" href="${uni.website}" target="_blank" rel="noopener">Website</a>
       </div>
     `;
+
+    const closeBtn = UI.$("#closeInfo");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        deselectUniversity();
+      });
+    }
 
     if (fly) {
       map.flyTo({

@@ -551,7 +551,9 @@
 }
 
 .university-card .logo-box {
-  width: 48px;
+  min-width: 48px;
+  width: fit-content;
+  padding: 0 8px;
   height: 36px;
   display: grid;
   place-items: center;
@@ -561,6 +563,7 @@
   background: var(--scholar-blue);
   color: var(--ink);
   border: var(--border);
+  white-space: nowrap;
 }
 
 .university-card .logo-box.private {
@@ -655,7 +658,7 @@
   align-items: center;
   padding: 16px 20px;
   background: var(--ink);
-  color: var(--mustard);
+  color: var(--white);
   font-family: var(--font-display);
   font-weight: 800;
   text-transform: uppercase;
@@ -697,10 +700,17 @@
   width: 260px;
   padding: 16px;
   background: var(--mustard);
+  color: var(--white);
   border: var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-card);
   z-index: 90;
+}
+
+.compare-dock .pill {
+  background: var(--white);
+  color: var(--ink);
+  border: 2px solid var(--ink);
 }
 
 .compare-dock.is-visible {
@@ -774,6 +784,38 @@
   border: var(--border);
   border-radius: var(--radius);
   box-shadow: 3px 3px 0 var(--ink);
+  position: relative;
+}
+
+.close-info-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--white);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform 0.08s, box-shadow 0.08s;
+  z-index: 10;
+}
+
+.close-info-btn:hover {
+  background: var(--sage-green);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.close-info-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
 }
 .map-info-panel .summary-item span {
   color: var(--sage-light);
@@ -929,7 +971,7 @@
   margin-bottom: 20px;
   padding: 20px;
   background: var(--scholar-blue);
-  color: var(--white);
+  color: var(--ink);
   border: var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-card);
@@ -1001,6 +1043,7 @@
   font-family: var(--font-display);
   font-weight: 700;
   background: var(--mustard);
+  color: var(--white);
   border: var(--border);
   border-radius: 8px;
   box-shadow: var(--shadow-card);
@@ -1049,4 +1092,88 @@ body.is-exiting {
   background: var(--sage-light);
   color: var(--spruce-green);
   border: var(--border);
+}
+
+/* Skeleton Loading for Map list */
+.skeleton-card {
+  padding: 10px;
+  margin-bottom: 6px;
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 var(--ink);
+  pointer-events: none;
+}
+
+.skeleton-line {
+  height: 14px;
+  background: #e2e8f0;
+  margin-bottom: 8px;
+  border-radius: 3px;
+  animation: skeleton-pulse 1.2s infinite ease-in-out;
+}
+
+.skeleton-line--title {
+  width: 75%;
+}
+
+.skeleton-pills {
+  display: flex;
+  gap: 6px;
+}
+
+.skeleton-pill {
+  width: 60px;
+  height: 18px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  animation: skeleton-pulse 1.2s infinite ease-in-out;
+}
+
+.skeleton-pill:nth-child(2) {
+  width: 45px;
+}
+
+.skeleton-pill:nth-child(3) {
+  width: 70px;
+}
+
+@keyframes skeleton-pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+    background-color: #cbd5e1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Staggered Fade-in Animation for actual elements */
+.fade-in {
+  opacity: 0;
+  animation: fadeInEffect 0.4s ease-out forwards;
+}
+
+@keyframes fadeInEffect {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.skeleton-result-card {
+  margin-bottom: 12px;
+  padding: 14px;
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--ink);
+  pointer-events: none;
 }

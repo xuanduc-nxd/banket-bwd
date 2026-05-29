@@ -84,7 +84,7 @@
 
 /* Hero */
 .hero {
-  padding: 48px 0 40px;
+  padding: 36px 0 30px;
 }
 
 .hero-grid {
@@ -214,7 +214,7 @@
 
 /* Sections */
 .section {
-  padding: 48px 0;
+  padding: 36px 0;
 }
 
 .section-header h2 {
@@ -223,7 +223,7 @@
 }
 
 .site-footer {
-  margin-top: 64px;
+  margin-top: 0;
   padding: 48px 0 24px;
   background: var(--ink);
   color: var(--white);
@@ -349,7 +349,11 @@
 }
 
 .page-header {
-  padding: 40px 0 24px;
+  padding: 40px 0 12px;
+}
+
+.page-header + .section {
+  padding-top: 16px;
 }
 
 .majors-page.section {

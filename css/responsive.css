@@ -62,6 +62,18 @@
     min-height: min(28dvh, 280px);
     height: min(28dvh, 280px);
   }
+
+  .page-header {
+    padding: 24px 0 8px;
+  }
+
+  .page-header + .section {
+    padding-top: 12px;
+  }
+
+  .section {
+    padding: 24px 0;
+  }
 }
 
 @media (max-width: 520px) {

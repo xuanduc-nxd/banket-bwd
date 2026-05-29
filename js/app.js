@@ -182,7 +182,7 @@
     const reasonShort = match.reason.length > 120 ? `${match.reason.slice(0, 117)}…` : match.reason;
 
     return `
-      <article class="uni-card">
+      <article class="uni-card fade-in" style="animation-delay: ${Math.min(index, 8) * 0.04}s">
         <div class="uni-card__rank">#${index + 1}</div>
         <h4 class="uni-card__title">${match.major.name}</h4>
         <p class="uni-card__school">${match.university.shortName} · ${match.university.city}</p>
@@ -381,17 +381,59 @@
 
       savePlan(plan);
       localStorage.removeItem("unimatch_form_draft");
-      if (matches.length) {
-        renderResultsMatrix(matches);
-      } else {
-        clearResultsMatrix();
-        const listEl = $("#resultsList");
-        if (listEl) {
-          listEl.innerHTML = `<div class="empty-state">Không có kết quả. Thử nới học phí hoặc khu vực.</div>`;
-        }
+
+      const listEl = $("#resultsList");
+      if (listEl) {
+        listEl.innerHTML = `
+          <div class="matrix-loading-status" style="font-family:var(--font-display);font-weight:700;margin-bottom:12px;color:var(--spruce-green);animation:skeleton-pulse 1.2s infinite ease-in-out;">
+            🤖 Đang chạy ma trận tuyển sinh 30/50/20...
+          </div>
+          <div class="skeleton-result-card">
+            <div class="skeleton-line" style="width: 25%; height: 10px;"></div>
+            <div class="skeleton-line" style="width: 70%; height: 18px; margin-top: 8px;"></div>
+            <div class="skeleton-line" style="width: 45%; height: 12px;"></div>
+            <div class="skeleton-metrics" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;">
+              <div class="skeleton-metric" style="height:46px;background:#e2e8f0;border-radius:6px;animation:skeleton-pulse 1.2s infinite ease-in-out;"></div>
+              <div class="skeleton-metric" style="height:46px;background:#e2e8f0;border-radius:6px;animation:skeleton-pulse 1.2s infinite ease-in-out;"></div>
+            </div>
+            <div class="skeleton-line" style="width: 90%; height: 12px;"></div>
+            <div class="skeleton-line" style="width: 75%; height: 12px;"></div>
+          </div>
+          <div class="skeleton-result-card">
+            <div class="skeleton-line" style="width: 20%; height: 10px;"></div>
+            <div class="skeleton-line" style="width: 60%; height: 18px; margin-top: 8px;"></div>
+            <div class="skeleton-line" style="width: 40%; height: 12px;"></div>
+            <div class="skeleton-metrics" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;">
+              <div class="skeleton-metric" style="height:46px;background:#e2e8f0;border-radius:6px;animation:skeleton-pulse 1.2s infinite ease-in-out;"></div>
+              <div class="skeleton-metric" style="height:46px;background:#e2e8f0;border-radius:6px;animation:skeleton-pulse 1.2s infinite ease-in-out;"></div>
+            </div>
+            <div class="skeleton-line" style="width: 85%; height: 12px;"></div>
+            <div class="skeleton-line" style="width: 65%; height: 12px;"></div>
+          </div>
+        `;
       }
-      renderPlanSummary(plan, summary);
+
+      if (summary) {
+        summary.innerHTML = `
+          <div style="text-align:center;padding:12px;font-family:var(--font-display);font-weight:700;color:var(--ink);animation:skeleton-pulse 1.2s infinite ease-in-out;">
+            Tính điểm match...
+          </div>
+        `;
+      }
+
       go(4);
+
+      setTimeout(() => {
+        if (matches.length) {
+          renderResultsMatrix(matches);
+        } else {
+          clearResultsMatrix();
+          if (listEl) {
+            listEl.innerHTML = `<div class="empty-state">Không có kết quả. Thử nới học phí hoặc khu vực.</div>`;
+          }
+        }
+        renderPlanSummary(plan, summary);
+      }, 700);
     });
 
     $("#restartPlan")?.addEventListener("click", () => {

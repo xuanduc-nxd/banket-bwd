@@ -1,8 +1,6 @@
 /* Page-specific */
 
-#match .smart-card {
-  background: var(--white);
-}
+
 
 #match .section-header {
   margin-bottom: 24px;

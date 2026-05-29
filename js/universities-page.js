@@ -54,13 +54,13 @@
 
     const displayList = isExpanded ? filtered : filtered.slice(0, INITIAL_LIMIT);
 
-    list.innerHTML = displayList.length ? displayList.map((uni) => {
+    list.innerHTML = displayList.length ? displayList.map((uni, index) => {
       const typeLabel = uni.type === "public" ? "Công lập" : "Tư thục";
       const isBookmarked = bookmarked.includes(uni.id);
       const bookmarkText = isBookmarked ? "Đã lưu ❤️" : "Lưu ♡";
 
       return `
-        <article class="university-card is-compact">
+        <article class="university-card is-compact fade-in" style="animation-delay: ${Math.min(index, 8) * 0.04}s">
           <div class="card-top">
             <div class="logo-box ${uni.type === "private" ? "private" : ""}">${uni.shortName}</div>
             <span class="pill ${uni.type}">${typeLabel}</span>
