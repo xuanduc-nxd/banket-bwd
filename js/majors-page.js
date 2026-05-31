@@ -94,6 +94,9 @@
     UI.$all("[data-compare]").forEach((button) => button.addEventListener("click", () => addCompare(button.dataset.compare)));
     UI.$all("[data-bookmark]").forEach((button) => button.addEventListener("click", () => toggleBookmark(button.dataset.bookmark)));
     applyMajorsRowLimit();
+    if (typeof AOS !== 'undefined') {
+      AOS.refresh();
+    }
   }
 
   function applyMajorsRowLimit() {
@@ -113,6 +116,7 @@
       wrap.style.maxHeight = "";
       wrap.classList.remove("majors-grid-wrap--collapsed");
       showMoreWrap.classList.add("is-hidden");
+      if (typeof AOS !== 'undefined') AOS.refresh();
       return;
     }
 
@@ -121,6 +125,7 @@
       wrap.classList.remove("majors-grid-wrap--collapsed");
       showMoreWrap.classList.add("is-hidden");
       cards.forEach((card) => { card.style.display = ""; });
+      if (typeof AOS !== 'undefined') AOS.refresh();
       return;
     }
 
@@ -140,6 +145,7 @@
       wrap.style.maxHeight = "";
       wrap.classList.remove("majors-grid-wrap--collapsed");
       showMoreWrap.classList.add("is-hidden");
+      if (typeof AOS !== 'undefined') AOS.refresh();
       return;
     }
 
@@ -150,6 +156,10 @@
     wrap.classList.add("majors-grid-wrap--collapsed");
     showMoreWrap.classList.remove("is-hidden");
     showMoreBtn.textContent = "Xem thêm";
+
+    if (typeof AOS !== 'undefined') {
+      AOS.refresh();
+    }
   }
 
   function majorCard(major, index = 0) {

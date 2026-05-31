@@ -10,6 +10,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -34,7 +35,7 @@
   <main>
     <section class="hero">
       <div class="container hero-grid">
-        <div class="hero-card brutal-card">
+        <div class="hero-card brutal-card" data-aos="fade-right">
           <span class="eyebrow">Gen-Z college strategy</span>
           <h1 class="hero-headline">
             UNIMATCH:
@@ -51,7 +52,7 @@
           </div>
         </div>
 
-        <aside class="insight-panel">
+        <aside class="insight-panel" data-aos="fade-left">
           <p class="panel-title">Chiến lược 30 · 50 · 20</p>
           <div class="strategy-stack">
             <div class="strategy-card">
@@ -77,7 +78,7 @@
 
     <section class="section" id="match">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header" data-aos="fade-up">
           <div>
             <span class="section-badge">Smart Match</span>
             <h2>Tạo chiến lược nguyện vọng</h2>
@@ -85,7 +86,7 @@
           </div>
         </div>
 
-        <div class="smart-card">
+        <div class="smart-card" data-aos="fade-up">
           <div class="steps">
             <div class="step-tab is-active" data-step="1"><span class="step-number">1</span> Tổ hợp</div>
             <div class="step-tab" data-step="2"><span class="step-number">2</span> Điểm</div>
@@ -188,7 +189,7 @@
 
     <section class="section" id="about">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header" data-aos="fade-up">
           <div>
             <span class="section-badge">Vì sao khác?</span>
             <h2>Không corporate. Có cơ sở.</h2>
@@ -196,17 +197,17 @@
           </div>
         </div>
         <div class="trend-grid">
-          <article class="tool-card trend-card">
+          <article class="tool-card trend-card" data-aos="fade-up" data-aos-delay="0">
             <span class="pill safe">01</span>
             <h3>30/50/20 split</h3>
             <p>Ma trận 3 khối bất đối xứng — không nhồi một list dài vô nghĩa.</p>
           </article>
-          <article class="tool-card trend-card">
+          <article class="tool-card trend-card" data-aos="fade-up" data-aos-delay="100">
             <span class="pill fit">02</span>
             <h3>Minh bạch</h3>
             <p>Mỗi gợi ý có học phí, benchmark score và text giải thích.</p>
           </article>
-          <article class="tool-card trend-card">
+          <article class="tool-card trend-card" data-aos="fade-up" data-aos-delay="200">
             <span class="pill reach">03</span>
             <h3>Data-first</h3>
             <p>Dữ liệu tách file — sẵn sàng nâng cấp API thật.</p>
@@ -218,7 +219,7 @@
 
   <footer class="site-footer">
     <div class="container footer-container">
-      <div class="footer-brand-section">
+      <div class="footer-brand-section" data-aos="fade-up">
         <a class="brand" href="index.html">
           <span class="brand-mark">U</span>
           UNIMATCH
@@ -232,7 +233,7 @@
         </div>
       </div>
 
-      <div class="footer-nav-column">
+      <div class="footer-nav-column" data-aos="fade-up" data-aos-delay="100">
         <h4>Khám Phá</h4>
         <a href="index.html">Trang chủ</a>
         <a href="pages/universities.html">Trường ĐH</a>
@@ -240,14 +241,14 @@
         <a href="pages/map.html">Bản đồ trường</a>
       </div>
 
-      <div class="footer-nav-column">
+      <div class="footer-nav-column" data-aos="fade-up" data-aos-delay="200">
         <h4>Dữ Liệu & Code</h4>
         <a href="https://github.com/xuanduc-nxd" target="_blank" rel="noopener">GitHub Author</a>
         <a href="docs/Thiet_ke_de_tai_UniMatch.doc" download>Tài liệu đề án</a>
         <a href="https://maps.vietmap.vn/console/register" target="_blank" rel="noopener">VietMap API</a>
       </div>
 
-      <div class="footer-nav-column">
+      <div class="footer-nav-column" data-aos="fade-up" data-aos-delay="300">
         <h4>Liên Hệ & Support</h4>
         <a href="mailto:contact@unimatch.vn">contact@unimatch.vn</a>
         <a href="#about">Về chúng tôi</a>
@@ -263,6 +264,7 @@
   <script src="js/majors.js"></script>
   <script src="js/universities.js"></script>
   <script src="js/app-data.js"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script src="js/app.js"></script>
 </body>
 

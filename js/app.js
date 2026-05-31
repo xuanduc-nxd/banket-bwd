@@ -218,6 +218,10 @@
     listEl.innerHTML = safeMatches.length
       ? safeMatches.map((m, i) => renderResultCard(m, i)).join("")
       : empty;
+
+    if (typeof AOS !== "undefined") {
+      AOS.refresh();
+    }
   }
 
   function clearResultsMatrix() {
@@ -694,6 +698,8 @@
   }
 
   function initScrollReveal() {
+    if (typeof AOS !== 'undefined') return;
+
     const selector = ".hero-card, .university-card, .major-card, .tool-card, .stats-item, .matrix-block, .compare-table, .feature-intro, .recent-tag, .insight-panel";
     const els = document.querySelectorAll(selector);
 
@@ -702,7 +708,8 @@
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("revealed");
-            observer.unobserve(entry.target);
+          } else {
+            entry.target.classList.remove("revealed");
           }
         });
       },
@@ -870,6 +877,15 @@
   };
 
   document.addEventListener("DOMContentLoaded", () => {
+    if (typeof AOS !== "undefined") {
+      AOS.init({
+        duration: 800,
+        easing: "ease-out-quad",
+        once: false,
+        offset: 60
+      });
+    }
+
     initPageTransitions();
     initNav();
     initSmartMatch();

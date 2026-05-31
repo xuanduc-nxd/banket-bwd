@@ -104,6 +104,10 @@
     UI.$all("[data-bookmark]").forEach((button) => {
       button.addEventListener("click", () => toggleBookmark(button.dataset.bookmark));
     });
+
+    if (typeof AOS !== "undefined") {
+      AOS.refresh();
+    }
   }
 
   function toggleBookmark(id) {
