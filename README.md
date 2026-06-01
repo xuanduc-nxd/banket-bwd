@@ -42,7 +42,7 @@ Chào bạn, dưới góc độ của một Senior Developer có hơn 5 năm kin
 
 *   **Ngôn ngữ thiết kế Neo-Brutalism xuất sắc:** Dự án bắt rất đúng trend thiết kế hiện đại của Gen-Z. Cách phối màu tương phản cao (High-contrast), viền border đen dày dặn (`3px`) kết hợp bóng đổ phẳng không mờ (`5px 5px 0 #000`) mang lại cá tính mạnh mẽ, cao cấp và độc đáo so với các trang web giáo dục truyền thống tẻ nhạt.
 *   **Chiến lược ma trận nguyện vọng 30/50/20 thực tế:** Thuật toán phân chia ma trận (An toàn -Sweet Spot - Dream) có logic nghiệp vụ cực kỳ tốt. Đây là công thức tư vấn chuẩn xác được áp dụng rộng rãi ngoài đời thực, giúp học sinh tối ưu hóa cơ hội đỗ đại học.
-*   **Cấu trúc phân tách dữ liệu rõ ràng (Clean Data Layer):** Việc tách biệt hoàn toàn dữ liệu thô ([js/universities.js](file:///c:/Users/Admin/Documents/LapTrinhWeb/BestWebDesign/js/universities.js), [js/majors.js](file:///c:/Users/Admin/Documents/LapTrinhWeb/BestWebDesign/js/majors.js)) ra khỏi logic điều khiển và giao diện giúp bạn có thể dễ dàng cắm API thật hoặc kết nối Database ở Backend vào mà không phải sửa lại cấu trúc UI.
+*   **Cấu trúc phân tách dữ liệu rõ ràng (Clean Data Layer):** Việc tách biệt hoàn toàn dữ liệu thô ([js/universities.js](..../BestWebDesign/js/universities.js), [js/majors.js](..../BestWebDesign/js/majors.js)) ra khỏi logic điều khiển và giao diện giúp bạn có thể dễ dàng cắm API thật hoặc kết nối Database ở Backend vào mà không phải sửa lại cấu trúc UI.
 *   **Trải nghiệm bản đồ chuẩn chủ quyền:** Việc tích hợp bản đồ **VietMap GL JS** thay vì OpenStreetMap là một điểm cộng cực lớn về mặt chính trị và pháp lý tại Việt Nam, hiển thị rõ ràng và chính xác chủ quyền quốc gia (Hoàng Sa - Trường Sa).
 *   **Micro-interactions mượt mà:** Việc bổ sung **Skeleton Loading** nhấp nháy khi tải dữ liệu bản đồ, danh sách và hiệu ứng trượt mượt mà từng phần (**Staggered Fade-in**) giúp ứng dụng mang lại cảm giác phản hồi nhanh, tiệm cận một ứng dụng Single Page App (SPA) chuyên nghiệp.
 
@@ -54,19 +54,19 @@ Chào bạn, dưới góc độ của một Senior Developer có hơn 5 năm kin
 
 ### A. Tích hợp Backend và Cơ sở dữ liệu thật (Database Integration)
 *   **Vấn đề:** Hiện tại mọi dữ liệu điểm chuẩn, học phí đều là tĩnh (hardcoded/seeded random). Nếu dữ liệu tuyển sinh thay đổi, bạn không thể cập nhật tức thời cho hàng ngàn người dùng.
-*   **Giải pháp:** Xây dựng hệ thống API Backend để quản lý dữ liệu.
-*   **Công nghệ đề xuất:** 
-    *   **Backend:** **Node.js (NestJS)** hoặc **Python (FastAPI)** để viết các API tìm kiếm, lọc trường học với tốc độ cao.
-    *   **Database:** **PostgreSQL** để quản lý các bảng quan hệ phức tạp (Trường ĐH, Ngành học, Điểm chuẩn qua các năm, Môn xét tuyển).
+*   **Giải pháp:** Xây dựng hệ thống lưu trữ dữ liệu tập trung và sinh API.
+*   **Công nghệ lựa chọn:** 
+    *   **Backend:** **Node.js (Next.js)** - Sử dụng Next.js Route Handlers / Server Actions làm Backend Proxy và xử lý các API nghiệp vụ.
+    *   **Database:** **Supabase (PostgreSQL)** - Sử dụng PostgreSQL làm cơ sở dữ liệu quan hệ quản lý các bản: Trường ĐH, Ngành học, Điểm chuẩn qua các năm, Tổ hợp xét tuyển.
 
 ### B. Hệ thống Tài khoản & Đồng bộ dữ liệu (Authentication & User Persistence)
 *   **Vấn đề:** Dữ liệu bookmark trường học và bản nháp nguyện vọng hiện tại đang lưu ở `localStorage`. Nếu học sinh đổi từ điện thoại sang máy tính, toàn bộ chiến lược nguyện vọng đã tạo sẽ biến mất.
 *   **Giải pháp:** Xây dựng hệ thống Đăng nhập/Đăng ký.
-*   **Công nghệ đề xuất:** Sử dụng **JWT (JSON Web Token)** kết hợp với **Google OAuth 2.0** để học sinh Gen-Z có thể đăng nhập nhanh bằng tài khoản Google chỉ với 1-click.
+*   **Công nghệ lựa chọn:** Sử dụng **Supabase Auth** tích hợp **Google OAuth 2.0** để học sinh Gen-Z có thể đăng nhập nhanh bằng tài khoản Google chỉ với 1-click. Toàn bộ nguyện vọng sẽ được lưu trực tiếp trên database Supabase để đồng bộ mọi thiết bị.
 
 ### C. Bảo mật API Key VietMap
-*   **Vấn đề:** Hiện tại API Key của VietMap đang được ghi trực tiếp ở file cấu hình client-side ([js/map-config.js](file:///c:/Users/Admin/Documents/LapTrinhWeb/BestWebDesign/js/map-config.js)). Bất kỳ ai F12 cũng có thể lấy trộm key này để sử dụng, gây phát sinh chi phí hoặc bị khóa tài khoản VietMap của bạn.
-*   **Giải pháp:** Triển khai **Proxy Route** ở Backend. Client sẽ gọi về API của Backend của bạn, Backend sẽ dùng API Key (được lưu an toàn trong biến môi trường `.env`) để gọi dữ liệu bản đồ từ VietMap rồi trả về cho client.
+*   **Vấn đề:** Hiện tại API Key của VietMap đang được ghi trực tiếp ở file cấu hình client-side ([js/map-config.js](..../BestWebDesign/js/map-config.js)). Bất kỳ ai F12 cũng có thể lấy trộm key này để sử dụng, gây phát sinh chi phí hoặc bị khóa tài khoản VietMap của bạn.
+*   **Giải pháp:** Triển khai **Proxy Route** ở Backend (sử dụng Next.js Route Handlers). Client sẽ gọi về API nội bộ của Next.js, phía Server sẽ lấy API Key VietMap từ biến môi trường ẩn (`.env`) để fetch bản đồ rồi trả về cho client, giúp che giấu API Key tuyệt đối.
 
 ---
 
@@ -134,9 +134,9 @@ Qua rà soát sâu hơn về logic nghiệp vụ chạy bộ lọc (Smart Match)
 
 ```mermaid
 graph TD
-    A["Giai đoạn 1: Chuẩn hóa Frontend <br> Chuyển sang Next.js/React <br> Tối ưu hóa SEO & Responsive"] --> B["Giai đoạn 2: Xây dựng Backend <br> Thiết lập NestJS + PostgreSQL <br> Bảo mật Proxy API Key"]
-    B --> C["Giai đoạn 3: Tính năng Tài khoản <br> Google Auth <br> Lưu trữ ma trận nguyện vọng lên DB"]
-    C --> D["Giai đoạn 4: Đột phá Trải nghiệm <br> Tích hợp AI Counselor <br> Biểu đồ Chart.js & Xuất file PDF"]
+    A["Giai đoạn 1: Chuẩn hóa Frontend <br> Di chuyển giao diện sang Next.js <br> Thiết lập Styling & Responsive"] --> B["Giai đoạn 2: Kết nối Supabase <br> Khởi tạo Database PostgreSQL <br> Tích hợp Supabase Auth & Google Login"]
+    B --> C["Giai đoạn 3: Bảo mật & Logic <br> Thiết lập Proxy Route ẩn API Key <br> Sửa lỗi thuật toán Smart Match"]
+    C --> D["Giai đoạn 4: Đột phá Trải nghiệm <br> Tích hợp AI Counselor Gemini <br> Vẽ biểu đồ Chart.js & Xuất PDF"]
 ```
 
 Hy vọng bản đánh giá và kế hoạch hành động chuyên sâu này sẽ giúp bạn định hình rõ nét con đường phát triển tiếp theo của dự án **UniMatch**. Chúc dự án của bạn thành công vang dội!
